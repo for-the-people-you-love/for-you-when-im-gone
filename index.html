@@ -9,20 +9,20 @@
       margin: 0;
       font-family: Georgia, serif;
       background: linear-gradient(to bottom, #2b1d14, #120d09);
-      color: white;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
       box-sizing: border-box;
+      color: #fff;
     }
 
     .hidden {
       display: none;
     }
 
-    .book-cover {
+    .cover-stage {
       width: 320px;
       height: 460px;
       background: linear-gradient(135deg, #6b4423, #3d2412);
@@ -39,7 +39,7 @@
       cursor: pointer;
     }
 
-    .book-cover::before {
+    .cover-stage::before {
       content: "";
       position: absolute;
       left: 0;
@@ -74,44 +74,92 @@
       text-transform: uppercase;
     }
 
-    .book-open {
+    .open-book {
       width: 100%;
-      max-width: 460px;
-      background: #f7ead7;
-      color: #4a2d1a;
-      border-radius: 18px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+      max-width: 1050px;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 0;
+      border-radius: 22px;
       overflow: hidden;
-      border: 2px solid #c4a06b;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.45);
     }
 
-    .page {
-      padding: 28px;
-      min-height: 580px;
+    .left-cover-back {
+      background: linear-gradient(135deg, #6b4423, #3d2412);
+      border: 4px solid #b88a44;
+      border-right: 2px solid #8d6735;
+      border-radius: 22px 0 0 22px;
+      min-height: 680px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      box-sizing: border-box;
+      box-shadow: inset 0 0 25px rgba(0,0,0,0.22);
+    }
+
+    .left-cover-back::before {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 28px;
+      height: 100%;
+      background: rgba(0,0,0,0.18);
+    }
+
+    .back-cover-text {
+      color: rgba(240,209,138,0.85);
+      font-size: 22px;
+      text-align: center;
+      line-height: 1.6;
+      max-width: 240px;
+    }
+
+    .right-page {
+      background: #fbf4e8;
+      color: #4a2d1a;
+      border: 4px solid #d6bb90;
+      border-left: 2px solid #d0b389;
+      border-radius: 0 22px 22px 0;
+      min-height: 680px;
+      padding: 34px;
       box-sizing: border-box;
       position: relative;
     }
 
     .page-kicker {
       font-size: 12px;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-transform: uppercase;
       color: #a06d35;
       margin-bottom: 14px;
     }
 
-    h1, h2 {
+    .right-page h1 {
       margin-top: 0;
+      font-size: 44px;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .intro {
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 25px;
+      color: #6a4931;
     }
 
     .menu-button {
       display: block;
       width: 100%;
-      padding: 14px 16px;
-      margin-bottom: 12px;
-      font-size: 16px;
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      font-size: 19px;
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       background: #9b5d3a;
       color: white;
       cursor: pointer;
@@ -120,32 +168,24 @@
 
     .message-box {
       background: white;
-      border-radius: 14px;
-      padding: 22px;
+      border-radius: 16px;
+      padding: 24px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      font-size: 20px;
-      line-height: 1.7;
-      min-height: 220px;
-      margin-top: 20px;
+      font-size: 21px;
+      line-height: 1.8;
+      margin-top: 24px;
+      min-height: 180px;
     }
 
-    .page-panel {
-      display: none;
-    }
-
-    .page-panel.active {
-      display: block;
-    }
-
-    .nav-buttons {
+    .arrow-row {
       display: flex;
       justify-content: space-between;
       margin-top: 24px;
     }
 
-    .nav-buttons button {
+    .arrow-btn {
       padding: 12px 18px;
-      font-size: 16px;
+      font-size: 18px;
       border: none;
       border-radius: 12px;
       background: #7b4e2f;
@@ -153,67 +193,84 @@
       cursor: pointer;
     }
 
-    .nav-buttons button:disabled {
-      opacity: 0.4;
+    .arrow-btn:disabled {
+      opacity: 0.35;
       cursor: not-allowed;
+    }
+
+    @media (max-width: 900px) {
+      .open-book {
+        grid-template-columns: 1fr;
+      }
+
+      .left-cover-back {
+        min-height: 220px;
+        border-radius: 22px 22px 0 0;
+        border-right: 4px solid #b88a44;
+        border-bottom: 2px solid #8d6735;
+      }
+
+      .left-cover-back::before {
+        display: none;
+      }
+
+      .right-page {
+        min-height: 620px;
+        border-radius: 0 0 22px 22px;
+        border-left: 4px solid #d6bb90;
+        border-top: 2px solid #d0b389;
+      }
+
+      .right-page h1 {
+        font-size: 34px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div id="cover" class="book-cover" onclick="openBook()">
+  <div id="closedBook" class="cover-stage" onclick="openBook()">
     <div class="cover-title">For You When I'm Gone</div>
     <div class="cover-subtitle">Everything I wanted you to remember, know, and feel.</div>
     <div class="tap-note">Tap to open</div>
   </div>
 
-  <div id="book" class="book-open hidden">
-    <div class="page">
+  <div id="openedBook" class="open-book hidden">
+    <div class="left-cover-back">
+      <div class="back-cover-text">
+        The front cover is opened and laid back here,
+        like a real book resting open.
+      </div>
+    </div>
 
-      <div id="panel1" class="page-panel active">
-        <div class="page-kicker">Page 1</div>
-        <h2>Open When You Need Me</h2>
-        <p>Choose what you need right now.</p>
-
-        <button class="menu-button" onclick="showMessage('love')">❤️ When you need love</button>
-        <button class="menu-button" onclick="showMessage('strength')">💪 When you need strength</button>
-        <button class="menu-button" onclick="showMessage('miss')">😢 When you miss me</button>
-        <button class="menu-button" onclick="showMessage('smile')">😊 When you need a smile</button>
-
-        <div class="nav-buttons">
-          <button disabled>← Back</button>
-          <button onclick="goToPanel(2)">Next →</button>
-        </div>
+    <div class="right-page">
+      <div class="page-kicker">Page 1</div>
+      <h1>Open When You Need Me</h1>
+      <div class="intro">
+        This is the working page on the right side of the book.
+        Choose what you need right now.
       </div>
 
-      <div id="panel2" class="page-panel">
-        <div class="page-kicker">Page 2</div>
-        <h2>Your Message Page</h2>
+      <button class="menu-button" onclick="showMessage('love')">❤️ When you need love</button>
+      <button class="menu-button" onclick="showMessage('strength')">💪 When you need strength</button>
+      <button class="menu-button" onclick="showMessage('miss')">😢 When you miss me</button>
+      <button class="menu-button" onclick="showMessage('smile')">😊 When you need a smile</button>
 
-        <div class="message-box" id="messageBox">
-          Tap one of the message buttons on Page 1 first.
-        </div>
-
-        <div class="nav-buttons">
-          <button onclick="goToPanel(1)">← Back</button>
-          <button disabled>Next →</button>
-        </div>
+      <div id="messageBox" class="message-box">
+        Tap one of the choices above to open a message.
       </div>
 
+      <div class="arrow-row">
+        <button class="arrow-btn" disabled>← Back</button>
+        <button class="arrow-btn" disabled>Next →</button>
+      </div>
     </div>
   </div>
 
   <script>
     function openBook() {
-      document.getElementById("cover").classList.add("hidden");
-      document.getElementById("book").classList.remove("hidden");
-    }
-
-    function goToPanel(panelNumber) {
-      document.querySelectorAll(".page-panel").forEach(panel => {
-        panel.classList.remove("active");
-      });
-      document.getElementById("panel" + panelNumber).classList.add("active");
+      document.getElementById("closedBook").classList.add("hidden");
+      document.getElementById("openedBook").classList.remove("hidden");
     }
 
     function showMessage(type) {
@@ -228,8 +285,6 @@
       } else if (type === "smile") {
         box.innerHTML = "Think of one of our good moments and smile for me. I would want that.";
       }
-
-      goToPanel(2);
     }
   </script>
 

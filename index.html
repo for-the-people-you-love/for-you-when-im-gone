@@ -1,10 +1,64 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>For You When I'm Gone</title>
-  </head>
-  <body>
-    <h1>🔥 Your app is LIVE 🔥</h1>
-    <p>This is your starting point.</p>
-  </body>
+<head>
+  <title>For You When I'm Gone</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #111;
+      color: white;
+      padding: 40px;
+    }
+
+    button {
+      padding: 15px 25px;
+      margin: 10px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background: #ff4d6d;
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+      margin-top: 20px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>For You When I'm Gone ❤️</h1>
+  <p>This is for you… whenever you need me.</p>
+
+  <button onclick="showMessage('love')">❤️ When you need love</button>
+  <button onclick="showMessage('strength')">💪 When you need strength</button>
+  <button onclick="showMessage('miss')">😢 When you miss me</button>
+
+  <div id="love" class="hidden">
+    I love you more than anything. Always have. Always will.
+  </div>
+
+  <div id="strength" class="hidden">
+    You are stronger than you think. I believe in you.
+  </div>
+
+  <div id="miss" class="hidden">
+    I’m never really gone. I’m always with you in some way.
+  </div>
+
+  <script>
+    function showMessage(type) {
+      document.getElementById("love").style.display = "none";
+      document.getElementById("strength").style.display = "none";
+      document.getElementById("miss").style.display = "none";
+
+      document.getElementById(type).style.display = "block";
+    }
+  </script>
+
+</body>
 </html>

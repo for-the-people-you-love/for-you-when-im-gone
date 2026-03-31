@@ -182,6 +182,7 @@
       display: none;
       position: relative;
       z-index: 1;
+      height: 100%;
     }
 
     .page-panel.active {
@@ -266,6 +267,7 @@
 </head>
 <body>
 
+  <!-- CLOSED BOOK FIRST -->
   <div id="closedStage" class="stage">
     <div id="closedBook" class="cover-stage" onclick="openBook()">
       <div class="cover-title">For You When I'm Gone</div>
@@ -274,12 +276,14 @@
     </div>
   </div>
 
+  <!-- OPEN BOOK -->
   <div id="openedStage" class="open-wrap hidden">
     <div class="open-book">
       <div class="left-cover-back"></div>
       <div class="spine"></div>
 
       <div class="right-page">
+        <!-- INDEX FIRST -->
         <div id="page0" class="page-panel active">
           <div class="page-kicker">Index</div>
           <h1>Book Index</h1>
@@ -299,31 +303,27 @@
           </div>
         </div>
 
+        <!-- PAGE 1 -->
         <div id="page1" class="page-panel">
           <div class="page-kicker">Page 1</div>
           <h1>About You</h1>
           <div class="intro">
-            This page will hold your personal information and introduce the book.
+            This page will hold your name, birthday, where you were born, your parents, and your brothers and sisters.
           </div>
           <div class="message-box">
-            We can build this page next with your name, birthday, birthplace, parents, and siblings.
+            We can build this page next exactly how you want it.
           </div>
         </div>
 
+        <!-- PAGE 2 -->
         <div id="page2" class="page-panel">
           <div class="page-kicker">Page 2</div>
-          <h1>Open When You Need Me</h1>
+          <h1>Father Pictures</h1>
           <div class="intro">
-            This is a sample message page.
+            This page will be for a main picture of your father in the center and a collage of pictures around him.
           </div>
-
-          <button class="menu-button" onclick="showMessage('love')">❤️ When you need love</button>
-          <button class="menu-button" onclick="showMessage('strength')">💪 When you need strength</button>
-          <button class="menu-button" onclick="showMessage('miss')">😢 When you miss me</button>
-          <button class="menu-button" onclick="showMessage('smile')">😊 When you need a smile</button>
-
-          <div id="messageBox" class="message-box">
-            Tap one of the choices above to open a message.
+          <div class="message-box">
+            We can build this page after Page 1.
           </div>
         </div>
 
@@ -349,31 +349,19 @@
       for (let i = 0; i < totalPages; i++) {
         document.getElementById("page" + i).classList.remove("active");
       }
-      document.getElementById("page" + pageNumber).classList.add("active");
 
+      document.getElementById("page" + pageNumber).classList.add("active");
       document.getElementById("backBtn").disabled = pageNumber === 0;
       document.getElementById("nextBtn").disabled = pageNumber === totalPages - 1;
     }
 
     function changePage(direction) {
       currentPage += direction;
+
       if (currentPage < 0) currentPage = 0;
       if (currentPage > totalPages - 1) currentPage = totalPages - 1;
+
       showPage(currentPage);
-    }
-
-    function showMessage(type) {
-      const box = document.getElementById("messageBox");
-
-      if (type === "love") {
-        box.innerHTML = "I love you more than words can ever explain. That never changes.";
-      } else if (type === "strength") {
-        box.innerHTML = "You are stronger than you know, and I always believed in you.";
-      } else if (type === "miss") {
-        box.innerHTML = "Even when you miss me, remember that love does not leave. I am with you in that.";
-      } else if (type === "smile") {
-        box.innerHTML = "Think of one of our good moments and smile for me. I would want that.";
-      }
     }
   </script>
 

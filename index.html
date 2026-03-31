@@ -1,4 +1,4 @@
-1<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -17,7 +17,15 @@
     }
 
     .hidden {
-  display: none !important;
+      display: none !important;
+    }
+
+    #openedStage {
+      display: none;
+    }
+
+    #openedStage.show {
+      display: flex;
     }
 
     .stage {
@@ -117,7 +125,6 @@
 
     .open-wrap {
       min-height: 100vh;
-      display: flex;
       justify-content: flex-start;
       align-items: center;
       padding: 16px;
@@ -261,7 +268,6 @@
       cursor: pointer;
     }
 
-    /* Fancy gold page corners */
     .corner-nav {
       position: absolute;
       width: 44px;
@@ -398,13 +404,12 @@
     </div>
   </div>
 
-  <div id="openedStage" class="open-wrap hidden">
+  <div id="openedStage" class="open-wrap">
     <div class="open-book">
       <div class="left-cover-back"></div>
       <div class="spine"></div>
 
       <div class="right-page">
-        <!-- page corners -->
         <div id="leftTopCorner" class="corner-nav left-top" onclick="changePage(-1)"></div>
         <div id="leftBottomCorner" class="corner-nav left-bottom" onclick="changePage(-1)"></div>
         <div id="rightTopCorner" class="corner-nav right-top" onclick="changePage(1)"></div>
@@ -472,21 +477,21 @@
 
     function openBook() {
       document.getElementById("closedStage").classList.add("hidden");
-      document.getElementById("openedStage").classList.remove("hidden");
+      document.getElementById("openedStage").classList.add("show");
       showPage(currentPage);
     }
 
     function closeBook() {
-      document.getElementById("openedStage").classList.add("hidden");
+      document.getElementById("openedStage").classList.remove("show");
       document.getElementById("closedStage").classList.remove("hidden");
     }
 
     function showPage(pageNumber) {
       for (let i = 0; i < totalPages; i++) {
-        document.getElementById("page" + i).classList.add("show")
+        document.getElementById("page" + i).classList.remove("active");
       }
 
-      document.getElementById("page" + pageNumber).classList.remove("show")
+      document.getElementById("page" + pageNumber).classList.add("active");
 
       const leftDisabled = pageNumber === 0;
       const rightDisabled = pageNumber === totalPages - 1;

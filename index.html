@@ -415,33 +415,43 @@
         <div id="rightTopCorner" class="corner-nav right-top" onclick="changePage(1)"></div>
         <div id="rightBottomCorner" class="corner-nav right-bottom" onclick="changePage(1)"></div>
 
-        <div id="page0" class="page-panel active">
-          <div class="page-kicker">Index</div>
-          <h1>Book Index</h1>
-          <div class="index-list">
-            <p>Page 1 — About you</p>
-            <p>Page 2 — Father pictures</p>
-            <p>Page 3 — Mother pictures</p>
-            <p>Page 4 — Brothers & sisters</p>
-            <p>Page 5 — You</p>
-            <p>Page 6 — Jobs</p>
-            <p>Page 7 — Family stories</p>
-            <p>Page 8 — Friends</p>
-            <p>Page 9 — Diary</p>
-            <p>Page 10 — Contacts & Angels</p>
-            <p>Page 11 — Important info</p>
-            <p>Page 12 — Angel message</p>
-          </div>
+        <!-- ===================== PAGES ===================== -->
 
-          <div class="close-row">
-            <button class="close-btn" onclick="closeBook()">Close Book</button>
-          <div id="page1" class="page-panel">
+<div id="page0" class="page-panel active">
+  <div class="page-kicker">Index</div>
+  <h1>Book Index</h1>
+
+  <div class="index-list">
+    <p>Page 1 — About you</p>
+    <p>Page 2 — Father pictures</p>
+    <p>Page 3 — Mother pictures</p>
+    <p>Page 4 — Brothers & sisters</p>
+    <p>Page 5 — You</p>
+    <p>Page 6 — Jobs</p>
+    <p>Page 7 — Family stories</p>
+    <p>Page 8 — Friends</p>
+    <p>Page 9 — Diary</p>
+    <p>Page 10 — Contacts & Angels</p>
+    <p>Page 11 — Important info</p>
+    <p>Page 12 — Angel message</p>
+  </div>
+
+  <div class="close-row">
+    <button class="close-btn" onclick="closeBook()">Close Book</button>
+  </div>
+</div>
+
+<!-- ===================== PAGE 1 ===================== -->
+
+<div id="page1" class="page-panel">
   <div class="page-kicker">Page 1</div>
   <h1>About You</h1>
 
   <div style="display:flex; gap:20px; align-items:flex-start; margin-top:10px;">
+    
+    <!-- LEFT SIDE -->
     <div style="flex:1;">
-      <div class="intro" style="margin-top:0;">
+      <div class="intro">
         A simple page about who you are.
       </div>
 
@@ -455,13 +465,14 @@
       </div>
     </div>
 
+    <!-- RIGHT SIDE (PICTURE) -->
     <div style="width:140px;">
       <div style="
         width:140px;
         height:180px;
         border:2px solid #c7964b;
         border-radius:12px;
-        background: #efe4d1;
+        background:#efe4d1;
         color:#8a6a45;
         display:flex;
         align-items:center;
@@ -474,80 +485,10 @@
         Picture of you
       </div>
     </div>
+
   </div>
 
   <div class="close-row">
     <button class="close-btn" onclick="closeBook()">Close Book</button>
   </div>
-          </div>
-
-  <div class="close-row">
-    <button class="close-btn" onclick="closeBook()">Close Book</button>
-  </div>
-        </div>
-
-          <div class="close-row">
-            <button class="close-btn" onclick="closeBook()">Close Book</button>
-          </div>
-        </div>
-
-        <div id="page2" class="page-panel">
-          <div class="page-kicker">Page 2</div>
-          <h1>Father Pictures</h1>
-          <div class="intro">
-            This page will be for a main picture of your father in the center and a collage of pictures around him.
-          </div>
-          <div class="message-box">
-            We can build this page after Page 1.
-          </div>
-
-          <div class="close-row">
-            <button class="close-btn" onclick="closeBook()">Close Book</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    let currentPage = 0;
-    const totalPages = 3;
-
-    function openBook() {
-      document.getElementById("closedStage").classList.add("hidden");
-      document.getElementById("openedStage").classList.add("show");
-      showPage(currentPage);
-    }
-
-    function closeBook() {
-      document.getElementById("openedStage").classList.remove("show");
-      document.getElementById("closedStage").classList.remove("hidden");
-    }
-
-    function showPage(pageNumber) {
-      for (let i = 0; i < totalPages; i++) {
-        document.getElementById("page" + i).classList.remove("active");
-      }
-
-      document.getElementById("page" + pageNumber).classList.add("active");
-
-      const leftDisabled = pageNumber === 0;
-      const rightDisabled = pageNumber === totalPages - 1;
-
-      document.getElementById("leftTopCorner").classList.toggle("disabled", leftDisabled);
-      document.getElementById("leftBottomCorner").classList.toggle("disabled", leftDisabled);
-      document.getElementById("rightTopCorner").classList.toggle("disabled", rightDisabled);
-      document.getElementById("rightBottomCorner").classList.toggle("disabled", rightDisabled);
-    }
-
-    function changePage(direction) {
-      currentPage += direction;
-
-      if (currentPage < 0) currentPage = 0;
-      if (currentPage > totalPages - 1) currentPage = totalPages - 1;
-
-      showPage(currentPage);
-    }
-  </script>
-</body>
-</html>
+</div>

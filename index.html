@@ -435,18 +435,51 @@
 
           <div class="close-row">
             <button class="close-btn" onclick="closeBook()">Close Book</button>
-          </div>
-        </div>
-
-        <div id="page1" class="page-panel">
+          <div id="page1" class="page-panel">
   <div class="page-kicker">Page 1</div>
   <h1>About You</h1>
-  <div class="intro">
-    This page will hold your name, birthday, where you were born, your parents, and your brothers and sisters.
+
+  <div style="display:flex; gap:20px; align-items:flex-start; margin-top:10px;">
+    <div style="flex:1;">
+      <div class="intro" style="margin-top:0;">
+        A simple page about who you are.
+      </div>
+
+      <div class="message-box">
+        <p><strong>Full Name:</strong> ____________________</p>
+        <p><strong>Birthday:</strong> ____________________</p>
+        <p><strong>Where You Were Born:</strong> ____________________</p>
+        <p><strong>Father's Name:</strong> ____________________</p>
+        <p><strong>Mother's Name:</strong> ____________________</p>
+        <p><strong>Brothers & Sisters:</strong> ____________________</p>
+      </div>
+    </div>
+
+    <div style="width:140px;">
+      <div style="
+        width:140px;
+        height:180px;
+        border:2px solid #c7964b;
+        border-radius:12px;
+        background: #efe4d1;
+        color:#8a6a45;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        font-size:16px;
+        padding:10px;
+        box-sizing:border-box;
+      ">
+        Picture of you
+      </div>
+    </div>
   </div>
-  <div class="message-box">
-    We can build this page next exactly how you want it.
+
+  <div class="close-row">
+    <button class="close-btn" onclick="closeBook()">Close Book</button>
   </div>
+          </div>
 
   <div class="close-row">
     <button class="close-btn" onclick="closeBook()">Close Book</button>

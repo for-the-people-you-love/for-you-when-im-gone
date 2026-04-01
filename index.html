@@ -647,50 +647,7 @@
             <button class="close-btn" onclick="closeBook()">Close Book</button>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <script>
-    let currentPage = 0;
-    const totalPages = 5;
-
-    function openBook() {
-      document.getElementById("closedStage").classList.add("hidden");
-      document.getElementById("openedStage").classList.add("show");
-      showPage(currentPage);
-    }
-
-    function closeBook() {
-      document.getElementById("openedStage").classList.remove("show");
-      document.getElementById("closedStage").classList.remove("hidden");
-    }
-
-    function showPage(pageNumber) {
-      for (let i = 0; i < totalPages; i++) {
-        document.getElementById("page" + i).classList.remove("active");
-      }
-
-      document.getElementById("page" + pageNumber).classList.add("active");
-
-      const leftDisabled = pageNumber === 0;
-      const rightDisabled = pageNumber === totalPages - 1;
-
-      document.getElementById("leftTopCorner").classList.toggle("disabled", leftDisabled);
-      document.getElementById("leftBottomCorner").classList.toggle("disabled", leftDisabled);
-      document.getElementById("rightTopCorner").classList.toggle("disabled", rightDisabled);
-      document.getElementById("rightBottomCorner").classList.toggle("disabled", rightDisabled);
-    }
-
-    function changePage(direction) {
-      currentPage += direction;
-
-      if (currentPage < 0) currentPage = 0;
-      if (currentPage > totalPages - 1) currentPage = totalPages - 1;
-
-      showPage(currentPage);
-    }
-  </script>
-
-</body>
-</html>
+        <div id="page5" class="page-panel">
+          <div class="page-kicker">Page 5</div>
+          <h1>You</h1>

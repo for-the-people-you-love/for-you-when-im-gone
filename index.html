@@ -390,6 +390,86 @@
       cursor: default;
       pointer-events: none;
     }
+
+    .album-collage {
+      display: flex;
+      justify-content: center;
+      margin-top: 18px;
+      margin-bottom: 22px;
+    }
+
+    .album-frame {
+      position: relative;
+      width: 320px;
+      height: 270px;
+    }
+
+    .main-photo {
+      position: absolute;
+      top: 35px;
+      left: 90px;
+      width: 140px;
+      height: 180px;
+      border: 2px solid #c7964b;
+      border-radius: 12px;
+      background: #efe4d1;
+      color: #8a6a45;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 16px;
+      padding: 10px;
+      box-sizing: border-box;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+      z-index: 2;
+    }
+
+    .mini-photo {
+      position: absolute;
+      width: 95px;
+      height: 110px;
+      border: 2px solid #c7964b;
+      border-radius: 10px;
+      background: #f4eadb;
+      color: #8a6a45;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 13px;
+      padding: 8px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .mini-top-left {
+      top: 0;
+      left: 10px;
+      transform: rotate(-6deg);
+    }
+
+    .mini-top-right {
+      top: 5px;
+      right: 10px;
+      transform: rotate(6deg);
+    }
+
+    .mini-bottom-left {
+      bottom: 0;
+      left: 5px;
+      width: 100px;
+      height: 115px;
+      transform: rotate(5deg);
+    }
+
+    .mini-bottom-right {
+      bottom: 0;
+      right: 5px;
+      width: 100px;
+      height: 115px;
+      transform: rotate(-5deg);
+    }
   </style>
 </head>
 <body>
@@ -420,9 +500,9 @@
           <h1>Book Index</h1>
           <div class="index-list">
             <p>Page 1 — About you</p>
-            <p>Page 2 — Father pictures</p>
-            <p>Page 3 — Mother pictures</p>
-            <p>Page 4 — Brothers & sisters</p>
+            <p>Page 2 — Father</p>
+            <p>Page 3 — Mother</p>
+            <p>Page 4 — Brothers & Sisters</p>
             <p>Page 5 — You</p>
             <p>Page 6 — Jobs</p>
             <p>Page 7 — Family stories</p>
@@ -486,12 +566,81 @@
 
         <div id="page2" class="page-panel">
           <div class="page-kicker">Page 2</div>
-          <h1>Father Pictures</h1>
+          <h1>Father</h1>
+
           <div class="intro">
-            This page will be for a main picture of your father in the center and a collage of pictures around him.
+            A page for your father, with one main picture and smaller memory photos around him.
           </div>
+
+          <div class="album-collage">
+            <div class="album-frame">
+              <div class="main-photo">Main picture of your father</div>
+              <div class="mini-photo mini-top-left">Memory photo</div>
+              <div class="mini-photo mini-top-right">Memory photo</div>
+              <div class="mini-photo mini-bottom-left">Memory photo</div>
+              <div class="mini-photo mini-bottom-right">Memory photo</div>
+            </div>
+          </div>
+
           <div class="message-box">
-            We can build this page after Page 1.
+            <strong>Story about your father:</strong><br><br>
+            Write about who he was, the memories you shared, what made him special, and anything you want remembered.
+          </div>
+
+          <div class="close-row">
+            <button class="close-btn" onclick="closeBook()">Close Book</button>
+          </div>
+        </div>
+
+        <div id="page3" class="page-panel">
+          <div class="page-kicker">Page 3</div>
+          <h1>Mother</h1>
+
+          <div class="intro">
+            A page for your mother, with one main picture and smaller memory photos around her.
+          </div>
+
+          <div class="album-collage">
+            <div class="album-frame">
+              <div class="main-photo">Main picture of your mother</div>
+              <div class="mini-photo mini-top-left">Memory photo</div>
+              <div class="mini-photo mini-top-right">Memory photo</div>
+              <div class="mini-photo mini-bottom-left">Memory photo</div>
+              <div class="mini-photo mini-bottom-right">Memory photo</div>
+            </div>
+          </div>
+
+          <div class="message-box">
+            <strong>Story about your mother:</strong><br><br>
+            Write about who she was, the memories you shared, what made her special, and anything you want remembered.
+          </div>
+
+          <div class="close-row">
+            <button class="close-btn" onclick="closeBook()">Close Book</button>
+          </div>
+        </div>
+
+        <div id="page4" class="page-panel">
+          <div class="page-kicker">Page 4</div>
+          <h1>Brothers & Sisters</h1>
+
+          <div class="intro">
+            A page for each brother or sister, with one main picture and smaller memory photos around them.
+          </div>
+
+          <div class="album-collage">
+            <div class="album-frame">
+              <div class="main-photo">Main picture of your brother or sister</div>
+              <div class="mini-photo mini-top-left">Memory photo</div>
+              <div class="mini-photo mini-top-right">Memory photo</div>
+              <div class="mini-photo mini-bottom-left">Memory photo</div>
+              <div class="mini-photo mini-bottom-right">Memory photo</div>
+            </div>
+          </div>
+
+          <div class="message-box">
+            <strong>Story about your brother or sister:</strong><br><br>
+            Write about your memories together and anything you want remembered about them.
           </div>
 
           <div class="close-row">
@@ -504,7 +653,7 @@
 
   <script>
     let currentPage = 0;
-    const totalPages = 3;
+    const totalPages = 5;
 
     function openBook() {
       document.getElementById("closedStage").classList.add("hidden");

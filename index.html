@@ -17,17 +17,9 @@
       overflow-y: hidden;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    #openedStage {
-      display: none;
-    }
-
-    #openedStage.show {
-      display: flex;
-    }
+    .hidden { display: none !important; }
+    #openedStage { display: none; }
+    #openedStage.show { display: flex; }
 
     .stage {
       min-height: 100vh;
@@ -189,7 +181,7 @@
       border: 4px solid #d6bb90;
       border-left: none;
       border-radius: 0 22px 22px 0;
-      padding: 28px 54px 28px 28px;
+      padding: 28px 72px 28px 28px;
       box-sizing: border-box;
       position: relative;
       overflow: hidden;
@@ -210,7 +202,7 @@
       position: relative;
       z-index: 1;
       height: 100%;
-      padding-bottom: 24px;
+      padding-bottom: 20px;
       display: none;
       overflow: hidden;
     }
@@ -254,25 +246,6 @@
       min-height: 100px;
       max-height: 210px;
       overflow: auto;
-    }
-
-    .close-row {
-      margin-top: 16px;
-    }
-
-    .close-btn,
-    .add-btn {
-      padding: 12px 18px;
-      font-size: 16px;
-      border: none;
-      border-radius: 12px;
-      background: #7b4e2f;
-      color: white;
-      cursor: pointer;
-    }
-
-    .add-btn {
-      margin-top: 14px;
     }
 
     .corner-nav {
@@ -626,19 +599,28 @@
       border-radius: 0 3px 0 0;
     }
 
-    .edge-close-book {
+    .edge-close-book,
+    .edge-add-page {
       position: absolute;
       right: 6px;
-      top: 90px;
-      color: #b00000;
-      font-size: 11px;
-      line-height: 1.05;
       text-transform: uppercase;
       text-align: center;
       letter-spacing: 1px;
       z-index: 3;
       cursor: pointer;
       user-select: none;
+      font-size: 11px;
+      line-height: 1.05;
+    }
+
+    .edge-close-book {
+      top: 88px;
+      color: #b00000;
+    }
+
+    .edge-add-page {
+      top: 180px;
+      color: #0c8a2a;
     }
   </style>
 </head>
@@ -759,6 +741,12 @@
         </div>
 
         <div id="page4" class="page-panel">
+          <div class="edge-add-page" onclick="addSiblingPage()">
+            + N<br>
+            E W<br><br>
+            P A<br>
+            G E
+          </div>
           <div class="page-kicker">Page 4</div>
           <h1>Brothers & Sisters</h1>
           <div class="intro">A page for each brother or sister, with one main picture and smaller memory photos around them.</div>
@@ -775,7 +763,6 @@
             <strong>Story about your brother or sister:</strong><br><br>
             Write about your memories together and anything you want remembered about them.
           </div>
-          <button class="add-btn" onclick="addSiblingPage()">+ New Brother/Sister Page</button>
         </div>
 
         <div id="page5" class="page-panel">
@@ -798,6 +785,12 @@
         </div>
 
         <div id="page6" class="page-panel">
+          <div class="edge-add-page" onclick="addJobPage()">
+            + N<br>
+            E W<br><br>
+            P A<br>
+            G E
+          </div>
           <div class="page-kicker">Page 6</div>
           <h1>Jobs Timeline</h1>
           <div class="intro">A timeline of the jobs you worked, the years you did them, what you were paid, and the stories that came with them.</div>
@@ -817,10 +810,15 @@
               </div>
             </div>
           </div>
-          <button class="add-btn" onclick="addJobPage()">+ New Page for New Job</button>
         </div>
 
         <div id="page7" class="page-panel">
+          <div class="edge-add-page" onclick="addFamilyStoryPage()">
+            + N<br>
+            E W<br><br>
+            P A<br>
+            G E
+          </div>
           <div class="page-kicker">Page 7</div>
           <h1>Family Stories</h1>
           <div class="intro">A page for family memories, photos, and the stories behind them.</div>
@@ -829,10 +827,15 @@
             <strong>Family story:</strong><br><br>
             Write the story behind this family photo, who is in it, what happened, and why this memory matters.
           </div>
-          <button class="add-btn" onclick="addFamilyStoryPage()">+ New Family Story Page</button>
         </div>
 
         <div id="page8" class="page-panel">
+          <div class="edge-add-page" onclick="addFriendsPage()">
+            + N<br>
+            E W<br><br>
+            P A<br>
+            G E
+          </div>
           <div class="page-kicker">Page 8</div>
           <h1>Friends</h1>
           <div class="intro">A page for the friends in your life and the stories that go with them.</div>
@@ -841,10 +844,15 @@
             <strong>Story about your friends:</strong><br><br>
             Write about the moment, the people in the photo, and what made this friendship or memory special.
           </div>
-          <button class="add-btn" onclick="addFriendsPage()">+ New Friends Page</button>
         </div>
 
         <div id="page9" class="page-panel">
+          <div class="edge-add-page" onclick="addDiaryPage()">
+            + N<br>
+            E W<br><br>
+            P A<br>
+            G E
+          </div>
           <div class="page-kicker">Page 9</div>
           <h1>Diary</h1>
           <div class="intro">A private page for thoughts, memories, and anything you want to write down.</div>
@@ -852,7 +860,6 @@
             <strong>Title or Date:</strong> ____________________<br><br>
             Write whatever you want here...
           </div>
-          <button class="add-btn" onclick="addDiaryPage()">+ New Diary Page</button>
         </div>
       </div>
     </div>
@@ -902,6 +909,12 @@
       const n = totalPages;
       document.querySelector(".right-page").insertAdjacentHTML("beforeend", `
         <div id="page${n}" class="page-panel">
+          <div class="edge-add-page" onclick="addSiblingPage()">
+            + N<br>
+            E W<br><br>
+            P A<br>
+            G E
+          </div>
           <div class="page-kicker">Page ${n}</div>
           <h1>Brother / Sister</h1>
           <div class="intro">Another brother or sister page with the same layout.</div>
@@ -918,7 +931,6 @@
             <strong>Story about your brother or sister:</strong><br><br>
             Write about your memories together and anything you want remembered about them.
           </div>
-          <button class="add-btn" onclick="addSiblingPage()">+ New Brother/Sister Page</button>
         </div>
       `);
       totalPages++;
@@ -930,6 +942,12 @@
       const n = totalPages;
       document.querySelector(".right-page").insertAdjacentHTML("beforeend", `
         <div id="page${n}" class="page-panel">
+          <div class="edge-add-page" onclick="addJobPage()">
+            + N<br>
+            E W<br><br>
+            P A<br>
+            G E
+          </div>
           <div class="page-kicker">Page ${n}</div>
           <h1>Jobs Timeline</h1>
           <div class="intro">Another job page with the same jobs timeline layout.</div>
@@ -949,7 +967,6 @@
               </div>
             </div>
           </div>
-          <button class="add-btn" onclick="addJobPage()">+ New Page for New Job</button>
         </div>
       `);
       totalPages++;
@@ -961,6 +978,12 @@
       const n = totalPages;
       document.querySelector(".right-page").insertAdjacentHTML("beforeend", `
         <div id="page${n}" class="page-panel">
+          <div class="edge-add-page" onclick="addFamilyStoryPage()">
+            + N<br>
+            E W<br><br>
+            P A<br>
+            G E
+          </div>
           <div class="page-kicker">Page ${n}</div>
           <h1>Family Stories</h1>
           <div class="intro">Another family story page with the same layout.</div>
@@ -969,7 +992,6 @@
             <strong>Family story:</strong><br><br>
             Write the story behind this family photo, who is in it, what happened, and why this memory matters.
           </div>
-          <button class="add-btn" onclick="addFamilyStoryPage()">+ New Family Story Page</button>
         </div>
       `);
       totalPages++;
@@ -981,6 +1003,12 @@
       const n = totalPages;
       document.querySelector(".right-page").insertAdjacentHTML("beforeend", `
         <div id="page${n}" class="page-panel">
+          <div class="edge-add-page" onclick="addFriendsPage()">
+            + N<br>
+            E W<br><br>
+            P A<br>
+            G E
+          </div>
           <div class="page-kicker">Page ${n}</div>
           <h1>Friends</h1>
           <div class="intro">Another friends page with the same layout.</div>
@@ -989,7 +1017,6 @@
             <strong>Story about your friends:</strong><br><br>
             Write about the moment, the people in the photo, and what made this friendship or memory special.
           </div>
-          <button class="add-btn" onclick="addFriendsPage()">+ New Friends Page</button>
         </div>
       `);
       totalPages++;
@@ -1001,6 +1028,12 @@
       const n = totalPages;
       document.querySelector(".right-page").insertAdjacentHTML("beforeend", `
         <div id="page${n}" class="page-panel">
+          <div class="edge-add-page" onclick="addDiaryPage()">
+            + N<br>
+            E W<br><br>
+            P A<br>
+            G E
+          </div>
           <div class="page-kicker">Page ${n}</div>
           <h1>Diary</h1>
           <div class="intro">Another diary page with the same layout.</div>
@@ -1008,7 +1041,6 @@
             <strong>Title or Date:</strong> ____________________<br><br>
             Write whatever you want here...
           </div>
-          <button class="add-btn" onclick="addDiaryPage()">+ New Diary Page</button>
         </div>
       `);
       totalPages++;

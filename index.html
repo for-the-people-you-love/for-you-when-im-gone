@@ -181,10 +181,11 @@
       border: 4px solid #d6bb90;
       border-left: none;
       border-radius: 0 22px 22px 0;
-      padding: 28px 78px 28px 28px;
       box-sizing: border-box;
       position: relative;
       overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 46px;
     }
 
     .right-page::before {
@@ -198,11 +199,45 @@
       pointer-events: none;
     }
 
+    .page-content {
+      padding: 28px 16px 24px 24px;
+      height: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .page-rail {
+      border-left: 1px solid rgba(199,150,75,0.35);
+      position: relative;
+      padding-top: 86px;
+      box-sizing: border-box;
+    }
+
+    .edge-close-book,
+    .edge-add-page {
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 1px;
+      font-size: 11px;
+      line-height: 1.05;
+      cursor: pointer;
+      user-select: none;
+      width: 100%;
+    }
+
+    .edge-close-book {
+      color: #b00000;
+      margin-bottom: 28px;
+    }
+
+    .edge-add-page {
+      color: #0c8a2a;
+    }
+
     .page-panel {
       position: relative;
       z-index: 1;
       height: 100%;
-      padding-bottom: 20px;
       display: none;
       overflow: hidden;
     }
@@ -212,47 +247,94 @@
       letter-spacing: 3px;
       text-transform: uppercase;
       color: #a06d35;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .right-page h1 {
       margin-top: 0;
-      font-size: 34px;
-      line-height: 1.1;
-      margin-bottom: 12px;
+      font-size: 32px;
+      line-height: 1.08;
+      margin-bottom: 10px;
     }
 
     .intro {
-      font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: 18px;
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 14px;
       color: #6a4931;
     }
 
     .index-list p {
-      margin: 6px 0;
-      font-size: 15px;
-      line-height: 1.4;
+      margin: 5px 0;
+      font-size: 14px;
+      line-height: 1.35;
     }
 
     .message-box {
       background: rgba(255,255,255,0.92);
       border-radius: 16px;
-      padding: 16px;
+      padding: 14px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      font-size: 17px;
-      line-height: 1.65;
-      margin-top: 16px;
-      min-height: 100px;
-      max-height: 210px;
+      font-size: 16px;
+      line-height: 1.55;
+      margin-top: 14px;
+      min-height: 90px;
+      max-height: 180px;
       overflow: auto;
+    }
+
+    .instruction-box {
+      background: rgba(255,255,255,0.92);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-top: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      color: #5d4634;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .corner-inline {
+      display: inline-block;
+      position: relative;
+      width: 28px;
+      height: 18px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .corner-inline::before,
+    .corner-inline::after {
+      content: "";
+      position: absolute;
+      border-color: #c7964b;
+    }
+
+    .corner-inline::before {
+      right: 0;
+      top: 0;
+      width: 14px;
+      height: 14px;
+      border-top: 2px solid #c7964b;
+      border-right: 2px solid #c7964b;
+      border-radius: 0 6px 0 0;
+    }
+
+    .corner-inline::after {
+      right: 5px;
+      top: 5px;
+      width: 6px;
+      height: 6px;
+      border-top: 1px solid #c7964b;
+      border-right: 1px solid #c7964b;
+      border-radius: 0 3px 0 0;
     }
 
     .corner-nav {
       position: absolute;
       width: 44px;
       height: 44px;
-      z-index: 2;
+      z-index: 4;
       cursor: pointer;
       user-select: none;
     }
@@ -317,7 +399,7 @@
 
     .corner-nav.right-top {
       top: 12px;
-      right: 12px;
+      right: 58px;
     }
 
     .corner-nav.right-top::before {
@@ -342,7 +424,7 @@
 
     .corner-nav.right-bottom {
       bottom: 12px;
-      right: 12px;
+      right: 58px;
     }
 
     .corner-nav.right-bottom::before {
@@ -374,22 +456,22 @@
     .album-collage {
       display: flex;
       justify-content: center;
-      margin-top: 14px;
-      margin-bottom: 18px;
+      margin-top: 10px;
+      margin-bottom: 14px;
     }
 
     .album-frame {
       position: relative;
-      width: 300px;
-      height: 245px;
+      width: 250px;
+      height: 210px;
     }
 
     .main-photo {
       position: absolute;
-      top: 32px;
-      left: 84px;
-      width: 132px;
-      height: 170px;
+      top: 28px;
+      left: 70px;
+      width: 110px;
+      height: 145px;
       border: 2px solid #c7964b;
       border-radius: 12px;
       background: #efe4d1;
@@ -398,8 +480,8 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-size: 15px;
-      padding: 10px;
+      font-size: 14px;
+      padding: 8px;
       box-sizing: border-box;
       box-shadow: 0 6px 14px rgba(0,0,0,0.12);
       z-index: 2;
@@ -407,8 +489,8 @@
 
     .mini-photo {
       position: absolute;
-      width: 88px;
-      height: 100px;
+      width: 74px;
+      height: 86px;
       border: 2px solid #c7964b;
       border-radius: 10px;
       background: #f4eadb;
@@ -417,44 +499,44 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-size: 12px;
-      padding: 8px;
+      font-size: 11px;
+      padding: 6px;
       box-sizing: border-box;
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     .mini-top-left {
       top: 0;
-      left: 8px;
+      left: 2px;
       transform: rotate(-6deg);
     }
 
     .mini-top-right {
-      top: 5px;
-      right: 8px;
+      top: 4px;
+      right: 2px;
       transform: rotate(6deg);
     }
 
     .mini-bottom-left {
       bottom: 0;
-      left: 4px;
-      width: 94px;
-      height: 106px;
+      left: 0;
+      width: 80px;
+      height: 92px;
       transform: rotate(5deg);
     }
 
     .mini-bottom-right {
       bottom: 0;
-      right: 4px;
-      width: 94px;
-      height: 106px;
+      right: 0;
+      width: 80px;
+      height: 92px;
       transform: rotate(-5deg);
     }
 
     .timeline-entry {
       position: relative;
-      margin-bottom: 18px;
-      padding-left: 24px;
+      margin-bottom: 14px;
+      padding-left: 22px;
     }
 
     .timeline-entry::before {
@@ -462,7 +544,7 @@
       position: absolute;
       left: 7px;
       top: 0;
-      bottom: -18px;
+      bottom: -14px;
       width: 3px;
       background: rgba(199,150,75,0.45);
       border-radius: 999px;
@@ -475,9 +557,9 @@
     .timeline-dot {
       position: absolute;
       left: 0;
-      top: 18px;
-      width: 16px;
-      height: 16px;
+      top: 16px;
+      width: 14px;
+      height: 14px;
       background: #c7964b;
       border-radius: 50%;
       box-shadow: 0 0 0 4px rgba(199,150,75,0.18);
@@ -486,21 +568,49 @@
     .timeline-card {
       background: rgba(255,255,255,0.92);
       border-radius: 16px;
-      padding: 16px;
+      padding: 14px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      font-size: 15px;
+      line-height: 1.45;
     }
 
     .timeline-grid {
       display: grid;
-      grid-template-columns: 135px 1fr;
-      gap: 16px;
+      grid-template-columns: 112px 1fr;
+      gap: 12px;
       align-items: start;
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
     .job-photo {
-      width: 135px;
-      height: 165px;
+      width: 112px;
+      height: 140px;
+      border: 2px solid #c7964b;
+      border-radius: 12px;
+      background: #efe4d1;
+      color: #8a6a45;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 13px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .job-story {
+      background: #f8f1e6;
+      border-radius: 12px;
+      padding: 10px;
+      line-height: 1.45;
+      max-height: 150px;
+      overflow: auto;
+      font-size: 14px;
+    }
+
+    .story-page-photo {
+      width: 145px;
+      height: 160px;
       border: 2px solid #c7964b;
       border-radius: 12px;
       background: #efe4d1;
@@ -510,117 +620,21 @@
       justify-content: center;
       text-align: center;
       font-size: 14px;
-      padding: 10px;
+      padding: 8px;
       box-sizing: border-box;
-    }
-
-    .job-story {
-      background: #f8f1e6;
-      border-radius: 12px;
-      padding: 12px;
-      line-height: 1.6;
-      max-height: 180px;
-      overflow: auto;
-    }
-
-    .story-page-photo {
-      width: 170px;
-      height: 185px;
-      border: 2px solid #c7964b;
-      border-radius: 12px;
-      background: #efe4d1;
-      color: #8a6a45;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: 15px;
-      padding: 10px;
-      box-sizing: border-box;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .diary-box {
       background: rgba(255,255,255,0.92);
       border-radius: 16px;
-      padding: 16px;
+      padding: 14px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      min-height: 220px;
-      max-height: 320px;
+      min-height: 180px;
+      max-height: 260px;
       overflow: auto;
-      line-height: 1.8;
-      font-size: 17px;
-    }
-
-    .instruction-box {
-      background: rgba(255,255,255,0.92);
-      border-radius: 14px;
-      padding: 14px 16px;
-      margin-top: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      color: #5d4634;
-      font-size: 15px;
       line-height: 1.6;
-    }
-
-    .corner-inline {
-      display: inline-block;
-      position: relative;
-      width: 28px;
-      height: 18px;
-      margin-left: 6px;
-      vertical-align: middle;
-    }
-
-    .corner-inline::before,
-    .corner-inline::after {
-      content: "";
-      position: absolute;
-      border-color: #c7964b;
-    }
-
-    .corner-inline::before {
-      right: 0;
-      top: 0;
-      width: 14px;
-      height: 14px;
-      border-top: 2px solid #c7964b;
-      border-right: 2px solid #c7964b;
-      border-radius: 0 6px 0 0;
-    }
-
-    .corner-inline::after {
-      right: 5px;
-      top: 5px;
-      width: 6px;
-      height: 6px;
-      border-top: 1px solid #c7964b;
-      border-right: 1px solid #c7964b;
-      border-radius: 0 3px 0 0;
-    }
-
-    .edge-close-book,
-    .edge-add-page {
-      position: absolute;
-      right: 6px;
-      text-transform: uppercase;
-      text-align: center;
-      letter-spacing: 1px;
-      z-index: 3;
-      cursor: pointer;
-      user-select: none;
-      font-size: 11px;
-      line-height: 1.05;
-    }
-
-    .edge-close-book {
-      top: 88px;
-      color: #b00000;
-    }
-
-    .edge-add-page {
-      top: 190px;
-      color: #0c8a2a;
+      font-size: 15px;
     }
   </style>
 </head>
@@ -642,223 +656,204 @@
       <div class="spine"></div>
 
       <div class="right-page">
-        <div class="edge-close-book" onclick="closeBook()">
-          C B<br>
-          L O<br>
-          O O<br>
-          S K<br>
-          E
-        </div>
+        <div class="corner-nav left-top" id="leftTopCorner" onclick="changePage(-1)"></div>
+        <div class="corner-nav left-bottom" id="leftBottomCorner" onclick="changePage(-1)"></div>
+        <div class="corner-nav right-top" id="rightTopCorner" onclick="changePage(1)"></div>
+        <div class="corner-nav right-bottom" id="rightBottomCorner" onclick="changePage(1)"></div>
 
-        <div id="leftTopCorner" class="corner-nav left-top" onclick="changePage(-1)"></div>
-        <div id="leftBottomCorner" class="corner-nav left-bottom" onclick="changePage(-1)"></div>
-        <div id="rightTopCorner" class="corner-nav right-top" onclick="changePage(1)"></div>
-        <div id="rightBottomCorner" class="corner-nav right-bottom" onclick="changePage(1)"></div>
+        <div class="page-content">
+          <div id="page0" class="page-panel">
+            <div class="page-kicker">Index</div>
+            <h1>Book Index</h1>
+            <div class="index-list">
+              <p>Page 1 — About you</p>
+              <p>Page 2 — Father</p>
+              <p>Page 3 — Mother</p>
+              <p>Page 4 — Brothers & Sisters</p>
+              <p>Page 5 — You</p>
+              <p>Page 6 — Jobs</p>
+              <p>Page 7 — Family stories</p>
+              <p>Page 8 — Friends</p>
+              <p>Page 9 — Diary</p>
+              <p>Page 10 — Contacts & Angels</p>
+              <p>Page 11 — Important info</p>
+              <p>Page 12 — Angel message</p>
+            </div>
 
-        <div id="page0" class="page-panel">
-          <div class="page-kicker">Index</div>
-          <h1>Book Index</h1>
-          <div class="index-list">
-            <p>Page 1 — About you</p>
-            <p>Page 2 — Father</p>
-            <p>Page 3 — Mother</p>
-            <p>Page 4 — Brothers & Sisters</p>
-            <p>Page 5 — You</p>
-            <p>Page 6 — Jobs</p>
-            <p>Page 7 — Family stories</p>
-            <p>Page 8 — Friends</p>
-            <p>Page 9 — Diary</p>
-            <p>Page 10 — Contacts & Angels</p>
-            <p>Page 11 — Important info</p>
-            <p>Page 12 — Angel message</p>
+            <div class="instruction-box">
+              <strong>Use the gold corners to go back and forth.</strong>
+              <span class="corner-inline"></span>
+            </div>
           </div>
 
-          <div class="instruction-box">
-            <strong>Use the gold corners to go back and forth.</strong>
-            <span class="corner-inline"></span>
-          </div>
-        </div>
-
-        <div id="page1" class="page-panel">
-          <div class="page-kicker">Page 1</div>
-          <h1>About You</h1>
-          <div style="display:flex; gap:20px; align-items:flex-start; margin-top:10px;">
-            <div style="flex:1;">
-              <div class="intro">A simple page about who you are.</div>
-              <div class="message-box">
-                <p><strong>Full Name:</strong> ____________________</p>
-                <p><strong>Birthday:</strong> ____________________</p>
-                <p><strong>Where You Were Born:</strong> ____________________</p>
-                <p><strong>Father's Name:</strong> ____________________</p>
-                <p><strong>Mother's Name:</strong> ____________________</p>
-                <p><strong>Brothers & Sisters:</strong> ____________________</p>
+          <div id="page1" class="page-panel">
+            <div class="page-kicker">Page 1</div>
+            <h1>About You</h1>
+            <div style="display:flex; gap:14px; align-items:flex-start; margin-top:8px;">
+              <div style="flex:1;">
+                <div class="intro">A simple page about who you are.</div>
+                <div class="message-box">
+                  <p><strong>Full Name:</strong> ____________________</p>
+                  <p><strong>Birthday:</strong> ____________________</p>
+                  <p><strong>Where You Were Born:</strong> ____________________</p>
+                  <p><strong>Father's Name:</strong> ____________________</p>
+                  <p><strong>Mother's Name:</strong> ____________________</p>
+                  <p><strong>Brothers & Sisters:</strong> ____________________</p>
+                </div>
               </div>
-            </div>
-            <div style="width:140px;">
-              <div style="width:140px;height:180px;border:2px solid #c7964b;border-radius:12px;background:#efe4d1;color:#8a6a45;display:flex;align-items:center;justify-content:center;text-align:center;font-size:16px;padding:10px;box-sizing:border-box;">
-                Picture of you
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="page2" class="page-panel">
-          <div class="page-kicker">Page 2</div>
-          <h1>Father</h1>
-          <div class="intro">A page for your father, with one main picture and smaller memory photos around him.</div>
-          <div class="album-collage">
-            <div class="album-frame">
-              <div class="main-photo">Main picture of your father</div>
-              <div class="mini-photo mini-top-left">Memory photo</div>
-              <div class="mini-photo mini-top-right">Memory photo</div>
-              <div class="mini-photo mini-bottom-left">Memory photo</div>
-              <div class="mini-photo mini-bottom-right">Memory photo</div>
-            </div>
-          </div>
-          <div class="message-box">
-            <strong>Story about your father:</strong><br><br>
-            Write about who he was, the memories you shared, what made him special, and anything you want remembered.
-          </div>
-        </div>
-
-        <div id="page3" class="page-panel">
-          <div class="page-kicker">Page 3</div>
-          <h1>Mother</h1>
-          <div class="intro">A page for your mother, with one main picture and smaller memory photos around her.</div>
-          <div class="album-collage">
-            <div class="album-frame">
-              <div class="main-photo">Main picture of your mother</div>
-              <div class="mini-photo mini-top-left">Memory photo</div>
-              <div class="mini-photo mini-top-right">Memory photo</div>
-              <div class="mini-photo mini-bottom-left">Memory photo</div>
-              <div class="mini-photo mini-bottom-right">Memory photo</div>
-            </div>
-          </div>
-          <div class="message-box">
-            <strong>Story about your mother:</strong><br><br>
-            Write about who she was, the memories you shared, what made her special, and anything you want remembered.
-          </div>
-        </div>
-
-        <div id="page4" class="page-panel">
-          <div class="edge-add-page" onclick="addSiblingPage()">
-            + N<br>
-            E W<br><br>
-            P A<br>
-            G E
-          </div>
-          <div class="page-kicker">Page 4</div>
-          <h1>Brothers & Sisters</h1>
-          <div class="intro">A page for each brother or sister, with one main picture and smaller memory photos around them.</div>
-          <div class="album-collage">
-            <div class="album-frame">
-              <div class="main-photo">Main picture of your brother or sister</div>
-              <div class="mini-photo mini-top-left">Memory photo</div>
-              <div class="mini-photo mini-top-right">Memory photo</div>
-              <div class="mini-photo mini-bottom-left">Memory photo</div>
-              <div class="mini-photo mini-bottom-right">Memory photo</div>
-            </div>
-          </div>
-          <div class="message-box">
-            <strong>Story about your brother or sister:</strong><br><br>
-            Write about your memories together and anything you want remembered about them.
-          </div>
-        </div>
-
-        <div id="page5" class="page-panel">
-          <div class="page-kicker">Page 5</div>
-          <h1>You</h1>
-          <div class="intro">A page for you, with one main picture and smaller memory photos around you.</div>
-          <div class="album-collage">
-            <div class="album-frame">
-              <div class="main-photo">Main picture of you</div>
-              <div class="mini-photo mini-top-left">Memory photo</div>
-              <div class="mini-photo mini-top-right">Memory photo</div>
-              <div class="mini-photo mini-bottom-left">Memory photo</div>
-              <div class="mini-photo mini-bottom-right">Memory photo</div>
-            </div>
-          </div>
-          <div class="message-box">
-            <strong>Your story:</strong><br><br>
-            Write about who you are, the life you lived, what mattered to you, and anything you want remembered about you.
-          </div>
-        </div>
-
-        <div id="page6" class="page-panel">
-          <div class="edge-add-page" onclick="addJobPage()">
-            + N<br>
-            E W<br><br>
-            P A<br>
-            G E
-          </div>
-          <div class="page-kicker">Page 6</div>
-          <h1>Jobs Timeline</h1>
-          <div class="intro">A timeline of the jobs you worked, the years you did them, what you were paid, and the stories that came with them.</div>
-          <div class="timeline-entry">
-            <div class="timeline-dot"></div>
-            <div class="timeline-card">
-              <strong>Job Title:</strong> ____________________<br>
-              <strong>Years Worked:</strong> ____________________<br>
-              <strong>Starting Pay:</strong> ____________________<br>
-              <strong>Ending Pay:</strong> ____________________
-              <div class="timeline-grid">
-                <div class="job-photo">Job photo</div>
-                <div class="job-story">
-                  <strong>Story about this job / photo:</strong><br><br>
-                  Write about what this job was like, what the picture means, who you worked with, what you learned, and what you want remembered.
+              <div style="width:110px;">
+                <div style="width:110px;height:145px;border:2px solid #c7964b;border-radius:12px;background:#efe4d1;color:#8a6a45;display:flex;align-items:center;justify-content:center;text-align:center;font-size:14px;padding:8px;box-sizing:border-box;">
+                  Picture of you
                 </div>
               </div>
             </div>
           </div>
+
+          <div id="page2" class="page-panel">
+            <div class="page-kicker">Page 2</div>
+            <h1>Father</h1>
+            <div class="intro">A page for your father, with one main picture and smaller memory photos around him.</div>
+            <div class="album-collage">
+              <div class="album-frame">
+                <div class="main-photo">Main picture of your father</div>
+                <div class="mini-photo mini-top-left">Memory photo</div>
+                <div class="mini-photo mini-top-right">Memory photo</div>
+                <div class="mini-photo mini-bottom-left">Memory photo</div>
+                <div class="mini-photo mini-bottom-right">Memory photo</div>
+              </div>
+            </div>
+            <div class="message-box">
+              <strong>Story about your father:</strong><br><br>
+              Write about who he was, the memories you shared, what made him special, and anything you want remembered.
+            </div>
+          </div>
+
+          <div id="page3" class="page-panel">
+            <div class="page-kicker">Page 3</div>
+            <h1>Mother</h1>
+            <div class="intro">A page for your mother, with one main picture and smaller memory photos around her.</div>
+            <div class="album-collage">
+              <div class="album-frame">
+                <div class="main-photo">Main picture of your mother</div>
+                <div class="mini-photo mini-top-left">Memory photo</div>
+                <div class="mini-photo mini-top-right">Memory photo</div>
+                <div class="mini-photo mini-bottom-left">Memory photo</div>
+                <div class="mini-photo mini-bottom-right">Memory photo</div>
+              </div>
+            </div>
+            <div class="message-box">
+              <strong>Story about your mother:</strong><br><br>
+              Write about who she was, the memories you shared, what made her special, and anything you want remembered.
+            </div>
+          </div>
+
+          <div id="page4" class="page-panel">
+            <div class="page-kicker">Page 4</div>
+            <h1>Brothers & Sisters</h1>
+            <div class="intro">A page for each brother or sister, with one main picture and smaller memory photos around them.</div>
+            <div class="album-collage">
+              <div class="album-frame">
+                <div class="main-photo">Main picture of your brother or sister</div>
+                <div class="mini-photo mini-top-left">Memory photo</div>
+                <div class="mini-photo mini-top-right">Memory photo</div>
+                <div class="mini-photo mini-bottom-left">Memory photo</div>
+                <div class="mini-photo mini-bottom-right">Memory photo</div>
+              </div>
+            </div>
+            <div class="message-box">
+              <strong>Story about your brother or sister:</strong><br><br>
+              Write about your memories together and anything you want remembered about them.
+            </div>
+          </div>
+
+          <div id="page5" class="page-panel">
+            <div class="page-kicker">Page 5</div>
+            <h1>You</h1>
+            <div class="intro">A page for you, with one main picture and smaller memory photos around you.</div>
+            <div class="album-collage">
+              <div class="album-frame">
+                <div class="main-photo">Main picture of you</div>
+                <div class="mini-photo mini-top-left">Memory photo</div>
+                <div class="mini-photo mini-top-right">Memory photo</div>
+                <div class="mini-photo mini-bottom-left">Memory photo</div>
+                <div class="mini-photo mini-bottom-right">Memory photo</div>
+              </div>
+            </div>
+            <div class="message-box">
+              <strong>Your story:</strong><br><br>
+              Write about who you are, the life you lived, what mattered to you, and anything you want remembered about you.
+            </div>
+          </div>
+
+          <div id="page6" class="page-panel">
+            <div class="page-kicker">Page 6</div>
+            <h1>Jobs Timeline</h1>
+            <div class="intro">A timeline of the jobs you worked, the years you did them, what you were paid, and the stories that came with them.</div>
+            <div class="timeline-entry">
+              <div class="timeline-dot"></div>
+              <div class="timeline-card">
+                <strong>Job Title:</strong> ____________________<br>
+                <strong>Years Worked:</strong> ____________________<br>
+                <strong>Starting Pay:</strong> ____________________<br>
+                <strong>Ending Pay:</strong> ____________________
+                <div class="timeline-grid">
+                  <div class="job-photo">Job photo</div>
+                  <div class="job-story">
+                    <strong>Story about this job / photo:</strong><br><br>
+                    Write about what this job was like, what the picture means, who you worked with, what you learned, and what you want remembered.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="page7" class="page-panel">
+            <div class="page-kicker">Page 7</div>
+            <h1>Family Stories</h1>
+            <div class="intro">A page for family memories, photos, and the stories behind them.</div>
+            <div class="story-page-photo">Family story photo</div>
+            <div class="message-box">
+              <strong>Family story:</strong><br><br>
+              Write the story behind this family photo, who is in it, what happened, and why this memory matters.
+            </div>
+          </div>
+
+          <div id="page8" class="page-panel">
+            <div class="page-kicker">Page 8</div>
+            <h1>Friends</h1>
+            <div class="intro">A page for the friends in your life and the stories that go with them.</div>
+            <div class="story-page-photo">Friends photo</div>
+            <div class="message-box">
+              <strong>Story about your friends:</strong><br><br>
+              Write about the moment, the people in the photo, and what made this friendship or memory special.
+            </div>
+          </div>
+
+          <div id="page9" class="page-panel">
+            <div class="page-kicker">Page 9</div>
+            <h1>Diary</h1>
+            <div class="intro">A private page for thoughts, memories, and anything you want to write down.</div>
+            <div class="diary-box">
+              <strong>Title or Date:</strong> ____________________<br><br>
+              Write whatever you want here...
+            </div>
+          </div>
         </div>
 
-        <div id="page7" class="page-panel">
-          <div class="edge-add-page" onclick="addFamilyStoryPage()">
+        <div class="page-rail">
+          <div class="edge-close-book" onclick="closeBook()">
+            C B<br>
+            L O<br>
+            O O<br>
+            S K<br>
+            E
+          </div>
+
+          <div id="edgeAddPage" class="edge-add-page" style="display:none;">
             + N<br>
             E W<br><br>
             P A<br>
             G E
-          </div>
-          <div class="page-kicker">Page 7</div>
-          <h1>Family Stories</h1>
-          <div class="intro">A page for family memories, photos, and the stories behind them.</div>
-          <div class="story-page-photo">Family story photo</div>
-          <div class="message-box">
-            <strong>Family story:</strong><br><br>
-            Write the story behind this family photo, who is in it, what happened, and why this memory matters.
-          </div>
-        </div>
-
-        <div id="page8" class="page-panel">
-          <div class="edge-add-page" onclick="addFriendsPage()">
-            + N<br>
-            E W<br><br>
-            P A<br>
-            G E
-          </div>
-          <div class="page-kicker">Page 8</div>
-          <h1>Friends</h1>
-          <div class="intro">A page for the friends in your life and the stories that go with them.</div>
-          <div class="story-page-photo">Friends photo</div>
-          <div class="message-box">
-            <strong>Story about your friends:</strong><br><br>
-            Write about the moment, the people in the photo, and what made this friendship or memory special.
-          </div>
-        </div>
-
-        <div id="page9" class="page-panel">
-          <div class="edge-add-page" onclick="addDiaryPage()">
-            + N<br>
-            E W<br><br>
-            P A<br>
-            G E
-          </div>
-          <div class="page-kicker">Page 9</div>
-          <h1>Diary</h1>
-          <div class="intro">A private page for thoughts, memories, and anything you want to write down.</div>
-          <div class="diary-box">
-            <strong>Title or Date:</strong> ____________________<br><br>
-            Write whatever you want here...
           </div>
         </div>
       </div>
@@ -880,6 +875,15 @@
       document.getElementById("closedStage").classList.remove("hidden");
     }
 
+    function getAddAction(pageNumber) {
+      if (pageNumber === 4) return addSiblingPage;
+      if (pageNumber === 6) return addJobPage;
+      if (pageNumber === 7) return addFamilyStoryPage;
+      if (pageNumber === 8) return addFriendsPage;
+      if (pageNumber === 9) return addDiaryPage;
+      return null;
+    }
+
     function showPage(pageNumber) {
       for (let i = 0; i < totalPages; i++) {
         const page = document.getElementById("page" + i);
@@ -896,6 +900,17 @@
       document.getElementById("leftBottomCorner").classList.toggle("disabled", leftDisabled);
       document.getElementById("rightTopCorner").classList.toggle("disabled", rightDisabled);
       document.getElementById("rightBottomCorner").classList.toggle("disabled", rightDisabled);
+
+      const edgeAddPage = document.getElementById("edgeAddPage");
+      const addAction = getAddAction(pageNumber);
+
+      if (addAction) {
+        edgeAddPage.style.display = "block";
+        edgeAddPage.onclick = addAction;
+      } else {
+        edgeAddPage.style.display = "none";
+        edgeAddPage.onclick = null;
+      }
     }
 
     function changePage(direction) {
@@ -907,14 +922,8 @@
 
     function addSiblingPage() {
       const n = totalPages;
-      document.querySelector(".right-page").insertAdjacentHTML("beforeend", `
+      document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
         <div id="page${n}" class="page-panel">
-          <div class="edge-add-page" onclick="addSiblingPage()">
-            + N<br>
-            E W<br><br>
-            P A<br>
-            G E
-          </div>
           <div class="page-kicker">Page ${n}</div>
           <h1>Brother / Sister</h1>
           <div class="intro">Another brother or sister page with the same layout.</div>
@@ -940,14 +949,8 @@
 
     function addJobPage() {
       const n = totalPages;
-      document.querySelector(".right-page").insertAdjacentHTML("beforeend", `
+      document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
         <div id="page${n}" class="page-panel">
-          <div class="edge-add-page" onclick="addJobPage()">
-            + N<br>
-            E W<br><br>
-            P A<br>
-            G E
-          </div>
           <div class="page-kicker">Page ${n}</div>
           <h1>Jobs Timeline</h1>
           <div class="intro">Another job page with the same jobs timeline layout.</div>
@@ -976,14 +979,8 @@
 
     function addFamilyStoryPage() {
       const n = totalPages;
-      document.querySelector(".right-page").insertAdjacentHTML("beforeend", `
+      document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
         <div id="page${n}" class="page-panel">
-          <div class="edge-add-page" onclick="addFamilyStoryPage()">
-            + N<br>
-            E W<br><br>
-            P A<br>
-            G E
-          </div>
           <div class="page-kicker">Page ${n}</div>
           <h1>Family Stories</h1>
           <div class="intro">Another family story page with the same layout.</div>
@@ -1001,14 +998,8 @@
 
     function addFriendsPage() {
       const n = totalPages;
-      document.querySelector(".right-page").insertAdjacentHTML("beforeend", `
+      document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
         <div id="page${n}" class="page-panel">
-          <div class="edge-add-page" onclick="addFriendsPage()">
-            + N<br>
-            E W<br><br>
-            P A<br>
-            G E
-          </div>
           <div class="page-kicker">Page ${n}</div>
           <h1>Friends</h1>
           <div class="intro">Another friends page with the same layout.</div>
@@ -1026,14 +1017,8 @@
 
     function addDiaryPage() {
       const n = totalPages;
-      document.querySelector(".right-page").insertAdjacentHTML("beforeend", `
+      document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
         <div id="page${n}" class="page-panel">
-          <div class="edge-add-page" onclick="addDiaryPage()">
-            + N<br>
-            E W<br><br>
-            P A<br>
-            G E
-          </div>
           <div class="page-kicker">Page ${n}</div>
           <h1>Diary</h1>
           <div class="intro">Another diary page with the same layout.</div>

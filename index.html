@@ -215,7 +215,8 @@
     }
 
     .edge-close-book,
-    .edge-add-page {
+    .edge-add-page,
+    .edge-flip-back {
       text-transform: uppercase;
       text-align: center;
       letter-spacing: 1px;
@@ -228,12 +229,16 @@
 
     .edge-close-book {
       color: #b00000;
-      margin-bottom: 36px;
+      margin-bottom: 28px;
     }
 
     .edge-add-page {
       color: #0c8a2a;
-      margin-top: 8px;
+      margin-bottom: 28px;
+    }
+
+    .edge-flip-back {
+      color: #145cc7;
     }
 
     .page-panel {
@@ -664,7 +669,7 @@
         <div class="corner-nav right-bottom" id="rightBottomCorner" onclick="changePage(1)"></div>
 
         <div class="page-content">
-          <div id="page0" class="page-panel">
+          <div id="page0" class="page-panel" data-parent-page="">
             <div class="page-kicker">Index</div>
             <h1>Book Index</h1>
             <div class="index-list">
@@ -690,7 +695,7 @@
             </div>
           </div>
 
-          <div id="page1" class="page-panel">
+          <div id="page1" class="page-panel" data-parent-page="">
             <div class="page-kicker">Page 1</div>
             <h1>About You</h1>
             <div style="display:flex; gap:14px; align-items:flex-start; margin-top:8px;">
@@ -713,7 +718,7 @@
             </div>
           </div>
 
-          <div id="page2" class="page-panel">
+          <div id="page2" class="page-panel" data-parent-page="">
             <div class="page-kicker">Page 2</div>
             <h1>Father</h1>
             <div class="intro">A page for your father, with one main picture and smaller memory photos around him.</div>
@@ -732,7 +737,7 @@
             </div>
           </div>
 
-          <div id="page3" class="page-panel">
+          <div id="page3" class="page-panel" data-parent-page="">
             <div class="page-kicker">Page 3</div>
             <h1>Mother</h1>
             <div class="intro">A page for your mother, with one main picture and smaller memory photos around her.</div>
@@ -751,7 +756,7 @@
             </div>
           </div>
 
-          <div id="page4" class="page-panel">
+          <div id="page4" class="page-panel" data-parent-page="">
             <div class="page-kicker">Page 4</div>
             <h1>Brothers & Sisters</h1>
             <div class="intro">A page for each brother or sister, with one main picture and smaller memory photos around them.</div>
@@ -770,7 +775,7 @@
             </div>
           </div>
 
-          <div id="page5" class="page-panel">
+          <div id="page5" class="page-panel" data-parent-page="">
             <div class="page-kicker">Page 5</div>
             <h1>You</h1>
             <div class="intro">A page for you, with one main picture and smaller memory photos around you.</div>
@@ -789,7 +794,7 @@
             </div>
           </div>
 
-          <div id="page6" class="page-panel">
+          <div id="page6" class="page-panel" data-parent-page="">
             <div class="page-kicker">Page 6</div>
             <h1>Jobs Timeline</h1>
             <div class="intro">A timeline of the jobs you worked, the years you did them, what you were paid, and the stories that came with them.</div>
@@ -811,7 +816,7 @@
             </div>
           </div>
 
-          <div id="page7" class="page-panel">
+          <div id="page7" class="page-panel" data-parent-page="">
             <div class="page-kicker">Page 7</div>
             <h1>Marriage</h1>
             <div class="intro">A page for your marriage story, wedding memories, and pictures of the person you married.</div>
@@ -822,7 +827,7 @@
             </div>
           </div>
 
-          <div id="page8" class="page-panel">
+          <div id="page8" class="page-panel" data-parent-page="">
             <div class="page-kicker">Page 8</div>
             <h1>When I Started My Family</h1>
             <div class="intro">A page for the beginning of your own family, the people in it, and the memories that came with it.</div>
@@ -833,7 +838,7 @@
             </div>
           </div>
 
-          <div id="page9" class="page-panel">
+          <div id="page9" class="page-panel" data-parent-page="">
             <div class="page-kicker">Page 9</div>
             <h1>Family Stories</h1>
             <div class="intro">A page for family memories, photos, and the stories behind them.</div>
@@ -844,7 +849,7 @@
             </div>
           </div>
 
-          <div id="page10" class="page-panel">
+          <div id="page10" class="page-panel" data-parent-page="">
             <div class="page-kicker">Page 10</div>
             <h1>Friends</h1>
             <div class="intro">A page for the friends in your life and the stories that go with them.</div>
@@ -855,7 +860,7 @@
             </div>
           </div>
 
-          <div id="page11" class="page-panel">
+          <div id="page11" class="page-panel" data-parent-page="">
             <div class="page-kicker">Page 11</div>
             <h1>Diary</h1>
             <div class="intro">A private page for thoughts, memories, and anything you want to write down.</div>
@@ -885,6 +890,17 @@
             G<br>
             E
           </div>
+
+          <div id="edgeFlipBack" class="edge-flip-back" style="display:none;">
+            F<br>
+            L<br>
+            I<br>
+            P<br><br>
+            B<br>
+            A<br>
+            C<br>
+            K
+          </div>
         </div>
       </div>
     </div>
@@ -906,14 +922,50 @@
     }
 
     function getAddAction(pageNumber) {
-      if (pageNumber === 4) return addSiblingPage;
-      if (pageNumber === 6) return addJobPage;
-      if (pageNumber === 7) return addMarriagePage;
-      if (pageNumber === 8) return addStartedFamilyPage;
-      if (pageNumber === 9) return addFamilyStoryPage;
-      if (pageNumber === 10) return addFriendsPage;
-      if (pageNumber === 11) return addDiaryPage;
+      if (isSiblingPage(pageNumber)) return addSiblingPage;
+      if (isJobPage(pageNumber)) return addJobPage;
+      if (isMarriagePage(pageNumber)) return addMarriagePage;
+      if (isStartedFamilyPage(pageNumber)) return addStartedFamilyPage;
+      if (isFamilyStoryPage(pageNumber)) return addFamilyStoryPage;
+      if (isFriendsPage(pageNumber)) return addFriendsPage;
+      if (isDiaryPage(pageNumber)) return addDiaryPage;
       return null;
+    }
+
+    function isSiblingPage(pageNumber) {
+      const title = getPageTitle(pageNumber);
+      return title === "Brothers & Sisters" || title === "Brother / Sister";
+    }
+
+    function isJobPage(pageNumber) {
+      return getPageTitle(pageNumber) === "Jobs Timeline";
+    }
+
+    function isMarriagePage(pageNumber) {
+      return getPageTitle(pageNumber) === "Marriage";
+    }
+
+    function isStartedFamilyPage(pageNumber) {
+      return getPageTitle(pageNumber) === "When I Started My Family";
+    }
+
+    function isFamilyStoryPage(pageNumber) {
+      return getPageTitle(pageNumber) === "Family Stories";
+    }
+
+    function isFriendsPage(pageNumber) {
+      return getPageTitle(pageNumber) === "Friends";
+    }
+
+    function isDiaryPage(pageNumber) {
+      return getPageTitle(pageNumber) === "Diary";
+    }
+
+    function getPageTitle(pageNumber) {
+      const page = document.getElementById("page" + pageNumber);
+      if (!page) return "";
+      const h1 = page.querySelector("h1");
+      return h1 ? h1.textContent.trim() : "";
     }
 
     function showPage(pageNumber) {
@@ -943,6 +995,20 @@
         edgeAddPage.style.display = "none";
         edgeAddPage.onclick = null;
       }
+
+      const edgeFlipBack = document.getElementById("edgeFlipBack");
+      const parentPage = current ? current.getAttribute("data-parent-page") : "";
+
+      if (parentPage !== "") {
+        edgeFlipBack.style.display = "block";
+        edgeFlipBack.onclick = function () {
+          currentPage = parseInt(parentPage, 10);
+          showPage(currentPage);
+        };
+      } else {
+        edgeFlipBack.style.display = "none";
+        edgeFlipBack.onclick = null;
+      }
     }
 
     function changePage(direction) {
@@ -955,7 +1021,7 @@
     function addSiblingPage() {
       const n = totalPages;
       document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
-        <div id="page${n}" class="page-panel">
+        <div id="page${n}" class="page-panel" data-parent-page="${currentPage}">
           <div class="page-kicker">Page ${n}</div>
           <h1>Brother / Sister</h1>
           <div class="intro">Another brother or sister page with the same layout.</div>
@@ -982,7 +1048,7 @@
     function addJobPage() {
       const n = totalPages;
       document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
-        <div id="page${n}" class="page-panel">
+        <div id="page${n}" class="page-panel" data-parent-page="${currentPage}">
           <div class="page-kicker">Page ${n}</div>
           <h1>Jobs Timeline</h1>
           <div class="intro">Another job page with the same jobs timeline layout.</div>
@@ -1012,7 +1078,7 @@
     function addMarriagePage() {
       const n = totalPages;
       document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
-        <div id="page${n}" class="page-panel">
+        <div id="page${n}" class="page-panel" data-parent-page="${currentPage}">
           <div class="page-kicker">Page ${n}</div>
           <h1>Marriage</h1>
           <div class="intro">Another marriage page with the same layout.</div>
@@ -1031,7 +1097,7 @@
     function addStartedFamilyPage() {
       const n = totalPages;
       document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
-        <div id="page${n}" class="page-panel">
+        <div id="page${n}" class="page-panel" data-parent-page="${currentPage}">
           <div class="page-kicker">Page ${n}</div>
           <h1>When I Started My Family</h1>
           <div class="intro">Another page with the same family beginning layout.</div>
@@ -1050,7 +1116,7 @@
     function addFamilyStoryPage() {
       const n = totalPages;
       document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
-        <div id="page${n}" class="page-panel">
+        <div id="page${n}" class="page-panel" data-parent-page="${currentPage}">
           <div class="page-kicker">Page ${n}</div>
           <h1>Family Stories</h1>
           <div class="intro">Another family story page with the same layout.</div>
@@ -1069,7 +1135,7 @@
     function addFriendsPage() {
       const n = totalPages;
       document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
-        <div id="page${n}" class="page-panel">
+        <div id="page${n}" class="page-panel" data-parent-page="${currentPage}">
           <div class="page-kicker">Page ${n}</div>
           <h1>Friends</h1>
           <div class="intro">Another friends page with the same layout.</div>
@@ -1088,7 +1154,7 @@
     function addDiaryPage() {
       const n = totalPages;
       document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
-        <div id="page${n}" class="page-panel">
+        <div id="page${n}" class="page-panel" data-parent-page="${currentPage}">
           <div class="page-kicker">Page ${n}</div>
           <h1>Diary</h1>
           <div class="intro">Another diary page with the same layout.</div>

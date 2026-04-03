@@ -674,12 +674,14 @@
               <p>Page 4 — Brothers & Sisters</p>
               <p>Page 5 — You</p>
               <p>Page 6 — Jobs</p>
-              <p>Page 7 — Family stories</p>
-              <p>Page 8 — Friends</p>
-              <p>Page 9 — Diary</p>
-              <p>Page 10 — Contacts & Angels</p>
-              <p>Page 11 — Important info</p>
-              <p>Page 12 — Angel message</p>
+              <p>Page 7 — Marriage</p>
+              <p>Page 8 — When I Started My Family</p>
+              <p>Page 9 — Family stories</p>
+              <p>Page 10 — Friends</p>
+              <p>Page 11 — Diary</p>
+              <p>Page 12 — Contacts & Angels</p>
+              <p>Page 13 — Important info</p>
+              <p>Page 14 — Angel message</p>
             </div>
 
             <div class="instruction-box">
@@ -811,6 +813,28 @@
 
           <div id="page7" class="page-panel">
             <div class="page-kicker">Page 7</div>
+            <h1>Marriage</h1>
+            <div class="intro">A page for your marriage story, wedding memories, and pictures of the person you married.</div>
+            <div class="story-page-photo">Marriage photo</div>
+            <div class="message-box">
+              <strong>Your marriage story:</strong><br><br>
+              Write about who you married, how you met, your wedding day, your life together, and what this love meant to you.
+            </div>
+          </div>
+
+          <div id="page8" class="page-panel">
+            <div class="page-kicker">Page 8</div>
+            <h1>When I Started My Family</h1>
+            <div class="intro">A page for the beginning of your own family, the people in it, and the memories that came with it.</div>
+            <div class="story-page-photo">Family beginning photo</div>
+            <div class="message-box">
+              <strong>Story about starting your family:</strong><br><br>
+              Write about becoming a parent, building your family, the people in these pictures, and what those moments meant to you.
+            </div>
+          </div>
+
+          <div id="page9" class="page-panel">
+            <div class="page-kicker">Page 9</div>
             <h1>Family Stories</h1>
             <div class="intro">A page for family memories, photos, and the stories behind them.</div>
             <div class="story-page-photo">Family story photo</div>
@@ -820,8 +844,8 @@
             </div>
           </div>
 
-          <div id="page8" class="page-panel">
-            <div class="page-kicker">Page 8</div>
+          <div id="page10" class="page-panel">
+            <div class="page-kicker">Page 10</div>
             <h1>Friends</h1>
             <div class="intro">A page for the friends in your life and the stories that go with them.</div>
             <div class="story-page-photo">Friends photo</div>
@@ -831,8 +855,8 @@
             </div>
           </div>
 
-          <div id="page9" class="page-panel">
-            <div class="page-kicker">Page 9</div>
+          <div id="page11" class="page-panel">
+            <div class="page-kicker">Page 11</div>
             <h1>Diary</h1>
             <div class="intro">A private page for thoughts, memories, and anything you want to write down.</div>
             <div class="diary-box">
@@ -868,7 +892,7 @@
 
   <script>
     let currentPage = 0;
-    let totalPages = 10;
+    let totalPages = 12;
 
     function openBook() {
       document.getElementById("closedStage").classList.add("hidden");
@@ -884,9 +908,11 @@
     function getAddAction(pageNumber) {
       if (pageNumber === 4) return addSiblingPage;
       if (pageNumber === 6) return addJobPage;
-      if (pageNumber === 7) return addFamilyStoryPage;
-      if (pageNumber === 8) return addFriendsPage;
-      if (pageNumber === 9) return addDiaryPage;
+      if (pageNumber === 7) return addMarriagePage;
+      if (pageNumber === 8) return addStartedFamilyPage;
+      if (pageNumber === 9) return addFamilyStoryPage;
+      if (pageNumber === 10) return addFriendsPage;
+      if (pageNumber === 11) return addDiaryPage;
       return null;
     }
 
@@ -975,6 +1001,44 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      `);
+      totalPages++;
+      currentPage = n;
+      showPage(currentPage);
+    }
+
+    function addMarriagePage() {
+      const n = totalPages;
+      document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
+        <div id="page${n}" class="page-panel">
+          <div class="page-kicker">Page ${n}</div>
+          <h1>Marriage</h1>
+          <div class="intro">Another marriage page with the same layout.</div>
+          <div class="story-page-photo">Marriage photo</div>
+          <div class="message-box">
+            <strong>Your marriage story:</strong><br><br>
+            Write about who you married, how you met, your wedding day, your life together, and what this love meant to you.
+          </div>
+        </div>
+      `);
+      totalPages++;
+      currentPage = n;
+      showPage(currentPage);
+    }
+
+    function addStartedFamilyPage() {
+      const n = totalPages;
+      document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
+        <div id="page${n}" class="page-panel">
+          <div class="page-kicker">Page ${n}</div>
+          <h1>When I Started My Family</h1>
+          <div class="intro">Another page with the same family beginning layout.</div>
+          <div class="story-page-photo">Family beginning photo</div>
+          <div class="message-box">
+            <strong>Story about starting your family:</strong><br><br>
+            Write about becoming a parent, building your family, the people in these pictures, and what those moments meant to you.
           </div>
         </div>
       `);

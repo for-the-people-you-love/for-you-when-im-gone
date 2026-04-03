@@ -542,6 +542,9 @@
               <div class="index-link" onclick="goToChapter(9)">Chapter 9 — Family stories</div>
               <div class="index-link" onclick="goToChapter(10)">Chapter 10 — Friends</div>
               <div class="index-link" onclick="goToChapter(11)">Chapter 11 — Diary</div>
+              <div class="index-link" onclick="goToChapter(12)">Chapter 12 — Contacts & Angels</div>
+              <div class="index-link" onclick="goToChapter(13)">Chapter 13 — Important Information</div>
+              <div class="index-link" onclick="goToChapter(14)">Chapter 14 — Angel Message</div>
             </div>
 
             <div class="instruction-box">
@@ -724,6 +727,51 @@
             </div>
           </div>
 
+          <div id="page12" class="page-panel" data-chapter="12" data-page-in-chapter="1" data-parent-page="">
+            <div class="page-kicker kicker-label"></div>
+            <h1>Contacts & Angels</h1>
+            <div class="intro">Important people, who receives this book, and who your Angel is.</div>
+            <div class="message-box">
+              <strong>Your Angel:</strong><br>
+              ___________________________<br><br>
+
+              <strong>Who receives this book:</strong><br>
+              ___________________________<br><br>
+
+              <strong>Important Contacts:</strong><br>
+              ___________________________<br>
+              ___________________________<br>
+              ___________________________
+            </div>
+          </div>
+
+          <div id="page13" class="page-panel" data-chapter="13" data-page-in-chapter="1" data-parent-page="">
+            <div class="page-kicker kicker-label"></div>
+            <h1>Important Information</h1>
+            <div class="intro">Everything your Angel needs to know.</div>
+            <div class="message-box">
+              <strong>Insurance:</strong><br>
+              ___________________________<br><br>
+
+              <strong>Doctor:</strong><br>
+              ___________________________<br><br>
+
+              <strong>Final Wishes:</strong><br>
+              ___________________________<br>
+              ___________________________<br>
+              ___________________________
+            </div>
+          </div>
+
+          <div id="page14" class="page-panel" data-chapter="14" data-page-in-chapter="1" data-parent-page="">
+            <div class="page-kicker kicker-label"></div>
+            <h1>Angel Message</h1>
+            <div class="intro">A place for messages to family, friends, and important people.</div>
+            <div class="message-box">
+              Write your message here...
+            </div>
+          </div>
+
         </div>
 
         <div class="page-rail">
@@ -749,7 +797,7 @@
 
   <script>
     let currentPage = 0;
-    let totalPages = 12;
+    let totalPages = 15;
 
     function openBook() {
       document.getElementById("closedStage").classList.add("hidden");
@@ -771,8 +819,7 @@
     function goToChapter(chapterNumber) {
       const page = document.querySelector(`.page-panel[data-chapter="${chapterNumber}"][data-page-in-chapter="1"]`);
       if (page) {
-        const id = page.id.replace("page", "");
-        currentPage = parseInt(id, 10);
+        currentPage = parseInt(page.id.replace("page", ""), 10);
         showPage(currentPage);
       }
     }
@@ -811,6 +858,8 @@
       if (chapter === 9) return addFamilyStoryPage;
       if (chapter === 10) return addFriendsPage;
       if (chapter === 11) return addDiaryPage;
+      if (chapter === 12) return addContactsPage;
+      if (chapter === 13) return addImportantInfoPage;
       return null;
     }
 
@@ -847,6 +896,24 @@
         edgeFlipBack.style.display = "none";
         edgeFlipBack.onclick = null;
       }
+    }
+
+    function addChapterPage(chapter, title, content) {
+      const n = totalPages;
+      const pageInChapter = getNextPageInChapter(chapter);
+
+      document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
+        <div id="page${n}" class="page-panel" data-chapter="${chapter}" data-page-in-chapter="${pageInChapter}" data-parent-page="${currentPage}">
+          <div class="page-kicker kicker-label"></div>
+          <h1>${title}</h1>
+          ${content}
+        </div>
+      `);
+
+      totalPages++;
+      updateKickers();
+      currentPage = n;
+      showPage(currentPage);
     }
 
     function addSiblingPage() {
@@ -944,20 +1011,40 @@
       `);
     }
 
-    function addChapterPage(chapter, title, content) {
-      const n = totalPages;
-      const pageInChapter = getNextPageInChapter(chapter);
-      document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
-        <div id="page${n}" class="page-panel" data-chapter="${chapter}" data-page-in-chapter="${pageInChapter}" data-parent-page="${currentPage}">
-          <div class="page-kicker kicker-label"></div>
-          <h1>${title}</h1>
-          ${content}
+    function addContactsPage() {
+      addChapterPage(12, "Contacts & Angels", `
+        <div class="intro">Another contacts page for important people and Angel details.</div>
+        <div class="message-box">
+          <strong>Your Angel:</strong><br>
+          ___________________________<br><br>
+
+          <strong>Who receives this book:</strong><br>
+          ___________________________<br><br>
+
+          <strong>Important Contacts:</strong><br>
+          ___________________________<br>
+          ___________________________<br>
+          ___________________________
         </div>
       `);
-      totalPages++;
-      updateKickers();
-      currentPage = n;
-      showPage(currentPage);
+    }
+
+    function addImportantInfoPage() {
+      addChapterPage(13, "Important Information", `
+        <div class="intro">Another page for important information your Angel needs to know.</div>
+        <div class="message-box">
+          <strong>Insurance:</strong><br>
+          ___________________________<br><br>
+
+          <strong>Doctor:</strong><br>
+          ___________________________<br><br>
+
+          <strong>Final Wishes:</strong><br>
+          ___________________________<br>
+          ___________________________<br>
+          ___________________________
+        </div>
+      `);
     }
 
     updateKickers();
@@ -965,4 +1052,4 @@
   </script>
 
 </body>
-</html>
+  </html>

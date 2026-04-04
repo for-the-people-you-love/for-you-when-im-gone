@@ -8,8 +8,6 @@
     :root{
       --bg1:#2b1d14;
       --bg2:#120d09;
-      --cover:#221710;
-      --cover2:#0f0b08;
       --gold:#c79a4a;
       --gold-soft:#e5c37c;
       --paper:#fbf4e8;
@@ -34,8 +32,7 @@
         linear-gradient(to bottom, var(--bg1), var(--bg2));
       min-height:100vh;
       color:white;
-      overflow-x:auto;
-      overflow-y:hidden;
+      overflow:hidden;
     }
 
     .hidden{ display:none !important; }
@@ -50,13 +47,12 @@
       padding:16px;
     }
 
-    /* CLOSED REALISTIC BOOK */
+    /* CLOSED BOOK */
     .closed-book-wrap{
       position:relative;
       width:360px;
       height:500px;
       cursor:pointer;
-      perspective:1200px;
     }
 
     .page-stack-right{
@@ -143,6 +139,7 @@
       background:linear-gradient(to right, transparent, var(--gold), transparent);
       box-shadow:0 0 8px rgba(199,154,74,.25);
     }
+
     .cover-top-rule-1{ top:78px; }
     .cover-top-rule-2{ top:112px; }
 
@@ -155,6 +152,7 @@
       background:linear-gradient(to bottom, transparent, var(--gold), transparent);
       box-shadow:0 0 8px rgba(199,154,74,.25);
     }
+
     .cover-side-rule-1{ right:104px; }
     .cover-side-rule-2{ right:68px; }
 
@@ -222,25 +220,31 @@
       opacity:.85;
     }
 
-    /* OPEN BOOK */
+    /* OPEN BOOK STAGE */
     .open-wrap{
       min-height:100vh;
-      justify-content:flex-start;
+      width:100%;
+      justify-content:center;
       align-items:center;
-      padding:16px;
-      overflow-x:auto;
-      overflow-y:hidden;
+      padding:10px;
+      overflow:hidden;
+    }
+
+    .book-scale-wrap{
+      width:1080px;
+      height:680px;
+      transform-origin:center center;
+      will-change:transform;
+      flex:0 0 auto;
     }
 
     .open-book{
       width:1080px;
       height:680px;
       display:grid;
-      grid-template-columns: 1fr 28px 1fr 68px;
-      flex:0 0 auto;
+      grid-template-columns: 430px 28px 430px 68px;
       box-shadow:var(--shadow);
       position:relative;
-      perspective:2000px;
     }
 
     .left-cover{
@@ -254,6 +258,7 @@
       box-shadow:
         inset 0 0 30px rgba(0,0,0,.22),
         inset -10px 0 20px rgba(255,255,255,.04);
+      overflow:hidden;
     }
 
     .left-cover::before{
@@ -284,13 +289,11 @@
     }
 
     .left-page{
-      border-left:none;
       border-right:1px solid rgba(0,0,0,.08);
     }
 
     .right-page{
       border-left:1px solid rgba(0,0,0,.06);
-      border-right:none;
       border-radius:0 22px 22px 0;
     }
 
@@ -331,12 +334,12 @@
 
     .rail-item{
       text-transform:uppercase;
-      text-align:center;
       letter-spacing:1px;
       font-size:10px;
       line-height:1.02;
       cursor:pointer;
       margin-bottom:16px;
+      text-align:center;
     }
 
     .rail-close{ color:var(--rail-red); }
@@ -391,7 +394,6 @@
     .job-card,
     .diary-box,
     .important-large,
-    .message-box,
     .message-side-box{
       background:rgba(255,255,255,.92);
       border-radius:16px;
@@ -412,7 +414,6 @@
     .about-info-box,
     .important-large,
     .message-side-box,
-    .message-box,
     .diary-box{
       padding:10px 12px;
       overflow:hidden;
@@ -424,47 +425,39 @@
       min-height:74px;
     }
 
-    /* Left page */
-    .left-page-sheet{
-      height:100%;
-      display:grid;
-      grid-template-rows:auto auto 1fr auto;
-      gap:10px;
-    }
-
-    .left-back-photo{
-      width:140px;
-      height:154px;
-      border:2px solid #c7964b;
-      border-radius:12px;
-      background:#efe4d1;
-      color:#8a6a45;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      font-size:13px;
-      padding:8px;
-    }
-
-    .left-ghost-box{
-      background:rgba(255,255,255,.78);
-      border-radius:16px;
-      padding:10px 12px;
-      font-size:11px;
-      line-height:1.18;
-      color:#7a614a;
-      box-shadow:var(--panel-shadow);
-    }
-
-    /* Chapter 1 and 14 like Chapter 7 */
-    .top-photo-page{
-      display:grid;
-      grid-template-rows:auto auto 1fr auto;
-      gap:8px;
+    .left-page-sheet,
+    .top-photo-page,
+    .about-layout,
+    .collage-page,
+    .job-page,
+    .contacts-page,
+    .important-page,
+    .message-page,
+    .diary-page{
       height:560px;
+      display:grid;
+      gap:8px;
     }
 
+    .left-page-sheet,
+    .top-photo-page,
+    .about-layout,
+    .message-page,
+    .diary-page,
+    .job-page{
+      grid-template-rows:auto auto 1fr auto;
+    }
+
+    .collage-page{
+      grid-template-rows:auto auto 1fr auto;
+    }
+
+    .contacts-page,
+    .important-page{
+      grid-template-rows:auto 1fr auto;
+    }
+
+    .left-back-photo,
     .single-photo,
     .about-main-photo,
     .message-photo{
@@ -483,28 +476,21 @@
       margin-top:2px;
     }
 
-    .about-layout{
-      display:grid;
-      grid-template-rows:auto auto 1fr auto;
-      gap:8px;
-      height:560px;
+    .left-ghost-box{
+      background:rgba(255,255,255,.78);
+      border-radius:16px;
+      padding:10px 12px;
+      font-size:11px;
+      line-height:1.18;
+      color:#7a614a;
+      box-shadow:var(--panel-shadow);
     }
 
     .about-info-box,
     .story-box,
-    .note-box,
     .message-side-box{
       font-size:12px;
       line-height:1.2;
-      min-height:0;
-    }
-
-    /* Collage chapters */
-    .collage-page{
-      display:grid;
-      grid-template-rows:auto auto 1fr auto;
-      gap:8px;
-      height:560px;
     }
 
     .album-collage{
@@ -561,14 +547,6 @@
     .mini-bottom-left{ bottom:0; left:0; width:72px; height:84px; transform:rotate(5deg); }
     .mini-bottom-right{ bottom:0; right:0; width:72px; height:84px; transform:rotate(-5deg); }
 
-    /* Jobs */
-    .job-page{
-      display:grid;
-      grid-template-rows:auto auto 1fr auto;
-      gap:8px;
-      height:560px;
-    }
-
     .job-card{
       padding:10px;
       display:grid;
@@ -614,106 +592,60 @@
       overflow:hidden;
     }
 
-    /* Diary */
-    .diary-page{
-      display:grid;
-      grid-template-rows:auto auto 1fr auto;
-      gap:8px;
-      height:560px;
-    }
-
     .diary-box{
       min-height:240px;
       line-height:1.22;
       font-size:12px;
     }
 
-    /* Contacts */
-    .contacts-page{
-      display:grid;
-      grid-template-rows:auto 1fr auto;
-      gap:8px;
-      height:560px;
-    }
-
-    .contacts-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      min-height:0;
-    }
-
-    .mini-info-box{
-      background:#f8f1e6;
-      border-radius:12px;
-      padding:10px;
-      font-size:11px;
-      line-height:1.15;
-      overflow:hidden;
-    }
-
-    /* Important info */
-    .important-page{
-      display:grid;
-      grid-template-rows:auto 1fr auto;
-      gap:8px;
-      height:560px;
-    }
-
+    .contacts-grid,
     .important-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:10px;
-      margin-bottom:8px;
     }
 
+    .mini-info-box,
     .important-small{
       background:#f8f1e6;
       border-radius:12px;
       padding:10px;
       font-size:11px;
       line-height:1.15;
-      min-height:92px;
       overflow:hidden;
     }
 
+    .important-small{ min-height:92px; }
     .important-large{
       font-size:12px;
       line-height:1.18;
       min-height:138px;
+      margin-top:8px;
     }
 
-    /* Chapter 14 */
-    .message-page{
-      display:grid;
-      grid-template-rows:auto auto 1fr auto;
-      gap:8px;
-      height:560px;
-    }
-
-    /* Flip sheet */
+    /* FLIP */
     .flip-sheet{
       position:absolute;
-      top:4px;
-      left:calc(50% + 14px);
-      width:calc(50% - 48px);
-      height:calc(100% - 8px);
+      top:0;
+      width:430px;
+      height:100%;
       transform-style:preserve-3d;
-      transform-origin:left center;
       pointer-events:none;
-      z-index:20;
+      z-index:15;
       display:none;
     }
 
     .flip-sheet.show{ display:block; }
 
     .flip-sheet.forward{
+      left:0;
+      transform-origin:left center;
       animation:flipForward .85s ease-in-out forwards;
     }
 
     .flip-sheet.backward{
       left:0;
-      transform-origin:right center;
+      transform-origin:left center;
       animation:flipBackward .85s ease-in-out forwards;
     }
 
@@ -722,10 +654,9 @@
       inset:0;
       backface-visibility:hidden;
       overflow:hidden;
-      border-radius:0 18px 18px 0;
       background:linear-gradient(to right, #f0dfc3 0%, #fbf4e8 12%, #fffaf2 100%);
+      border-left:1px solid rgba(0,0,0,.06);
       box-shadow:0 16px 24px rgba(0,0,0,.18);
-      border:1px solid rgba(0,0,0,.04);
     }
 
     .flip-face.front::before,
@@ -733,10 +664,13 @@
       content:"";
       position:absolute;
       top:0; bottom:0;
-      width:22px;
-      background:linear-gradient(to right, rgba(0,0,0,.08), rgba(255,255,255,.32));
-      left:0;
+      width:24px;
       pointer-events:none;
+    }
+
+    .flip-face.front::before{
+      left:0;
+      background:linear-gradient(to right, rgba(0,0,0,.08), rgba(255,255,255,.35));
     }
 
     .flip-face.back{
@@ -745,9 +679,8 @@
     }
 
     .flip-face.back::before{
-      left:auto;
       right:0;
-      background:linear-gradient(to left, rgba(0,0,0,.08), rgba(255,255,255,.32));
+      background:linear-gradient(to left, rgba(0,0,0,.08), rgba(255,255,255,.35));
     }
 
     .flip-pad{
@@ -757,15 +690,13 @@
     }
 
     @keyframes flipForward{
-      0% { transform:rotateY(0deg); filter:brightness(1); }
-      48% { filter:brightness(.92); }
-      100% { transform:rotateY(-180deg); filter:brightness(1); }
+      0% { transform:rotateY(0deg); }
+      100% { transform:rotateY(-180deg); }
     }
 
     @keyframes flipBackward{
-      0% { transform:rotateY(0deg); filter:brightness(1); }
-      48% { filter:brightness(.92); }
-      100% { transform:rotateY(180deg); filter:brightness(1); }
+      0% { transform:rotateY(-180deg); }
+      100% { transform:rotateY(0deg); }
     }
   </style>
 </head>
@@ -775,16 +706,13 @@
     <div class="closed-book-wrap" onclick="openBook()">
       <div class="page-stack-right"></div>
       <div class="page-stack-bottom"></div>
-
       <div class="closed-book">
         <div class="cover-top-rule-1"></div>
         <div class="cover-top-rule-2"></div>
         <div class="cover-side-rule-1"></div>
         <div class="cover-side-rule-2"></div>
-
         <div class="cover-for-you">For You</div>
         <div class="cover-when-gone">When I'm Gone</div>
-
         <div class="cover-photo-slot">Cover picture</div>
         <div class="tap-open-note">Tap to open</div>
       </div>
@@ -792,48 +720,51 @@
   </div>
 
   <div id="openedStage" class="open-wrap">
-    <div class="open-book">
+    <div id="bookScaleWrap" class="book-scale-wrap">
+      <div class="open-book">
 
-      <div class="left-cover"></div>
-      <div class="spine"></div>
+        <div class="left-cover"></div>
+        <div class="spine"></div>
 
-      <div class="page-side left-page">
-        <div class="page-pad" id="leftPagePad"></div>
-      </div>
+        <div class="page-side left-page">
+          <div class="page-pad" id="leftPagePad"></div>
+        </div>
 
-      <div class="page-side right-page">
-        <div class="page-pad" id="rightPagePad"></div>
+        <div class="page-side right-page">
+          <div class="page-pad" id="rightPagePad"></div>
 
-        <div id="flipSheet" class="flip-sheet">
-          <div class="flip-face front">
-            <div class="flip-pad" id="flipFrontPad"></div>
+          <div id="flipSheet" class="flip-sheet">
+            <div class="flip-face front">
+              <div class="flip-pad" id="flipFrontPad"></div>
+            </div>
+            <div class="flip-face back">
+              <div class="flip-pad" id="flipBackPad"></div>
+            </div>
           </div>
-          <div class="flip-face back">
-            <div class="flip-pad" id="flipBackPad"></div>
+        </div>
+
+        <div class="rail">
+          <div class="rail-item rail-close" onclick="closeBook()">
+            C<br>L<br>O<br>S<br>E<br><br>B<br>O<br>O<br>K
+          </div>
+
+          <div id="railAdd" class="rail-item rail-add" style="display:none;" onclick="addNewPage()">
+            +<br>N<br>E<br>W<br><br>P<br>A<br>G<br>E
+          </div>
+
+          <div id="railBack" class="rail-item rail-back" onclick="flipBackPage()">
+            F<br>L<br>I<br>P<br><br>B<br>A<br>C<br>K
+          </div>
+
+          <div class="rail-item rail-index" onclick="goToIndex()">
+            I<br>N<br>D<br>E<br>X
+          </div>
+
+          <div class="rail-item rail-next" onclick="goToNextChapter()">
+            N<br>E<br>X<br>T<br><br>C<br>H<br>A<br>P<br>T<br>E<br>R
           </div>
         </div>
-      </div>
 
-      <div class="rail">
-        <div class="rail-item rail-close" onclick="closeBook()">
-          C<br>L<br>O<br>S<br>E<br><br>B<br>O<br>O<br>K
-        </div>
-
-        <div id="railAdd" class="rail-item rail-add" style="display:none;" onclick="addNewPage()">
-          +<br>N<br>E<br>W<br><br>P<br>A<br>G<br>E
-        </div>
-
-        <div id="railBack" class="rail-item rail-back" onclick="flipBackPage()">
-          F<br>L<br>I<br>P<br><br>B<br>A<br>C<br>K
-        </div>
-
-        <div class="rail-item rail-index" onclick="goToIndex()">
-          I<br>N<br>D<br>E<br>X
-        </div>
-
-        <div class="rail-item rail-next" onclick="goToNextChapter()">
-          N<br>E<br>X<br>T<br><br>C<br>H<br>A<br>P<br>T<br>E<br>R
-        </div>
       </div>
     </div>
   </div>
@@ -860,7 +791,6 @@
     let pages = [];
     let currentIndex = 0;
     let animating = false;
-
     const addableChapters = new Set([4,6,7,8,9,10,11,12,13]);
 
     function resetPages() {
@@ -885,12 +815,22 @@
       });
     }
 
+    function updateBookScale() {
+      const wrap = document.getElementById("bookScaleWrap");
+      if (!wrap) return;
+      const availableW = window.innerWidth - 20;
+      const availableH = window.innerHeight - 20;
+      const scale = Math.min(availableW / 1080, availableH / 680, 1);
+      wrap.style.transform = `scale(${scale})`;
+    }
+
     function openBook() {
       document.getElementById("closedStage").classList.add("hidden");
       document.getElementById("openedStage").classList.add("show");
       if (!pages.length) resetPages();
       currentIndex = 0;
       renderSpread();
+      updateBookScale();
     }
 
     function closeBook() {
@@ -987,12 +927,12 @@
       if (direction === "forward") {
         frontPad.innerHTML = renderRightPage(current);
         backPad.innerHTML = renderLeftStylePage(current);
+        flipSheet.className = "flip-sheet show forward";
       } else {
-        frontPad.innerHTML = renderLeftStylePage(getPage(currentIndex - 1) || current);
-        backPad.innerHTML = renderRightPage(getPage(currentIndex - 1) || current);
+        frontPad.innerHTML = renderRightPage(getPage(targetIndex));
+        backPad.innerHTML = renderLeftStylePage(getPage(targetIndex));
+        flipSheet.className = "flip-sheet show backward";
       }
-
-      flipSheet.className = "flip-sheet show " + direction;
 
       const onDone = () => {
         flipSheet.removeEventListener("animationend", onDone);
@@ -1032,13 +972,18 @@
           <div class="left-ghost-box">
             This page has been turned and is now resting on the left side of the open book.
           </div>
+          <div class="left-ghost-box">
+            Keep turning pages to continue through the book.
+          </div>
         </div>
       `;
     }
 
     function renderRightPage(page) {
       if (!page) return "";
-      const kicker = page.chapter === 0 ? `<div class="page-kicker">Index</div>` : `<div class="page-kicker">Chapter ${page.chapter} — Page ${page.pageInChapter}</div>`;
+      const kicker = page.chapter === 0
+        ? `<div class="page-kicker">Index</div>`
+        : `<div class="page-kicker">Chapter ${page.chapter} — Page ${page.pageInChapter}</div>`;
 
       switch (page.type) {
         case "index":
@@ -1143,7 +1088,7 @@
           return `
             ${kicker}
             <h1>${page.title}</h1>
-            <div class="top-photo-page">
+            <div class="topPhoto-page top-photo-page">
               <div class="intro">A page for the story, the picture, and the memory behind it.</div>
               <div class="single-photo">${page.title} photo</div>
               <div class="story-box">
@@ -1194,7 +1139,6 @@
                   Name: __________________<br>
                   Email: __________________
                 </div>
-
                 <div class="mini-info-box">
                   <strong>Contacts & Phone Numbers:</strong><br><br>
                   Name: __________________<br>
@@ -1231,7 +1175,6 @@
                     ___________________________
                   </div>
                 </div>
-
                 <div class="important-large">
                   <strong>Final Wishes:</strong><br><br>
                   ___________________________<br><br>
@@ -1253,7 +1196,7 @@
             <div class="message-page">
               <div class="intro">A place for a message and a picture that goes with it.</div>
               <div class="message-photo">Picture for your message</div>
-              <div class="story-box">
+              <div class="message-side-box">
                 <strong>Your message:</strong><br><br>
                 Write your message here so it can go together with the picture on this page.
               </div>
@@ -1268,6 +1211,8 @@
           return `${kicker}<h1>${page.title}</h1>`;
       }
     }
+
+    window.addEventListener("resize", updateBookScale);
 
     resetPages();
   </script>

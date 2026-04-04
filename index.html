@@ -1,656 +1,1063 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>For You When I'm Gone</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You When I'm Gone</title>
+  <style>
+    :root{
+      --bg1:#2b1d14;
+      --bg2:#120d09;
+      --cover:#221710;
+      --cover2:#0f0b08;
+      --gold:#c79a4a;
+      --gold-soft:#e5c37c;
+      --paper:#fbf4e8;
+      --paper2:#efe0c5;
+      --ink:#4a2d1a;
+      --ink-soft:#6a4931;
+      --rail-red:#b00000;
+      --rail-green:#0c8a2a;
+      --rail-blue:#145cc7;
+      --rail-brown:#7b4e2f;
+      --shadow:0 24px 60px rgba(0,0,0,.45);
+      --panel-shadow:0 8px 20px rgba(0,0,0,.08);
+    }
 
-<style>
-  body {
-    margin: 0;
-    font-family: Georgia, serif;
-    background:
-      radial-gradient(circle at top, rgba(255,220,170,0.08), transparent 30%),
-      linear-gradient(to bottom, #2b1d14, #120d09);
-    min-height: 100vh;
-    color: white;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
+    * { box-sizing:border-box; }
 
-  .hidden { display: none !important; }
-  #openedStage { display: none; }
-  #openedStage.show { display: flex; }
+    body{
+      margin:0;
+      font-family:Georgia, serif;
+      background:
+        radial-gradient(circle at top, rgba(255,220,170,.08), transparent 30%),
+        linear-gradient(to bottom, var(--bg1), var(--bg2));
+      min-height:100vh;
+      color:white;
+      overflow-x:auto;
+      overflow-y:hidden;
+    }
 
-  .stage {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    box-sizing: border-box;
-  }
+    .hidden{ display:none !important; }
+    #openedStage{ display:none; }
+    #openedStage.show{ display:flex; }
 
-  .cover-stage {
-    width: 300px;
-    height: 430px;
-    background:
-      linear-gradient(135deg, rgba(255,255,255,0.06), transparent 30%),
-      linear-gradient(135deg, #6b4423, #3d2412);
-    border: 4px solid #c7964b;
-    border-radius: 18px;
-    box-shadow:
-      0 26px 50px rgba(0,0,0,0.55),
-      inset 0 0 0 2px rgba(255,230,180,0.08);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-    cursor: pointer;
-    overflow: hidden;
-  }
+    .stage{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:16px;
+    }
 
-  .cover-stage::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 26px;
-    height: 100%;
-    background: linear-gradient(to right, rgba(0,0,0,0.28), rgba(255,255,255,0.05));
-    border-radius: 14px 0 0 14px;
-  }
+    /* CLOSED REALISTIC BOOK */
+    .closed-book-wrap{
+      position:relative;
+      width:360px;
+      height:500px;
+      cursor:pointer;
+      perspective:1200px;
+    }
 
-  .cover-stage::after {
-    content: "";
-    position: absolute;
-    inset: 14px;
-    border: 1px solid rgba(240,209,138,0.65);
-    border-radius: 10px;
-    pointer-events: none;
-  }
+    .page-stack-right{
+      position:absolute;
+      right:-10px;
+      top:18px;
+      width:26px;
+      height:454px;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          #f8f1e6 0px,
+          #f8f1e6 3px,
+          #e2d6c4 3px,
+          #e2d6c4 4px
+        );
+      border-radius:0 8px 8px 0;
+      box-shadow: inset 0 0 10px rgba(0,0,0,.08);
+      transform:skewY(-2deg);
+    }
 
-  .cover-ornament-top,
-  .cover-ornament-bottom {
-    position: absolute;
-    left: 28px;
-    right: 28px;
-    height: 20px;
-    border-top: 1px solid rgba(240,209,138,0.55);
-    border-bottom: 1px solid rgba(240,209,138,0.25);
-    border-radius: 999px;
-  }
+    .page-stack-bottom{
+      position:absolute;
+      left:14px;
+      bottom:-12px;
+      width:320px;
+      height:24px;
+      background:
+        repeating-linear-gradient(
+          to right,
+          #f8f1e6 0px,
+          #f8f1e6 5px,
+          #e2d6c4 5px,
+          #e2d6c4 6px
+        );
+      border-radius:0 0 12px 12px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,.08);
+      transform:skewX(-10deg);
+    }
 
-  .cover-ornament-top { top: 22px; }
-  .cover-ornament-bottom { bottom: 22px; }
+    .closed-book{
+      position:absolute;
+      inset:0 16px 18px 0;
+      border-radius:12px 20px 16px 12px;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255,255,255,.08), transparent 18%),
+        linear-gradient(135deg, rgba(255,255,255,.03), transparent 28%),
+        linear-gradient(160deg, #2b1d15, #12100e 55%, #080707);
+      box-shadow:
+        18px 18px 40px rgba(0,0,0,.45),
+        inset 1px 1px 0 rgba(255,255,255,.03),
+        inset -18px -18px 30px rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.04);
+      overflow:hidden;
+      transform:rotate(-2deg);
+    }
 
-  .cover-title {
-    font-size: 32px;
-    color: #f0d18a;
-    line-height: 1.2;
-    margin-bottom: 18px;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.25);
-    position: relative;
-    z-index: 1;
-  }
+    .closed-book::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      width:34px;
+      height:100%;
+      background:linear-gradient(to right, rgba(0,0,0,.55), rgba(255,255,255,.04));
+      box-shadow: inset -1px 0 0 rgba(255,255,255,.04);
+    }
 
-  .cover-subtitle {
-    color: #f7e7c5;
-    font-size: 15px;
-    max-width: 220px;
-    line-height: 1.6;
-    font-style: italic;
-    position: relative;
-    z-index: 1;
-  }
+    .closed-book::after{
+      content:"";
+      position:absolute;
+      inset:10px;
+      border:1px solid rgba(199,154,74,.34);
+      border-radius:8px 14px 10px 8px;
+      pointer-events:none;
+    }
 
-  .tap-note {
-    position: absolute;
-    bottom: 18px;
-    font-size: 12px;
-    color: #e5c37c;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    z-index: 1;
-  }
+    .cover-top-rule-1,
+    .cover-top-rule-2{
+      position:absolute;
+      left:72px;
+      right:92px;
+      height:2px;
+      background:linear-gradient(to right, transparent, var(--gold), transparent);
+      box-shadow:0 0 8px rgba(199,154,74,.25);
+    }
+    .cover-top-rule-1{ top:78px; }
+    .cover-top-rule-2{ top:112px; }
 
-  .open-wrap {
-    min-height: 100vh;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 16px;
-    box-sizing: border-box;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
+    .cover-side-rule-1,
+    .cover-side-rule-2{
+      position:absolute;
+      top:144px;
+      bottom:70px;
+      width:2px;
+      background:linear-gradient(to bottom, transparent, var(--gold), transparent);
+      box-shadow:0 0 8px rgba(199,154,74,.25);
+    }
+    .cover-side-rule-1{ right:104px; }
+    .cover-side-rule-2{ right:68px; }
 
-  .open-book {
-    width: 920px;
-    height: 640px;
-    display: grid;
-    grid-template-columns: 1fr 20px 1fr;
-    flex: 0 0 auto;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
-  }
+    .cover-for-you{
+      position:absolute;
+      top:84px;
+      left:90px;
+      right:106px;
+      text-align:center;
+      color:var(--gold-soft);
+      font-size:22px;
+      letter-spacing:1px;
+      text-shadow:0 0 10px rgba(199,154,74,.18);
+    }
 
-  .left-cover-back {
-    background:
-      linear-gradient(135deg, rgba(255,255,255,0.05), transparent 30%),
-      linear-gradient(135deg, #5e3b1f, #3a2312);
-    border: 4px solid #c7964b;
-    border-right: none;
-    border-radius: 22px 0 0 22px;
-    position: relative;
-    box-shadow:
-      inset 0 0 30px rgba(0,0,0,0.22),
-      inset -10px 0 20px rgba(255,255,255,0.04);
-  }
+    .cover-when-gone{
+      position:absolute;
+      top:155px;
+      bottom:80px;
+      right:74px;
+      writing-mode:vertical-rl;
+      text-orientation:mixed;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--gold-soft);
+      font-size:22px;
+      letter-spacing:1px;
+      text-shadow:0 0 10px rgba(199,154,74,.18);
+    }
 
-  .left-cover-back::before {
-    content: "";
-    position: absolute;
-    inset: 14px;
-    border: 1px solid rgba(240,209,138,0.45);
-    border-radius: 10px;
-  }
+    .cover-photo-slot{
+      position:absolute;
+      left:84px;
+      top:166px;
+      width:154px;
+      height:210px;
+      border:2px solid rgba(199,154,74,.82);
+      border-radius:10px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.05), transparent 30%),
+        #1a1410;
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.03),
+        0 10px 18px rgba(0,0,0,.18);
+      color:#8f7a63;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:10px;
+      font-size:14px;
+    }
 
-  .left-cover-back::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 16px;
-    height: 100%;
-    background: linear-gradient(to left, rgba(0,0,0,0.25), rgba(255,255,255,0.04));
-  }
+    .tap-open-note{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:20px;
+      text-align:center;
+      color:var(--gold-soft);
+      font-size:11px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      opacity:.85;
+    }
 
-  .spine {
-    background:
-      linear-gradient(to right, #6f5130, #d8c29c 40%, #6f5130 70%, #4a341f);
-    box-shadow:
-      inset 0 0 10px rgba(255,255,255,0.18),
-      inset 0 0 12px rgba(0,0,0,0.2);
-  }
+    /* OPEN BOOK */
+    .open-wrap{
+      min-height:100vh;
+      justify-content:flex-start;
+      align-items:center;
+      padding:16px;
+      overflow-x:auto;
+      overflow-y:hidden;
+    }
 
-  .right-page {
-    background:
-      linear-gradient(to right, #f0dfc3 0%, #fbf4e8 10%, #fffaf2 100%);
-    color: #4a2d1a;
-    border: 4px solid #d6bb90;
-    border-left: none;
-    border-radius: 0 22px 22px 0;
-    box-sizing: border-box;
-    position: relative;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 1fr 64px;
-  }
+    .open-book{
+      width:1080px;
+      height:680px;
+      display:grid;
+      grid-template-columns: 1fr 28px 1fr 68px;
+      flex:0 0 auto;
+      box-shadow:var(--shadow);
+      position:relative;
+      perspective:2000px;
+    }
 
-  .right-page::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 26px;
-    height: 100%;
-    background: linear-gradient(to right, rgba(0,0,0,0.08), rgba(255,255,255,0.35));
-    pointer-events: none;
-  }
+    .left-cover{
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.05), transparent 30%),
+        linear-gradient(135deg, #5e3b1f, #3a2312);
+      border:4px solid var(--gold);
+      border-right:none;
+      border-radius:22px 0 0 22px;
+      position:relative;
+      box-shadow:
+        inset 0 0 30px rgba(0,0,0,.22),
+        inset -10px 0 20px rgba(255,255,255,.04);
+    }
 
-  .page-content {
-    padding: 16px 10px 12px 14px;
-    height: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
+    .left-cover::before{
+      content:"";
+      position:absolute;
+      inset:14px;
+      border:1px solid rgba(240,209,138,.45);
+      border-radius:10px;
+    }
 
-  .page-rail {
-    border-left: 1px solid rgba(199,150,75,0.35);
-    position: relative;
-    padding-top: 56px;
-    box-sizing: border-box;
-    background: rgba(255,250,242,0.35);
-  }
+    .spine{
+      background:
+        linear-gradient(to right, #614324, #d8c29c 38%, #725031 62%, #3b2817);
+      box-shadow:
+        inset 0 0 10px rgba(255,255,255,.18),
+        inset 0 0 12px rgba(0,0,0,.2);
+    }
 
-  .edge-close-book,
-  .edge-add-page,
-  .edge-flip-back,
-  .edge-index,
-  .edge-next-chapter {
-    text-transform: uppercase;
-    text-align: center;
-    letter-spacing: 1px;
-    font-size: 10px;
-    line-height: 1.02;
-    cursor: pointer;
-    user-select: none;
-    width: 100%;
-  }
+    .page-side{
+      position:relative;
+      background:
+        linear-gradient(to right, #f0dfc3 0%, #fbf4e8 10%, #fffaf2 100%);
+      color:var(--ink);
+      border-top:4px solid #d6bb90;
+      border-bottom:4px solid #d6bb90;
+      box-sizing:border-box;
+      overflow:hidden;
+    }
 
-  .edge-close-book { color: #b00000; margin-bottom: 16px; }
-  .edge-add-page { color: #0c8a2a; margin-bottom: 16px; }
-  .edge-flip-back { color: #145cc7; margin-bottom: 16px; }
-  .edge-index { color: #7b4e2f; margin-bottom: 16px; }
-  .edge-next-chapter { color: #c7964b; }
+    .left-page{
+      border-left:none;
+      border-right:1px solid rgba(0,0,0,.08);
+    }
 
-  .page-panel {
-    position: relative;
-    z-index: 1;
-    height: 100%;
-    display: none;
-    overflow: hidden;
-  }
+    .right-page{
+      border-left:1px solid rgba(0,0,0,.06);
+      border-right:none;
+      border-radius:0 22px 22px 0;
+    }
 
-  .page-kicker {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #a06d35;
-    margin-bottom: 6px;
-  }
+    .left-page::before,
+    .right-page::before{
+      content:"";
+      position:absolute;
+      top:0; bottom:0;
+      width:24px;
+      pointer-events:none;
+    }
 
-  .right-page h1 {
-    margin: 0 0 4px 0;
-    font-size: 22px;
-    line-height: 1.02;
-  }
+    .left-page::before{
+      right:0;
+      background:linear-gradient(to left, rgba(0,0,0,.07), rgba(255,255,255,.34));
+    }
 
-  .intro {
-    font-size: 11px;
-    line-height: 1.22;
-    margin-bottom: 6px;
-    color: #6a4931;
-  }
+    .right-page::before{
+      left:0;
+      background:linear-gradient(to right, rgba(0,0,0,.08), rgba(255,255,255,.35));
+    }
 
-  .index-list {
-    display: grid;
-    gap: 4px;
-    margin-top: 4px;
-  }
+    .page-pad{
+      padding:18px 14px 14px 18px;
+      height:100%;
+      overflow:hidden;
+      position:relative;
+      z-index:1;
+    }
 
-  .index-link {
-    background: rgba(255,255,255,0.75);
-    border: 1px solid rgba(199,150,75,0.45);
-    border-radius: 8px;
-    padding: 5px 8px;
-    font-size: 11px;
-    line-height: 1.05;
-    cursor: pointer;
-  }
+    .rail{
+      border-left:1px solid rgba(199,150,75,.35);
+      background:rgba(255,250,242,.35);
+      padding-top:58px;
+      text-align:center;
+      user-select:none;
+    }
 
-  .instruction-box {
-    background: rgba(255,255,255,0.92);
-    border-radius: 12px;
-    padding: 6px 8px;
-    margin-top: 6px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    color: #5d4634;
-    font-size: 10.5px;
-    line-height: 1.1;
-  }
+    .rail-item{
+      text-transform:uppercase;
+      text-align:center;
+      letter-spacing:1px;
+      font-size:10px;
+      line-height:1.02;
+      cursor:pointer;
+      margin-bottom:16px;
+    }
 
-  .soft-box {
-    background: rgba(255,255,255,0.92);
-    border-radius: 16px;
-    padding: 10px 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    overflow: hidden;
-  }
+    .rail-close{ color:var(--rail-red); }
+    .rail-add{ color:var(--rail-green); }
+    .rail-back{ color:var(--rail-blue); }
+    .rail-index{ color:var(--rail-brown); }
+    .rail-next{ color:var(--gold); }
 
-  .note-box {
-    background: rgba(255,255,255,0.92);
-    border-radius: 16px;
-    padding: 10px 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    font-size: 12px;
-    line-height: 1.2;
-    min-height: 74px;
-    overflow: hidden;
-  }
+    .page-kicker{
+      font-size:11px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:#a06d35;
+      margin-bottom:6px;
+    }
 
-  .about-layout {
-    display: grid;
-    grid-template-rows: auto auto 1fr auto;
-    gap: 8px;
-    height: 505px;
-  }
+    h1{
+      margin:0 0 4px 0;
+      font-size:22px;
+      line-height:1.02;
+      color:var(--ink);
+    }
 
-  .about-main-photo {
-    width: 142px;
-    height: 154px;
-    border: 2px solid #c7964b;
-    border-radius: 12px;
-    background: #efe4d1;
-    color: #8a6a45;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 13px;
-    padding: 8px;
-    box-sizing: border-box;
-    margin-top: 2px;
-  }
+    .intro{
+      font-size:11px;
+      line-height:1.22;
+      margin-bottom:6px;
+      color:var(--ink-soft);
+    }
 
-  .about-info-box {
-    background: rgba(255,255,255,0.92);
-    border-radius: 16px;
-    padding: 10px 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    font-size: 12px;
-    line-height: 1.2;
-    min-height: 154px;
-    overflow: hidden;
-  }
+    .index-list{
+      display:grid;
+      gap:4px;
+      margin-top:4px;
+    }
 
-  .collage-page {
-    display: grid;
-    grid-template-rows: auto auto 1fr auto;
-    gap: 8px;
-    height: 505px;
-  }
+    .index-link{
+      background:rgba(255,255,255,.75);
+      border:1px solid rgba(199,150,75,.45);
+      border-radius:8px;
+      padding:5px 8px;
+      font-size:11px;
+      line-height:1.05;
+      cursor:pointer;
+    }
 
-  .album-collage {
-    display: flex;
-    justify-content: center;
-    margin-top: 2px;
-  }
+    .instruction-box,
+    .soft-box,
+    .note-box,
+    .story-box,
+    .about-info-box,
+    .job-card,
+    .diary-box,
+    .important-large,
+    .message-box,
+    .message-side-box{
+      background:rgba(255,255,255,.92);
+      border-radius:16px;
+      box-shadow:var(--panel-shadow);
+    }
 
-  .album-frame {
-    position: relative;
-    width: 220px;
-    height: 182px;
-  }
+    .instruction-box{
+      padding:6px 8px;
+      margin-top:6px;
+      color:#5d4634;
+      font-size:10.5px;
+      line-height:1.1;
+    }
 
-  .main-photo {
-    position: absolute;
-    top: 24px;
-    left: 61px;
-    width: 98px;
-    height: 130px;
-    border: 2px solid #c7964b;
-    border-radius: 12px;
-    background: #efe4d1;
-    color: #8a6a45;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 12px;
-    padding: 8px;
-    box-sizing: border-box;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-    z-index: 2;
-  }
+    .soft-box,
+    .note-box,
+    .story-box,
+    .about-info-box,
+    .important-large,
+    .message-side-box,
+    .message-box,
+    .diary-box{
+      padding:10px 12px;
+      overflow:hidden;
+    }
 
-  .mini-photo {
-    position: absolute;
-    width: 66px;
-    height: 78px;
-    border: 2px solid #c7964b;
-    border-radius: 10px;
-    background: #f4eadb;
-    color: #8a6a45;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 10px;
-    padding: 5px;
-    box-sizing: border-box;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  }
+    .note-box{
+      font-size:12px;
+      line-height:1.2;
+      min-height:74px;
+    }
 
-  .mini-top-left { top: 0; left: 2px; transform: rotate(-6deg); }
-  .mini-top-right { top: 4px; right: 2px; transform: rotate(6deg); }
-  .mini-bottom-left { bottom: 0; left: 0; width: 72px; height: 84px; transform: rotate(5deg); }
-  .mini-bottom-right { bottom: 0; right: 0; width: 72px; height: 84px; transform: rotate(-5deg); }
+    /* Left page */
+    .left-page-sheet{
+      height:100%;
+      display:grid;
+      grid-template-rows:auto auto 1fr auto;
+      gap:10px;
+    }
 
-  .story-box {
-    background: rgba(255,255,255,0.92);
-    border-radius: 16px;
-    padding: 10px 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    font-size: 12px;
-    line-height: 1.2;
-    min-height: 88px;
-    overflow: hidden;
-  }
+    .left-back-photo{
+      width:140px;
+      height:154px;
+      border:2px solid #c7964b;
+      border-radius:12px;
+      background:#efe4d1;
+      color:#8a6a45;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-size:13px;
+      padding:8px;
+    }
 
-  .top-photo-page {
-    display: grid;
-    grid-template-rows: auto auto 1fr auto;
-    gap: 8px;
-    height: 505px;
-  }
+    .left-ghost-box{
+      background:rgba(255,255,255,.78);
+      border-radius:16px;
+      padding:10px 12px;
+      font-size:11px;
+      line-height:1.18;
+      color:#7a614a;
+      box-shadow:var(--panel-shadow);
+    }
 
-  .single-photo {
-    width: 142px;
-    height: 154px;
-    border: 2px solid #c7964b;
-    border-radius: 12px;
-    background: #efe4d1;
-    color: #8a6a45;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 13px;
-    padding: 8px;
-    box-sizing: border-box;
-    margin-top: 2px;
-  }
+    /* Chapter 1 and 14 like Chapter 7 */
+    .top-photo-page{
+      display:grid;
+      grid-template-rows:auto auto 1fr auto;
+      gap:8px;
+      height:560px;
+    }
 
-  .job-page {
-    display: grid;
-    grid-template-rows: auto auto 1fr auto;
-    gap: 8px;
-    height: 505px;
-  }
+    .single-photo,
+    .about-main-photo,
+    .message-photo{
+      width:142px;
+      height:154px;
+      border:2px solid #c7964b;
+      border-radius:12px;
+      background:#efe4d1;
+      color:#8a6a45;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-size:13px;
+      padding:8px;
+      margin-top:2px;
+    }
 
-  .job-card {
-    background: rgba(255,255,255,0.92);
-    border-radius: 16px;
-    padding: 10px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    display: grid;
-    grid-template-rows: auto auto;
-    gap: 8px;
-    overflow: hidden;
-  }
+    .about-layout{
+      display:grid;
+      grid-template-rows:auto auto 1fr auto;
+      gap:8px;
+      height:560px;
+    }
 
-  .job-lines {
-    font-size: 12px;
-    line-height: 1.1;
-    overflow: hidden;
-  }
+    .about-info-box,
+    .story-box,
+    .note-box,
+    .message-side-box{
+      font-size:12px;
+      line-height:1.2;
+      min-height:0;
+    }
 
-  .job-grid {
-    display: grid;
-    grid-template-columns: 86px 1fr;
-    gap: 8px;
-    align-items: stretch;
-  }
+    /* Collage chapters */
+    .collage-page{
+      display:grid;
+      grid-template-rows:auto auto 1fr auto;
+      gap:8px;
+      height:560px;
+    }
 
-  .job-photo {
-    width: 86px;
-    height: 104px;
-    border: 2px solid #c7964b;
-    border-radius: 12px;
-    background: #efe4d1;
-    color: #8a6a45;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 11px;
-    padding: 6px;
-    box-sizing: border-box;
-  }
+    .album-collage{
+      display:flex;
+      justify-content:center;
+      margin-top:2px;
+    }
 
-  .job-story {
-    background: #f8f1e6;
-    border-radius: 12px;
-    padding: 8px;
-    line-height: 1.15;
-    font-size: 10.5px;
-    min-height: 104px;
-    overflow: hidden;
-  }
+    .album-frame{
+      position:relative;
+      width:220px;
+      height:182px;
+    }
 
-  .contacts-page {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    gap: 8px;
-    height: 505px;
-  }
+    .main-photo{
+      position:absolute;
+      top:24px;
+      left:61px;
+      width:98px;
+      height:130px;
+      border:2px solid #c7964b;
+      border-radius:12px;
+      background:#efe4d1;
+      color:#8a6a45;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-size:12px;
+      padding:8px;
+      box-shadow:0 6px 14px rgba(0,0,0,.12);
+      z-index:2;
+    }
 
-  .contacts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    min-height: 0;
-  }
+    .mini-photo{
+      position:absolute;
+      width:66px;
+      height:78px;
+      border:2px solid #c7964b;
+      border-radius:10px;
+      background:#f4eadb;
+      color:#8a6a45;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-size:10px;
+      padding:5px;
+      box-shadow:0 4px 10px rgba(0,0,0,.08);
+    }
 
-  .mini-info-box {
-    background: #f8f1e6;
-    border-radius: 12px;
-    padding: 10px;
-    font-size: 11px;
-    line-height: 1.15;
-    overflow: hidden;
-    min-height: 0;
-  }
+    .mini-top-left{ top:0; left:2px; transform:rotate(-6deg); }
+    .mini-top-right{ top:4px; right:2px; transform:rotate(6deg); }
+    .mini-bottom-left{ bottom:0; left:0; width:72px; height:84px; transform:rotate(5deg); }
+    .mini-bottom-right{ bottom:0; right:0; width:72px; height:84px; transform:rotate(-5deg); }
 
-  .important-page {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    gap: 8px;
-    height: 505px;
-  }
+    /* Jobs */
+    .job-page{
+      display:grid;
+      grid-template-rows:auto auto 1fr auto;
+      gap:8px;
+      height:560px;
+    }
 
-  .important-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
+    .job-card{
+      padding:10px;
+      display:grid;
+      grid-template-rows:auto auto;
+      gap:8px;
+      overflow:hidden;
+    }
 
-  .important-small {
-    background: #f8f1e6;
-    border-radius: 12px;
-    padding: 10px;
-    font-size: 11px;
-    line-height: 1.15;
-    min-height: 92px;
-    overflow: hidden;
-  }
+    .job-lines{
+      font-size:12px;
+      line-height:1.1;
+    }
 
-  .important-large {
-    background: rgba(255,255,255,0.92);
-    border-radius: 16px;
-    padding: 10px 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    font-size: 12px;
-    line-height: 1.18;
-    min-height: 138px;
-    overflow: hidden;
-  }
+    .job-grid{
+      display:grid;
+      grid-template-columns:86px 1fr;
+      gap:8px;
+      align-items:stretch;
+    }
 
-  .message-page {
-    display: grid;
-    grid-template-rows: auto auto 1fr auto;
-    gap: 8px;
-    height: 505px;
-  }
+    .job-photo{
+      width:86px;
+      height:104px;
+      border:2px solid #c7964b;
+      border-radius:12px;
+      background:#efe4d1;
+      color:#8a6a45;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-size:11px;
+      padding:6px;
+    }
 
-  .message-photo {
-    width: 142px;
-    height: 154px;
-    border: 2px solid #c7964b;
-    border-radius: 12px;
-    background: #efe4d1;
-    color: #8a6a45;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 13px;
-    padding: 8px;
-    box-sizing: border-box;
-    margin-top: 2px;
-  }
+    .job-story{
+      background:#f8f1e6;
+      border-radius:12px;
+      padding:8px;
+      line-height:1.15;
+      font-size:10.5px;
+      min-height:104px;
+      overflow:hidden;
+    }
 
-  .diary-page {
-    display: grid;
-    grid-template-rows: auto auto 1fr auto;
-    gap: 8px;
-    height: 505px;
-  }
+    /* Diary */
+    .diary-page{
+      display:grid;
+      grid-template-rows:auto auto 1fr auto;
+      gap:8px;
+      height:560px;
+    }
 
-  .diary-box {
-    background: rgba(255,255,255,0.92);
-    border-radius: 16px;
-    padding: 10px 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    min-height: 220px;
-    line-height: 1.22;
-    font-size: 12px;
-    overflow: hidden;
-  }
-</style>
+    .diary-box{
+      min-height:240px;
+      line-height:1.22;
+      font-size:12px;
+    }
+
+    /* Contacts */
+    .contacts-page{
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      gap:8px;
+      height:560px;
+    }
+
+    .contacts-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      min-height:0;
+    }
+
+    .mini-info-box{
+      background:#f8f1e6;
+      border-radius:12px;
+      padding:10px;
+      font-size:11px;
+      line-height:1.15;
+      overflow:hidden;
+    }
+
+    /* Important info */
+    .important-page{
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      gap:8px;
+      height:560px;
+    }
+
+    .important-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:8px;
+    }
+
+    .important-small{
+      background:#f8f1e6;
+      border-radius:12px;
+      padding:10px;
+      font-size:11px;
+      line-height:1.15;
+      min-height:92px;
+      overflow:hidden;
+    }
+
+    .important-large{
+      font-size:12px;
+      line-height:1.18;
+      min-height:138px;
+    }
+
+    /* Chapter 14 */
+    .message-page{
+      display:grid;
+      grid-template-rows:auto auto 1fr auto;
+      gap:8px;
+      height:560px;
+    }
+
+    /* Flip sheet */
+    .flip-sheet{
+      position:absolute;
+      top:4px;
+      left:calc(50% + 14px);
+      width:calc(50% - 48px);
+      height:calc(100% - 8px);
+      transform-style:preserve-3d;
+      transform-origin:left center;
+      pointer-events:none;
+      z-index:20;
+      display:none;
+    }
+
+    .flip-sheet.show{ display:block; }
+
+    .flip-sheet.forward{
+      animation:flipForward .85s ease-in-out forwards;
+    }
+
+    .flip-sheet.backward{
+      left:0;
+      transform-origin:right center;
+      animation:flipBackward .85s ease-in-out forwards;
+    }
+
+    .flip-face{
+      position:absolute;
+      inset:0;
+      backface-visibility:hidden;
+      overflow:hidden;
+      border-radius:0 18px 18px 0;
+      background:linear-gradient(to right, #f0dfc3 0%, #fbf4e8 12%, #fffaf2 100%);
+      box-shadow:0 16px 24px rgba(0,0,0,.18);
+      border:1px solid rgba(0,0,0,.04);
+    }
+
+    .flip-face.front::before,
+    .flip-face.back::before{
+      content:"";
+      position:absolute;
+      top:0; bottom:0;
+      width:22px;
+      background:linear-gradient(to right, rgba(0,0,0,.08), rgba(255,255,255,.32));
+      left:0;
+      pointer-events:none;
+    }
+
+    .flip-face.back{
+      transform:rotateY(180deg);
+      background:linear-gradient(to left, #f0dfc3 0%, #fbf4e8 12%, #fffaf2 100%);
+    }
+
+    .flip-face.back::before{
+      left:auto;
+      right:0;
+      background:linear-gradient(to left, rgba(0,0,0,.08), rgba(255,255,255,.32));
+    }
+
+    .flip-pad{
+      padding:18px 14px 14px 18px;
+      height:100%;
+      overflow:hidden;
+    }
+
+    @keyframes flipForward{
+      0% { transform:rotateY(0deg); filter:brightness(1); }
+      48% { filter:brightness(.92); }
+      100% { transform:rotateY(-180deg); filter:brightness(1); }
+    }
+
+    @keyframes flipBackward{
+      0% { transform:rotateY(0deg); filter:brightness(1); }
+      48% { filter:brightness(.92); }
+      100% { transform:rotateY(180deg); filter:brightness(1); }
+    }
+  </style>
 </head>
 <body>
 
   <div id="closedStage" class="stage">
-    <div id="closedBook" class="cover-stage" onclick="openBook()">
-      <div class="cover-ornament-top"></div>
-      <div class="cover-ornament-bottom"></div>
-      <div class="cover-title">For You When I'm Gone</div>
-      <div class="cover-subtitle">Everything I wanted you to remember, know, and feel.</div>
-      <div class="tap-note">Tap to open</div>
+    <div class="closed-book-wrap" onclick="openBook()">
+      <div class="page-stack-right"></div>
+      <div class="page-stack-bottom"></div>
+
+      <div class="closed-book">
+        <div class="cover-top-rule-1"></div>
+        <div class="cover-top-rule-2"></div>
+        <div class="cover-side-rule-1"></div>
+        <div class="cover-side-rule-2"></div>
+
+        <div class="cover-for-you">For You</div>
+        <div class="cover-when-gone">When I'm Gone</div>
+
+        <div class="cover-photo-slot">Cover picture</div>
+        <div class="tap-open-note">Tap to open</div>
+      </div>
     </div>
   </div>
 
   <div id="openedStage" class="open-wrap">
     <div class="open-book">
-      <div class="left-cover-back"></div>
+
+      <div class="left-cover"></div>
       <div class="spine"></div>
 
-      <div class="right-page">
-        <div class="page-content">
+      <div class="page-side left-page">
+        <div class="page-pad" id="leftPagePad"></div>
+      </div>
 
-          <div id="page0" class="page-panel" data-chapter="0" data-page-in-chapter="0" data-parent-page="">
-            <div class="page-kicker">Index</div>
-            <h1>Book Index</h1>
+      <div class="page-side right-page">
+        <div class="page-pad" id="rightPagePad"></div>
 
-            <div class="index-list">
-              <div class="index-link" onclick="goToChapter(1)">Chapter 1 — About you</div>
-              <div class="index-link" onclick="goToChapter(2)">Chapter 2 — Father</div>
-              <div class="index-link" onclick="goToChapter(3)">Chapter 3 — Mother</div>
-              <div class="index-link" onclick="goToChapter(4)">Chapter 4 — Brothers & Sisters</div>
-              <div class="index-link" onclick="goToChapter(5)">Chapter 5 — You</div>
-              <div class="index-link" onclick="goToChapter(6)">Chapter 6 — Jobs</div>
-              <div class="index-link" onclick="goToChapter(7)">Chapter 7 — Marriage</div>
-              <div class="index-link" onclick="goToChapter(8)">Chapter 8 — When I Started My Family</div>
-              <div class="index-link" onclick="goToChapter(9)">Chapter 9 — Family stories</div>
-              <div class="index-link" onclick="goToChapter(10)">Chapter 10 — Friends</div>
-              <div class="index-link" onclick="goToChapter(11)">Chapter 11 — Diary</div>
-              <div class="index-link" onclick="goToChapter(12)">Chapter 12 — Contacts and Emails</div>
-              <div class="index-link" onclick="goToChapter(13)">Chapter 13 — Important Information</div>
-              <div class="index-link" onclick="goToChapter(14)">Chapter 14 — Angel Message</div>
+        <div id="flipSheet" class="flip-sheet">
+          <div class="flip-face front">
+            <div class="flip-pad" id="flipFrontPad"></div>
+          </div>
+          <div class="flip-face back">
+            <div class="flip-pad" id="flipBackPad"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rail">
+        <div class="rail-item rail-close" onclick="closeBook()">
+          C<br>L<br>O<br>S<br>E<br><br>B<br>O<br>O<br>K
+        </div>
+
+        <div id="railAdd" class="rail-item rail-add" style="display:none;" onclick="addNewPage()">
+          +<br>N<br>E<br>W<br><br>P<br>A<br>G<br>E
+        </div>
+
+        <div id="railBack" class="rail-item rail-back" onclick="flipBackPage()">
+          F<br>L<br>I<br>P<br><br>B<br>A<br>C<br>K
+        </div>
+
+        <div class="rail-item rail-index" onclick="goToIndex()">
+          I<br>N<br>D<br>E<br>X
+        </div>
+
+        <div class="rail-item rail-next" onclick="goToNextChapter()">
+          N<br>E<br>X<br>T<br><br>C<br>H<br>A<br>P<br>T<br>E<br>R
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BASE_PAGES = [
+      { chapter: 0, title: "Book Index", type: "index" },
+      { chapter: 1, title: "About You", type: "about" },
+      { chapter: 2, title: "Father", type: "collage" },
+      { chapter: 3, title: "Mother", type: "collage" },
+      { chapter: 4, title: "Brothers & Sisters", type: "collage" },
+      { chapter: 5, title: "You", type: "collage" },
+      { chapter: 6, title: "Jobs Timeline", type: "jobs" },
+      { chapter: 7, title: "Marriage", type: "topPhoto" },
+      { chapter: 8, title: "When I Started My Family", type: "topPhoto" },
+      { chapter: 9, title: "Family Stories", type: "topPhoto" },
+      { chapter: 10, title: "Friends", type: "topPhoto" },
+      { chapter: 11, title: "Diary", type: "diary" },
+      { chapter: 12, title: "Contacts and Emails", type: "contacts" },
+      { chapter: 13, title: "Important Information", type: "important" },
+      { chapter: 14, title: "Angel Message", type: "angel" }
+    ];
+
+    let pages = [];
+    let currentIndex = 0;
+    let animating = false;
+
+    const addableChapters = new Set([4,6,7,8,9,10,11,12,13]);
+
+    function resetPages() {
+      pages = BASE_PAGES.map((p, i) => ({
+        ...p,
+        id: `page-${i}`,
+        pageInChapter: p.chapter === 0 ? 0 : 1,
+        parentIndex: null
+      }));
+      recomputeChapterPageNumbers();
+    }
+
+    function recomputeChapterPageNumbers() {
+      const counts = {};
+      pages.forEach(p => {
+        if (p.chapter === 0) {
+          p.pageInChapter = 0;
+          return;
+        }
+        counts[p.chapter] = (counts[p.chapter] || 0) + 1;
+        p.pageInChapter = counts[p.chapter];
+      });
+    }
+
+    function openBook() {
+      document.getElementById("closedStage").classList.add("hidden");
+      document.getElementById("openedStage").classList.add("show");
+      if (!pages.length) resetPages();
+      currentIndex = 0;
+      renderSpread();
+    }
+
+    function closeBook() {
+      document.getElementById("openedStage").classList.remove("show");
+      document.getElementById("closedStage").classList.remove("hidden");
+    }
+
+    function getPage(i) {
+      return pages[i] || null;
+    }
+
+    function getCurrentPage() {
+      return getPage(currentIndex);
+    }
+
+    function canAddCurrentPage() {
+      const page = getCurrentPage();
+      return !!page && addableChapters.has(page.chapter);
+    }
+
+    function renderSpread() {
+      const current = getCurrentPage();
+      const previous = getPage(currentIndex - 1);
+
+      document.getElementById("leftPagePad").innerHTML = renderLeftPage(previous);
+      document.getElementById("rightPagePad").innerHTML = renderRightPage(current);
+
+      document.getElementById("railAdd").style.display = canAddCurrentPage() ? "block" : "none";
+      document.getElementById("railBack").style.display = currentIndex > 0 ? "block" : "none";
+    }
+
+    function goToIndex() {
+      if (animating) return;
+      currentIndex = 0;
+      renderSpread();
+    }
+
+    function goToChapter(chapterNumber) {
+      if (animating) return;
+      const index = pages.findIndex(p => p.chapter === chapterNumber && p.pageInChapter === 1);
+      if (index >= 0) {
+        currentIndex = index;
+        renderSpread();
+      }
+    }
+
+    function goToNextChapter() {
+      if (animating) return;
+      const current = getCurrentPage();
+      if (!current) return;
+      if (current.chapter === 0) {
+        animateToIndex(1, "forward");
+        return;
+      }
+      const nextIndex = pages.findIndex((p, idx) => idx > currentIndex && p.pageInChapter === 1 && p.chapter > current.chapter);
+      if (nextIndex >= 0) animateToIndex(nextIndex, "forward");
+    }
+
+    function flipBackPage() {
+      if (animating || currentIndex === 0) return;
+      animateToIndex(currentIndex - 1, "backward");
+    }
+
+    function addNewPage() {
+      if (animating) return;
+      const current = getCurrentPage();
+      if (!current || !addableChapters.has(current.chapter)) return;
+
+      const clone = {
+        chapter: current.chapter,
+        title: current.title,
+        type: current.type,
+        id: `page-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
+        pageInChapter: 1,
+        parentIndex: currentIndex
+      };
+
+      pages.splice(currentIndex + 1, 0, clone);
+      recomputeChapterPageNumbers();
+      animateToIndex(currentIndex + 1, "forward");
+    }
+
+    function animateToIndex(targetIndex, direction) {
+      if (animating) return;
+      const current = getCurrentPage();
+      const target = getPage(targetIndex);
+      if (!current || !target) return;
+
+      animating = true;
+      const flipSheet = document.getElementById("flipSheet");
+      const frontPad = document.getElementById("flipFrontPad");
+      const backPad = document.getElementById("flipBackPad");
+
+      if (direction === "forward") {
+        frontPad.innerHTML = renderRightPage(current);
+        backPad.innerHTML = renderLeftStylePage(current);
+      } else {
+        frontPad.innerHTML = renderLeftStylePage(getPage(currentIndex - 1) || current);
+        backPad.innerHTML = renderRightPage(getPage(currentIndex - 1) || current);
+      }
+
+      flipSheet.className = "flip-sheet show " + direction;
+
+      const onDone = () => {
+        flipSheet.removeEventListener("animationend", onDone);
+        flipSheet.className = "flip-sheet";
+        currentIndex = targetIndex;
+        renderSpread();
+        animating = false;
+      };
+
+      flipSheet.addEventListener("animationend", onDone);
+    }
+
+    function renderLeftPage(page) {
+      if (!page) {
+        return `
+          <div class="left-page-sheet">
+            <div class="page-kicker">Back Cover</div>
+            <h1 style="opacity:.72;">For You When I'm Gone</h1>
+            <div class="left-ghost-box">
+              The pages you flip will rest here on the left side of the open book.
             </div>
+            <div class="left-ghost-box">
+              Turn a page to begin building the story.
+            </div>
+          </div>
+        `;
+      }
+      return renderLeftStylePage(page);
+    }
 
+    function renderLeftStylePage(page) {
+      return `
+        <div class="left-page-sheet">
+          <div class="page-kicker">Chapter ${page.chapter} — Page ${page.pageInChapter}</div>
+          <h1 style="opacity:.84;">${page.title}</h1>
+          <div class="left-back-photo">Back of turned page</div>
+          <div class="left-ghost-box">
+            This page has been turned and is now resting on the left side of the open book.
+          </div>
+        </div>
+      `;
+    }
+
+    function renderRightPage(page) {
+      if (!page) return "";
+      const kicker = page.chapter === 0 ? `<div class="page-kicker">Index</div>` : `<div class="page-kicker">Chapter ${page.chapter} — Page ${page.pageInChapter}</div>`;
+
+      switch (page.type) {
+        case "index":
+          return `
+            ${kicker}
+            <h1>Book Index</h1>
+            <div class="index-list">
+              ${BASE_PAGES.filter(p => p.chapter > 0).map(p => `
+                <div class="index-link" onclick="goToChapter(${p.chapter})">Chapter ${p.chapter} — ${p.title}</div>
+              `).join("")}
+            </div>
             <div class="instruction-box">
               Tap a chapter to open it. Use NEXT CHAPTER to move through the book in order.
             </div>
-          </div>
+          `;
 
-          <div id="page1" class="page-panel" data-chapter="1" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
+        case "about":
+          return `
+            ${kicker}
             <h1>About You</h1>
             <div class="about-layout">
               <div class="intro">A page about who you are.</div>
@@ -669,16 +1076,17 @@
                 Write about who you are, your life, and what matters most.
               </div>
             </div>
-          </div>
+          `;
 
-          <div id="page2" class="page-panel" data-chapter="2" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
-            <h1>Father</h1>
+        case "collage":
+          return `
+            ${kicker}
+            <h1>${page.title}</h1>
             <div class="collage-page">
-              <div class="intro">A page for your father, with one main picture and smaller memory photos around him.</div>
+              <div class="intro">A page with one main picture and smaller memory photos around it.</div>
               <div class="album-collage">
                 <div class="album-frame">
-                  <div class="main-photo">Main picture of your father</div>
+                  <div class="main-photo">Main picture</div>
                   <div class="mini-photo mini-top-left">Memory photo</div>
                   <div class="mini-photo mini-top-right">Memory photo</div>
                   <div class="mini-photo mini-bottom-left">Memory photo</div>
@@ -686,96 +1094,22 @@
                 </div>
               </div>
               <div class="story-box">
-                <strong>Story about your father:</strong><br><br>
-                Write about who he was, the memories you shared, what made him special, and anything you want remembered.
+                <strong>Story:</strong><br><br>
+                Write the story behind these memories and why this person matters.
               </div>
               <div class="note-box">
-                <strong>More about him:</strong><br><br>
-                Add favorite sayings, important lessons, special dates, or family memories that belong here.
+                <strong>More memories:</strong><br><br>
+                Add special dates, favorite sayings, traditions, or more details worth keeping.
               </div>
             </div>
-          </div>
+          `;
 
-          <div id="page3" class="page-panel" data-chapter="3" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
-            <h1>Mother</h1>
-            <div class="collage-page">
-              <div class="intro">A page for your mother, with one main picture and smaller memory photos around her.</div>
-              <div class="album-collage">
-                <div class="album-frame">
-                  <div class="main-photo">Main picture of your mother</div>
-                  <div class="mini-photo mini-top-left">Memory photo</div>
-                  <div class="mini-photo mini-top-right">Memory photo</div>
-                  <div class="mini-photo mini-bottom-left">Memory photo</div>
-                  <div class="mini-photo mini-bottom-right">Memory photo</div>
-                </div>
-              </div>
-              <div class="story-box">
-                <strong>Story about your mother:</strong><br><br>
-                Write about who she was, the memories you shared, what made her special, and anything you want remembered.
-              </div>
-              <div class="note-box">
-                <strong>More about her:</strong><br><br>
-                Add traditions, family moments, loving memories, or anything you want preserved here.
-              </div>
-            </div>
-          </div>
-
-          <div id="page4" class="page-panel" data-chapter="4" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
-            <h1>Brothers & Sisters</h1>
-            <div class="collage-page">
-              <div class="intro">A page for each brother or sister, with one main picture and smaller memory photos around them.</div>
-              <div class="album-collage">
-                <div class="album-frame">
-                  <div class="main-photo">Main picture of your brother or sister</div>
-                  <div class="mini-photo mini-top-left">Memory photo</div>
-                  <div class="mini-photo mini-top-right">Memory photo</div>
-                  <div class="mini-photo mini-bottom-left">Memory photo</div>
-                  <div class="mini-photo mini-bottom-right">Memory photo</div>
-                </div>
-              </div>
-              <div class="story-box">
-                <strong>Story about your brother or sister:</strong><br><br>
-                Write about your memories together and anything you want remembered about them.
-              </div>
-              <div class="note-box">
-                <strong>Extra family memories:</strong><br><br>
-                Add birthdays, trips, inside jokes, or the things that made this bond special.
-              </div>
-            </div>
-          </div>
-
-          <div id="page5" class="page-panel" data-chapter="5" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
-            <h1>You</h1>
-            <div class="collage-page">
-              <div class="intro">A page for you, with one main picture and smaller memory photos around you.</div>
-              <div class="album-collage">
-                <div class="album-frame">
-                  <div class="main-photo">Main picture of you</div>
-                  <div class="mini-photo mini-top-left">Memory photo</div>
-                  <div class="mini-photo mini-top-right">Memory photo</div>
-                  <div class="mini-photo mini-bottom-left">Memory photo</div>
-                  <div class="mini-photo mini-bottom-right">Memory photo</div>
-                </div>
-              </div>
-              <div class="story-box">
-                <strong>Your story:</strong><br><br>
-                Write about who you are, the life you lived, what mattered to you, and anything you want remembered about you.
-              </div>
-              <div class="note-box">
-                <strong>What mattered most:</strong><br><br>
-                Add values, beliefs, favorite memories, or the things you most want people to know.
-              </div>
-            </div>
-          </div>
-
-          <div id="page6" class="page-panel" data-chapter="6" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
+        case "jobs":
+          return `
+            ${kicker}
             <h1>Jobs Timeline</h1>
             <div class="job-page">
-              <div class="intro">A timeline of the jobs you worked, the years you did them, what you were paid, and the stories that came with them.</div>
+              <div class="intro">A page for work history, photos, and the stories that came with each job.</div>
               <div class="job-card">
                 <div class="job-lines">
                   <strong>Job Title:</strong> ____________________<br>
@@ -803,78 +1137,29 @@
                 Add milestones, promotions, favorite crews, lessons learned, or the work you were proud of.
               </div>
             </div>
-          </div>
+          `;
 
-          <div id="page7" class="page-panel" data-chapter="7" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
-            <h1>Marriage</h1>
+        case "topPhoto":
+          return `
+            ${kicker}
+            <h1>${page.title}</h1>
             <div class="top-photo-page">
-              <div class="intro">A page for your marriage story, wedding memories, and pictures of the person you married.</div>
-              <div class="single-photo">Marriage photo</div>
+              <div class="intro">A page for the story, the picture, and the memory behind it.</div>
+              <div class="single-photo">${page.title} photo</div>
               <div class="story-box">
-                <strong>Your marriage story:</strong><br><br>
-                Write about who you married, how you met, your wedding day, your life together, and what this love meant to you.
+                <strong>Your story:</strong><br><br>
+                Write about this chapter, what happened, who was there, and why this part of your life mattered.
               </div>
               <div class="note-box">
                 <strong>Special moments:</strong><br><br>
-                Add more memories, trips, milestones, or anything that made your life together meaningful.
+                Add more memories, trips, milestones, or anything meaningful that belongs with this chapter.
               </div>
             </div>
-          </div>
+          `;
 
-          <div id="page8" class="page-panel" data-chapter="8" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
-            <h1>When I Started My Family</h1>
-            <div class="top-photo-page">
-              <div class="intro">A page for the beginning of your own family, the people in it, and the memories that came with it.</div>
-              <div class="single-photo">Family beginning photo</div>
-              <div class="story-box">
-                <strong>Story about starting your family:</strong><br><br>
-                Write about becoming a parent, building your family, the people in these pictures, and what those moments meant to you.
-              </div>
-              <div class="note-box">
-                <strong>Family memories:</strong><br><br>
-                Add special moments, early memories, or meaningful milestones that belong with this chapter.
-              </div>
-            </div>
-          </div>
-
-          <div id="page9" class="page-panel" data-chapter="9" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
-            <h1>Family Stories</h1>
-            <div class="top-photo-page">
-              <div class="intro">A page for family memories, photos, and the stories behind them.</div>
-              <div class="single-photo">Family story photo</div>
-              <div class="story-box">
-                <strong>Family story:</strong><br><br>
-                Write the story behind this family photo, who is in it, what happened, and why this memory matters.
-              </div>
-              <div class="note-box">
-                <strong>More details:</strong><br><br>
-                Add extra context, names, dates, places, or anything worth remembering.
-              </div>
-            </div>
-          </div>
-
-          <div id="page10" class="page-panel" data-chapter="10" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
-            <h1>Friends</h1>
-            <div class="top-photo-page">
-              <div class="intro">A page for the friends in your life and the stories that go with them.</div>
-              <div class="single-photo">Friends photo</div>
-              <div class="story-box">
-                <strong>Story about your friends:</strong><br><br>
-                Write about the moment, the people in the photo, and what made this friendship or memory special.
-              </div>
-              <div class="note-box">
-                <strong>Friend memories:</strong><br><br>
-                Add trips, laughs, hard times, loyalty, or the moments that made these friendships matter.
-              </div>
-            </div>
-          </div>
-
-          <div id="page11" class="page-panel" data-chapter="11" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
+        case "diary":
+          return `
+            ${kicker}
             <h1>Diary</h1>
             <div class="diary-page">
               <div class="intro">A private page for thoughts, memories, and anything you want to write down.</div>
@@ -891,10 +1176,11 @@
                 Add another reflection or memory that belongs with this page.
               </div>
             </div>
-          </div>
+          `;
 
-          <div id="page12" class="page-panel" data-chapter="12" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
+        case "contacts":
+          return `
+            ${kicker}
             <h1>Contacts and Emails</h1>
             <div class="contacts-page">
               <div class="intro">A page for email addresses and phone contacts that should be easy to find.</div>
@@ -924,10 +1210,11 @@
                 Add who should be called first, backup numbers, or anything else important.
               </div>
             </div>
-          </div>
+          `;
 
-          <div id="page13" class="page-panel" data-chapter="13" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
+        case "important":
+          return `
+            ${kicker}
             <h1>Important Information</h1>
             <div class="important-page">
               <div class="intro">Everything your Angel needs to know.</div>
@@ -957,10 +1244,11 @@
                 Add account notes, memberships, legal details, location information, or anything else your Angel needs.
               </div>
             </div>
-          </div>
+          `;
 
-          <div id="page14" class="page-panel" data-chapter="14" data-page-in-chapter="1" data-parent-page="">
-            <div class="page-kicker kicker-label"></div>
+        case "angel":
+          return `
+            ${kicker}
             <h1>Angel Message</h1>
             <div class="message-page">
               <div class="intro">A place for a message and a picture that goes with it.</div>
@@ -974,384 +1262,14 @@
                 Add anything you want your family, friends, or important people to remember.
               </div>
             </div>
-          </div>
+          `;
 
-        </div>
-
-        <div class="page-rail">
-          <div class="edge-close-book" onclick="closeBook()">
-            C<br>L<br>O<br>S<br>E<br><br>B<br>O<br>O<br>K
-          </div>
-
-          <div id="edgeAddPage" class="edge-add-page" style="display:none;">
-            +<br>N<br>E<br>W<br><br>P<br>A<br>G<br>E
-          </div>
-
-          <div id="edgeFlipBack" class="edge-flip-back" style="display:none;">
-            F<br>L<br>I<br>P<br><br>B<br>A<br>C<br>K
-          </div>
-
-          <div class="edge-index" onclick="goToIndex()">
-            I<br>N<br>D<br>E<br>X
-          </div>
-
-          <div class="edge-next-chapter" onclick="goToNextChapter()">
-            N<br>E<br>X<br>T<br><br>C<br>H<br>A<br>P<br>T<br>E<br>R
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    let currentPage = 0;
-    let totalPages = 15;
-    const maxChapter = 14;
-
-    function openBook() {
-      document.getElementById("closedStage").classList.add("hidden");
-      document.getElementById("openedStage").classList.add("show");
-      updateKickers();
-      showPage(currentPage);
-    }
-
-    function closeBook() {
-      document.getElementById("openedStage").classList.remove("show");
-      document.getElementById("closedStage").classList.remove("hidden");
-    }
-
-    function goToIndex() {
-      currentPage = 0;
-      showPage(currentPage);
-    }
-
-    function goToChapter(chapterNumber) {
-      const page = document.querySelector(`.page-panel[data-chapter="${chapterNumber}"][data-page-in-chapter="1"]`);
-      if (page) {
-        currentPage = parseInt(page.id.replace("page", ""), 10);
-        showPage(currentPage);
+        default:
+          return `${kicker}<h1>${page.title}</h1>`;
       }
     }
 
-    function goToNextChapter() {
-      const currentChapter = getChapter(currentPage);
-      if (currentChapter === 0) {
-        goToChapter(1);
-        return;
-      }
-      const nextChapter = currentChapter + 1;
-      if (nextChapter <= maxChapter) {
-        goToChapter(nextChapter);
-      }
-    }
-
-    function updateKickers() {
-      document.querySelectorAll(".page-panel").forEach(panel => {
-        const chapter = panel.getAttribute("data-chapter");
-        const pageInChapter = panel.getAttribute("data-page-in-chapter");
-        const kicker = panel.querySelector(".kicker-label");
-        if (kicker) {
-          kicker.textContent = `Chapter ${chapter} — Page ${pageInChapter}`;
-        }
-      });
-    }
-
-    function getChapter(pageNumber) {
-      const page = document.getElementById("page" + pageNumber);
-      return page ? parseInt(page.getAttribute("data-chapter"), 10) : null;
-    }
-
-    function getNextPageInChapter(chapterNumber) {
-      let max = 1;
-      document.querySelectorAll(`.page-panel[data-chapter="${chapterNumber}"]`).forEach(panel => {
-        const n = parseInt(panel.getAttribute("data-page-in-chapter"), 10);
-        if (n > max) max = n;
-      });
-      return max + 1;
-    }
-
-    function getAddAction(pageNumber) {
-      const chapter = getChapter(pageNumber);
-      if (chapter === 4) return addSiblingPage;
-      if (chapter === 6) return addJobPage;
-      if (chapter === 7) return addMarriagePage;
-      if (chapter === 8) return addStartedFamilyPage;
-      if (chapter === 9) return addFamilyStoryPage;
-      if (chapter === 10) return addFriendsPage;
-      if (chapter === 11) return addDiaryPage;
-      if (chapter === 12) return addContactsPage;
-      if (chapter === 13) return addImportantInfoPage;
-      return null;
-    }
-
-    function showPage(pageNumber) {
-      for (let i = 0; i < totalPages; i++) {
-        const page = document.getElementById("page" + i);
-        if (page) page.style.display = "none";
-      }
-
-      const current = document.getElementById("page" + pageNumber);
-      if (current) current.style.display = "block";
-
-      const edgeAddPage = document.getElementById("edgeAddPage");
-      const addAction = getAddAction(pageNumber);
-
-      if (addAction) {
-        edgeAddPage.style.display = "block";
-        edgeAddPage.onclick = addAction;
-      } else {
-        edgeAddPage.style.display = "none";
-        edgeAddPage.onclick = null;
-      }
-
-      const edgeFlipBack = document.getElementById("edgeFlipBack");
-      const parentPage = current ? current.getAttribute("data-parent-page") : "";
-
-      if (parentPage !== "") {
-        edgeFlipBack.style.display = "block";
-        edgeFlipBack.onclick = function () {
-          currentPage = parseInt(parentPage, 10);
-          showPage(currentPage);
-        };
-      } else {
-        edgeFlipBack.style.display = "none";
-        edgeFlipBack.onclick = null;
-      }
-    }
-
-    function addChapterPage(chapter, title, content) {
-      const n = totalPages;
-      const pageInChapter = getNextPageInChapter(chapter);
-
-      document.querySelector(".page-content").insertAdjacentHTML("beforeend", `
-        <div id="page${n}" class="page-panel" data-chapter="${chapter}" data-page-in-chapter="${pageInChapter}" data-parent-page="${currentPage}">
-          <div class="page-kicker kicker-label"></div>
-          <h1>${title}</h1>
-          ${content}
-        </div>
-      `);
-
-      totalPages++;
-      currentPage = n;
-      updateKickers();
-      showPage(currentPage);
-    }
-
-    function addSiblingPage() {
-      addChapterPage(4, "Brother / Sister", `
-        <div class="collage-page">
-          <div class="intro">Another brother or sister page with the same layout.</div>
-          <div class="album-collage">
-            <div class="album-frame">
-              <div class="main-photo">Main picture of your brother or sister</div>
-              <div class="mini-photo mini-top-left">Memory photo</div>
-              <div class="mini-photo mini-top-right">Memory photo</div>
-              <div class="mini-photo mini-bottom-left">Memory photo</div>
-              <div class="mini-photo mini-bottom-right">Memory photo</div>
-            </div>
-          </div>
-          <div class="story-box">
-            <strong>Story about your brother or sister:</strong><br><br>
-            Write about your memories together and anything you want remembered about them.
-          </div>
-          <div class="note-box">
-            <strong>Extra family memories:</strong><br><br>
-            Add birthdays, trips, inside jokes, or the things that made this bond special.
-          </div>
-        </div>
-      `);
-    }
-
-    function addJobPage() {
-      addChapterPage(6, "Jobs Timeline", `
-        <div class="job-page">
-          <div class="intro">Another job page with the same jobs layout.</div>
-          <div class="job-card">
-            <div class="job-lines">
-              <strong>Job Title:</strong> ____________________<br>
-              <strong>Years Worked:</strong> ____________________<br>
-              <strong>Starting Pay:</strong> ____________________<br>
-              <strong>Ending Pay:</strong> ____________________
-            </div>
-            <div class="job-grid">
-              <div class="job-photo">Job photo</div>
-              <div class="job-story">
-                <strong>Story about this job / photo:</strong><br><br>
-                Write about what this job was like, what the picture means, who you worked with, what you learned, and what you want remembered.
-              </div>
-            </div>
-          </div>
-          <div class="soft-box" style="font-size:12px; line-height:1.18; min-height:132px;">
-            <strong>More work details:</strong><br><br>
-            Company: ____________________<br>
-            Best part of this job: ____________________<br>
-            People you remember: ____________________<br>
-            Biggest lesson: ____________________
-          </div>
-          <div class="note-box">
-            <strong>Work memories:</strong><br><br>
-            Add milestones, promotions, favorite crews, lessons learned, or the work you were proud of.
-          </div>
-        </div>
-      `);
-    }
-
-    function addMarriagePage() {
-      addChapterPage(7, "Marriage", `
-        <div class="top-photo-page">
-          <div class="intro">Another marriage page with the same layout.</div>
-          <div class="single-photo">Marriage photo</div>
-          <div class="story-box">
-            <strong>Your marriage story:</strong><br><br>
-            Write about who you married, how you met, your wedding day, your life together, and what this love meant to you.
-          </div>
-          <div class="note-box">
-            <strong>Special moments:</strong><br><br>
-            Add more memories, trips, milestones, or anything that made your life together meaningful.
-          </div>
-        </div>
-      `);
-    }
-
-    function addStartedFamilyPage() {
-      addChapterPage(8, "When I Started My Family", `
-        <div class="top-photo-page">
-          <div class="intro">Another page with the same family beginning layout.</div>
-          <div class="single-photo">Family beginning photo</div>
-          <div class="story-box">
-            <strong>Story about starting your family:</strong><br><br>
-            Write about becoming a parent, building your family, the people in these pictures, and what those moments meant to you.
-          </div>
-          <div class="note-box">
-            <strong>Family memories:</strong><br><br>
-            Add special moments, early memories, or meaningful milestones that belong with this chapter.
-          </div>
-        </div>
-      `);
-    }
-
-    function addFamilyStoryPage() {
-      addChapterPage(9, "Family Stories", `
-        <div class="top-photo-page">
-          <div class="intro">Another family story page with the same layout.</div>
-          <div class="single-photo">Family story photo</div>
-          <div class="story-box">
-            <strong>Family story:</strong><br><br>
-            Write the story behind this family photo, who is in it, what happened, and why this memory matters.
-          </div>
-          <div class="note-box">
-            <strong>More details:</strong><br><br>
-            Add extra context, names, dates, places, or anything worth remembering.
-          </div>
-        </div>
-      `);
-    }
-
-    function addFriendsPage() {
-      addChapterPage(10, "Friends", `
-        <div class="top-photo-page">
-          <div class="intro">Another friends page with the same layout.</div>
-          <div class="single-photo">Friends photo</div>
-          <div class="story-box">
-            <strong>Story about your friends:</strong><br><br>
-            Write about the moment, the people in the photo, and what made this friendship or memory special.
-          </div>
-          <div class="note-box">
-            <strong>Friend memories:</strong><br><br>
-            Add trips, laughs, hard times, loyalty, or the moments that made these friendships matter.
-          </div>
-        </div>
-      `);
-    }
-
-    function addDiaryPage() {
-      addChapterPage(11, "Diary", `
-        <div class="diary-page">
-          <div class="intro">Another diary page with the same layout.</div>
-          <div class="diary-box">
-            <strong>Title or Date:</strong> ____________________<br><br>
-            Write whatever you want here...
-          </div>
-          <div class="soft-box" style="font-size:12px; line-height:1.2; min-height:136px;">
-            <strong>Another memory:</strong><br><br>
-            Add another thought, feeling, story, or note that belongs on this diary page.
-          </div>
-          <div class="note-box">
-            <strong>More thoughts:</strong><br><br>
-            Add another reflection or memory that belongs with this page.
-          </div>
-        </div>
-      `);
-    }
-
-    function addContactsPage() {
-      addChapterPage(12, "Contacts and Emails", `
-        <div class="contacts-page">
-          <div class="intro">Another page for email addresses and phone contacts that should be easy to find.</div>
-          <div class="contacts-grid">
-            <div class="mini-info-box">
-              <strong>Email List:</strong><br><br>
-              Name: __________________<br>
-              Email: __________________<br><br>
-              Name: __________________<br>
-              Email: __________________<br><br>
-              Name: __________________<br>
-              Email: __________________
-            </div>
-
-            <div class="mini-info-box">
-              <strong>Contacts & Phone Numbers:</strong><br><br>
-              Name: __________________<br>
-              Phone: __________________<br><br>
-              Name: __________________<br>
-              Phone: __________________<br><br>
-              Name: __________________<br>
-              Phone: __________________
-            </div>
-          </div>
-          <div class="note-box">
-            <strong>Extra contact notes:</strong><br><br>
-            Add who should be called first, backup numbers, or anything else important.
-          </div>
-        </div>
-      `);
-    }
-
-    function addImportantInfoPage() {
-      addChapterPage(13, "Important Information", `
-        <div class="important-page">
-          <div class="intro">Another page for important information your Angel needs to know.</div>
-          <div>
-            <div class="important-grid">
-              <div class="important-small">
-                <strong>Insurance:</strong><br><br>
-                ___________________________<br>
-                ___________________________
-              </div>
-              <div class="important-small">
-                <strong>Doctor:</strong><br><br>
-                ___________________________<br>
-                ___________________________
-              </div>
-            </div>
-
-            <div class="important-large">
-              <strong>Final Wishes:</strong><br><br>
-              ___________________________<br><br>
-              ___________________________<br><br>
-              ___________________________
-            </div>
-          </div>
-          <div class="note-box">
-            <strong>Extra important details:</strong><br><br>
-            Add account notes, memberships, legal details, location information, or anything else your Angel needs.
-          </div>
-        </div>
-      `);
-    }
-
-    updateKickers();
-    showPage(0);
+    resetPages();
   </script>
 </body>
 </html>

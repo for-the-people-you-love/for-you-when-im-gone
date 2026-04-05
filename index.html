@@ -31,19 +31,19 @@
     box-sizing: border-box;
   }
 
-  /* CLOSED BOOK - BROWN LEATHER VERSION ONLY */
+  /* CLOSED BOOK - COVER LINES MATCH PHOTO LAYOUT */
   .cover-stage {
     width: 320px;
     height: 455px;
     background:
-      radial-gradient(circle at 22% 18%, rgba(255,255,255,0.10), transparent 20%),
-      linear-gradient(145deg, #8a613d 0%, #6f4b2f 35%, #5b3d27 68%, #4a311f 100%);
+      radial-gradient(circle at 24% 22%, rgba(255,255,255,0.08), transparent 22%),
+      linear-gradient(145deg, #765133 0%, #614128 40%, #513520 72%, #422a1b 100%);
     border: 3px solid #c7964b;
     border-radius: 10px 14px 12px 10px;
     box-shadow:
       16px 20px 34px rgba(0,0,0,0.45),
       inset 0 0 0 1px rgba(255,240,210,0.08),
-      inset -12px -16px 26px rgba(0,0,0,0.16);
+      inset -10px -14px 22px rgba(0,0,0,0.16);
     position: relative;
     display: flex;
     justify-content: center;
@@ -58,9 +58,9 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 24px;
+    width: 22px;
     height: 100%;
-    background: linear-gradient(to right, rgba(63,36,18,0.55), rgba(255,255,255,0.04));
+    background: linear-gradient(to right, rgba(63,36,18,0.48), rgba(255,255,255,0.04));
     border-radius: 8px 0 0 8px;
   }
 
@@ -68,7 +68,7 @@
     content: "";
     position: absolute;
     inset: 12px;
-    border: 1px solid rgba(240,209,138,0.38);
+    border: 1px solid rgba(240,209,138,0.34);
     border-radius: 6px 10px 8px 6px;
     pointer-events: none;
   }
@@ -78,94 +78,95 @@
     display: none;
   }
 
+  /* Exact style placement more like reference photo */
   .cover-horizontal-line-top,
   .cover-horizontal-line-bottom {
     position: absolute;
-    left: 72px;
-    right: 72px;
+    left: 94px;
+    right: 34px;
     height: 2px;
-    background: linear-gradient(to right, transparent, #d8b26a, transparent);
-    box-shadow: 0 0 4px rgba(216,178,106,0.22);
+    background: #d4ae68;
+    box-shadow: 0 0 2px rgba(212,174,104,0.18);
   }
 
   .cover-horizontal-line-top {
-    top: 92px;
+    top: 122px;
   }
 
   .cover-horizontal-line-bottom {
-    top: 128px;
+    top: 160px;
   }
 
   .cover-vertical-line-left,
   .cover-vertical-line-right {
     position: absolute;
-    top: 152px;
-    bottom: 74px;
+    top: 74px;
+    bottom: 82px;
     width: 2px;
-    background: linear-gradient(to bottom, transparent, #d8b26a, transparent);
-    box-shadow: 0 0 4px rgba(216,178,106,0.22);
+    background: #d4ae68;
+    box-shadow: 0 0 2px rgba(212,174,104,0.18);
   }
 
   .cover-vertical-line-left {
-    right: 86px;
+    left: 108px;
   }
 
   .cover-vertical-line-right {
-    right: 54px;
+    left: 152px;
   }
 
   .cover-title {
     position: absolute;
-    top: 98px;
-    left: 82px;
-    right: 82px;
+    top: 128px;
+    left: 160px;
+    right: 42px;
     font-size: 24px;
     color: #efd39a;
     line-height: 1;
     letter-spacing: 1px;
     margin: 0;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.22);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.18);
     z-index: 1;
   }
 
   .cover-subtitle {
     position: absolute;
-    top: 160px;
-    right: 60px;
-    bottom: 82px;
-    width: 20px;
+    top: 86px;
+    bottom: 92px;
+    left: 114px;
+    width: 32px;
     color: #efd39a;
-    font-size: 19px;
+    font-size: 17px;
     line-height: 1;
     letter-spacing: 1px;
     font-style: normal;
     writing-mode: vertical-rl;
     text-orientation: mixed;
     z-index: 1;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.22);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.18);
   }
 
   .cover-photo-box {
     position: absolute;
-    left: 86px;
-    top: 168px;
-    width: 150px;
-    height: 196px;
+    left: 174px;
+    top: 184px;
+    width: 112px;
+    height: 150px;
     border: 2px solid #c7964b;
-    border-radius: 8px;
+    border-radius: 6px;
     background:
       linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.05)),
-      #7a5637;
+      #6f4d31;
     box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,0.04),
-      0 4px 10px rgba(0,0,0,0.16);
+      inset 0 0 0 1px rgba(255,255,255,0.03),
+      0 4px 10px rgba(0,0,0,0.14);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #ead7b2;
     font-size: 14px;
     text-align: center;
-    padding: 10px;
+    padding: 8px;
     box-sizing: border-box;
     z-index: 1;
   }

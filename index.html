@@ -1,166 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>For You When I'm Gone</title>
 
 <style>
 body {
   margin: 0;
   font-family: Georgia, serif;
-  height: 100vh;
   overflow: hidden;
+}
 
-  /* REAL MARBLE LOOK (STRONGER) */
+/* ===== MARBLE BACKGROUND (OPTION A) ===== */
+body {
   background:
-    linear-gradient(120deg, #d9f3ff 0%, #b8e0f5 30%, #8fc3e0 60%, #6ba8cf 100%),
-    repeating-linear-gradient(
-      60deg,
-      rgba(255,255,255,0.15) 0px,
-      rgba(255,255,255,0.15) 2px,
-      transparent 2px,
-      transparent 40px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(0,0,0,0.08) 0px,
-      rgba(0,0,0,0.08) 1px,
-      transparent 1px,
-      transparent 35px
-    );
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.25), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.15), transparent 40%),
+    linear-gradient(135deg, #7fb3d5, #2e86c1);
   background-blend-mode: overlay;
 }
 
-/* CLOSED STATE */
+/* ===== CLOSED BOOK STAGE ===== */
 #closedStage {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  width: 100vw;
   height: 100vh;
-  padding-right: 4%;
+  display: flex;
+  justify-content: flex-end; /* push book to right */
+  align-items: center;
+  padding-right: 5%;
 }
 
-.book-cover {
-  width: 45vw;
-  max-width: 500px;
+/* ===== BOOK IMAGE ===== */
+.book {
+  width: 45vw; /* THIS is your 50% bigger feel */
+  max-width: 700px;
   cursor: pointer;
   transition: transform 0.3s ease;
 }
 
-.book-cover:hover {
+.book:hover {
   transform: scale(1.03);
-}
-
-.book-cover img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-  border-radius: 4px;
-}
-
-/* OPEN STATE */
-#openedStage {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.open-book {
-  width: 90vw;
-  max-width: 1100px;
-  height: 650px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-}
-
-/* LEFT PAGE */
-.left-page {
-  background: linear-gradient(to right, #5a3a20, #3b2415);
-}
-
-/* RIGHT PAGE */
-.right-page {
-  background: #fffaf2;
-  color: #4a2d1a;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-h1 {
-  margin-top: 0;
-}
-
-.chapter {
-  cursor: pointer;
-  margin: 10px 0;
-  font-size: 18px;
-}
-
-button {
-  margin-top: 20px;
-  padding: 8px 14px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- CLOSED -->
+<!-- CLOSED BOOK -->
 <div id="closedStage">
-  <div class="book-cover" onclick="openBook()">
-    <img src="book.jpg" alt="Book Cover">
-  </div>
-</div>
-
-<!-- OPEN -->
-<div id="openedStage">
-  <div class="open-book">
-
-    <div class="left-page"></div>
-
-    <div class="right-page">
-      <h1>Book Index</h1>
-
-      <div class="chapter" onclick="goToPage(1)">Chapter 1 — About You</div>
-      <div class="chapter" onclick="goToPage(2)">Chapter 2 — Father</div>
-      <div class="chapter" onclick="goToPage(3)">Chapter 3 — Mother</div>
-
-      <div id="pageContent"></div>
-
-      <button onclick="goToIndex()">Back to Index</button>
-    </div>
-
-  </div>
+  <img src="book.jpg" class="book" onclick="openBook()" />
 </div>
 
 <script>
-function openBook(){
-  document.getElementById("closedStage").style.display = "none";
-  document.getElementById("openedStage").style.display = "flex";
-}
+function openBook() {
+  document.body.innerHTML = `
+    <div style="
+      width:100vw;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      font-family: Georgia, serif;
+    ">
+      <div style="
+        width:90vw;
+        height:80vh;
+        display:flex;
+        box-shadow:0 20px 50px rgba(0,0,0,0.3);
+      ">
+        
+        <!-- LEFT (BACK OF PAGES) -->
+        <div style="
+          width:50%;
+          background:#5a3e2b;
+        "></div>
 
-function goToIndex(){
-  document.getElementById("pageContent").innerHTML = "";
-}
+        <!-- RIGHT (ACTIVE PAGE) -->
+        <div style="
+          width:50%;
+          background:#f4f1ea;
+          padding:40px;
+          color:#3e2a1f;
+        ">
+          <h1>Book Index</h1>
 
-function goToPage(n){
-  let content = "";
+          <p>Chapter 1 — About You</p>
+          <p>Chapter 2 — Father</p>
+          <p>Chapter 3 — Mother</p>
 
-  if(n===1){
-    content = "<h2>About You</h2><p>This is your story page.</p>";
-  }
-  if(n===2){
-    content = "<h2>Father</h2><p>Story about your father.</p>";
-  }
-  if(n===3){
-    content = "<h2>Mother</h2><p>Story about your mother.</p>";
-  }
+          <br><br>
+          <button onclick="location.reload()">Close Book</button>
+        </div>
 
-  document.getElementById("pageContent").innerHTML = content;
+      </div>
+    </div>
+  `;
 }
 </script>
 

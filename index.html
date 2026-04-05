@@ -8,55 +8,86 @@
 <style>
 body {
   margin: 0;
-  background: #1a120b;
   font-family: Georgia, serif;
+  height: 100vh;
+  overflow: hidden;
+
+  /* SOFT BLUE MARBLE */
+  background:
+    radial-gradient(circle at 20% 30%, #cfe9f7 0%, transparent 40%),
+    radial-gradient(circle at 70% 60%, #9ecae1 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, #6baed6 0%, transparent 50%),
+    linear-gradient(to bottom, #d9f0ff, #a6cfe6);
 }
 
-/* CLOSED BOOK */
+/* CLOSED STATE */
 #closedStage {
   display: flex;
-  height: 100vh;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
+  height: 100vh;
+  padding-right: 5%;
 }
 
 .book-cover {
-  width: 320px;
-  height: 460px;
+  width: 45vw;
+  max-width: 420px;
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.book-cover:hover {
+  transform: scale(1.02);
 }
 
 .book-cover img {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
 }
 
-/* OPEN BOOK */
+/* OPEN STATE */
 #openedStage {
   display: none;
-  height: 100vh;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 
 .open-book {
-  width: 900px;
-  height: 600px;
+  width: 90vw;
+  max-width: 1100px;
+  height: 650px;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
 }
 
+/* LEFT PAGE (back of pages) */
 .left-page {
-  background: #5a3a20;
+  background: linear-gradient(to right, #5a3a20, #3b2415);
 }
 
+/* RIGHT PAGE (active) */
 .right-page {
   background: #fffaf2;
   color: #4a2d1a;
   padding: 20px;
+  overflow-y: auto;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+.chapter {
+  cursor: pointer;
+  margin: 8px 0;
+}
+
+/* BUTTON */
+button {
+  margin-top: 20px;
 }
 </style>
 </head>
@@ -73,16 +104,21 @@ body {
 <!-- OPEN -->
 <div id="openedStage">
   <div class="open-book">
+
     <div class="left-page"></div>
 
     <div class="right-page">
       <h1>Book Index</h1>
-      <p onclick="goToPage(1)">Chapter 1 — About You</p>
-      <p onclick="goToPage(2)">Chapter 2 — Father</p>
-      <p onclick="goToPage(3)">Chapter 3 — Mother</p>
+
+      <div class="chapter" onclick="goToPage(1)">Chapter 1 — About You</div>
+      <div class="chapter" onclick="goToPage(2)">Chapter 2 — Father</div>
+      <div class="chapter" onclick="goToPage(3)">Chapter 3 — Mother</div>
 
       <div id="pageContent"></div>
+
+      <button onclick="goToIndex()">Back to Index</button>
     </div>
+
   </div>
 </div>
 
@@ -92,12 +128,22 @@ function openBook(){
   document.getElementById("openedStage").style.display = "flex";
 }
 
+function goToIndex(){
+  document.getElementById("pageContent").innerHTML = "";
+}
+
 function goToPage(n){
   let content = "";
 
-  if(n===1) content = "<h2>About You</h2>";
-  if(n===2) content = "<h2>Father</h2>";
-  if(n===3) content = "<h2>Mother</h2>";
+  if(n===1){
+    content = "<h2>About You</h2><p>This is your story page.</p>";
+  }
+  if(n===2){
+    content = "<h2>Father</h2><p>Story about your father.</p>";
+  }
+  if(n===3){
+    content = "<h2>Mother</h2><p>Story about your mother.</p>";
+  }
 
   document.getElementById("pageContent").innerHTML = content;
 }

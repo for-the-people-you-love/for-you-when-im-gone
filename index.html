@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>For You When I'm Gone</title>
 
 <style>
@@ -24,7 +24,6 @@ html, body {
   align-items: center;
 }
 
-/* WRAP (so we can overlay text) */
 .book-wrap {
   position: relative;
   width: 100vw;
@@ -34,16 +33,16 @@ html, body {
   align-items: center;
 }
 
-/* BOOK IMAGE */
 .book {
   width: 112vw;
   height: 112vh;
   object-fit: contain;
   display: block;
   cursor: pointer;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-/* TAP TEXT */
 .tap-text {
   position: absolute;
   bottom: 20%;
@@ -63,6 +62,7 @@ html, body {
   height: 100vh;
   justify-content: center;
   align-items: center;
+  background: #f3f3f3;
 }
 
 .open-book {
@@ -74,45 +74,222 @@ html, body {
 
 .left-page {
   width: 50%;
-  background: #5a3a25;
+  background: linear-gradient(to right, #6a4a31, #4f3522);
 }
 
 .right-page {
   width: 50%;
   background: #f8f3ea;
-  padding: 30px;
+  color: #4a2d1a;
+  padding: 28px;
   box-sizing: border-box;
   overflow-y: auto;
 }
 
-h1 {
-  margin: 0 0 20px 0;
+.page {
+  display: none;
 }
 
-.chapter {
-  font-size: 22px;
-  margin: 15px 0;
+.page.active {
+  display: block;
+}
+
+h1 {
+  margin: 0 0 14px 0;
+  font-size: 44px;
+  line-height: 1;
+}
+
+h2 {
+  margin: 0 0 14px 0;
+  font-size: 34px;
+  line-height: 1.05;
+}
+
+.page-kicker {
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #9c6c37;
+  margin-bottom: 10px;
+}
+
+.intro {
+  font-size: 20px;
+  line-height: 1.3;
+  margin-bottom: 18px;
+  color: #694c35;
+}
+
+.chapter-link {
+  font-size: 26px;
+  margin: 12px 0;
   cursor: pointer;
 }
 
-#pageContent {
-  margin-top: 20px;
+.chapter-link:hover {
+  text-decoration: underline;
+}
+
+.box {
+  background: rgba(255,255,255,0.92);
+  border-radius: 18px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  margin-bottom: 18px;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.photo-box {
+  width: 180px;
+  height: 190px;
+  border: 3px solid #c7964b;
+  border-radius: 14px;
+  background: #efe4d1;
+  color: #8a6a45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 22px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 18px;
+}
+
+.top-photo-page .photo-box,
+.message-page .photo-box,
+.about-page .photo-box {
+  margin-bottom: 20px;
+}
+
+.collage-frame {
+  position: relative;
+  width: 360px;
+  height: 280px;
+  margin: 10px auto 24px auto;
+}
+
+.main-photo {
+  position: absolute;
+  top: 42px;
+  left: 100px;
+  width: 160px;
+  height: 190px;
+  border: 3px solid #c7964b;
+  border-radius: 16px;
+  background: #efe4d1;
+  color: #8a6a45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 22px;
+  padding: 8px;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+.mini-photo {
+  position: absolute;
+  width: 95px;
+  height: 105px;
+  border: 3px solid #c7964b;
+  border-radius: 12px;
+  background: #f4eadb;
+  color: #8a6a45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 16px;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.mini-top-left { top: 0; left: 10px; transform: rotate(-6deg); }
+.mini-top-right { top: 2px; right: 10px; transform: rotate(6deg); }
+.mini-bottom-left { bottom: 0; left: 0; transform: rotate(4deg); }
+.mini-bottom-right { bottom: 0; right: 0; transform: rotate(-4deg); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 18px;
+  align-items: start;
+}
+
+.job-card {
+  background: rgba(255,255,255,0.92);
+  border-radius: 18px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  margin-bottom: 18px;
+}
+
+.job-grid {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.job-photo {
+  width: 140px;
+  height: 165px;
+  border: 3px solid #c7964b;
+  border-radius: 14px;
+  background: #efe4d1;
+  color: #8a6a45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 20px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.job-story {
+  background: #f8f1e6;
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 19px;
+  line-height: 1.3;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.small-box {
+  background: #f8f1e6;
+  border-radius: 14px;
+  padding: 18px;
+  font-size: 19px;
+  line-height: 1.3;
 }
 
 button {
-  margin-top: 20px;
-  padding: 10px;
+  margin-top: 14px;
+  margin-right: 10px;
+  padding: 12px 18px;
+  font-size: 18px;
+  font-family: Georgia, serif;
   cursor: pointer;
 }
 </style>
 </head>
-
 <body>
 
 <!-- CLOSED -->
 <div id="closedStage">
   <div class="book-wrap">
-    <img src="book.jpg" class="book" onclick="openBook()">
+    <img src="book.jpg" alt="Closed Book" class="book" onclick="openBook()" />
     <div class="tap-text">Tap book to open</div>
   </div>
 </div>
@@ -123,15 +300,403 @@ button {
     <div class="left-page"></div>
 
     <div class="right-page">
-      <h1>Book Index</h1>
 
-      <div class="chapter" onclick="goToPage(1)">Chapter 1 — About You</div>
-      <div class="chapter" onclick="goToPage(2)">Chapter 2 — Father</div>
-      <div class="chapter" onclick="goToPage(3)">Chapter 3 — Mother</div>
+      <!-- INDEX -->
+      <div id="page0" class="page active">
+        <div class="page-kicker">Index</div>
+        <h1>Book Index</h1>
 
-      <div id="pageContent"></div>
+        <div class="chapter-link" onclick="goToPage(1)">Chapter 1 — About You</div>
+        <div class="chapter-link" onclick="goToPage(2)">Chapter 2 — Father</div>
+        <div class="chapter-link" onclick="goToPage(3)">Chapter 3 — Mother</div>
+        <div class="chapter-link" onclick="goToPage(4)">Chapter 4 — Brothers & Sisters</div>
+        <div class="chapter-link" onclick="goToPage(5)">Chapter 5 — You</div>
+        <div class="chapter-link" onclick="goToPage(6)">Chapter 6 — Jobs Timeline</div>
+        <div class="chapter-link" onclick="goToPage(7)">Chapter 7 — Marriage</div>
+        <div class="chapter-link" onclick="goToPage(8)">Chapter 8 — When I Started My Family</div>
+        <div class="chapter-link" onclick="goToPage(9)">Chapter 9 — Family Stories</div>
+        <div class="chapter-link" onclick="goToPage(10)">Chapter 10 — Friends</div>
+        <div class="chapter-link" onclick="goToPage(11)">Chapter 11 — Diary</div>
+        <div class="chapter-link" onclick="goToPage(12)">Chapter 12 — Contacts and Emails</div>
+        <div class="chapter-link" onclick="goToPage(13)">Chapter 13 — Important Information</div>
+        <div class="chapter-link" onclick="goToPage(14)">Chapter 14 — Angel Message</div>
 
-      <button onclick="closeBook()">Close Book</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 1 -->
+      <div id="page1" class="page">
+        <div class="page-kicker">Chapter 1 — Page 1</div>
+        <h2>About You</h2>
+        <div class="intro">A simple page about who you are.</div>
+
+        <div class="about-grid">
+          <div class="box">
+            <strong>Full Name:</strong> ____________________<br><br>
+            <strong>Birthday:</strong> ____________________<br><br>
+            <strong>Where You Were Born:</strong> ____________________<br><br>
+            <strong>Father's Name:</strong> ____________________<br><br>
+            <strong>Mother's Name:</strong> ____________________<br><br>
+            <strong>Brothers & Sisters:</strong> ____________________
+          </div>
+
+          <div class="photo-box">Picture of you</div>
+        </div>
+
+        <div class="box">
+          <strong>Your story:</strong><br><br>
+          Write about who you are, your life, and what matters most.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 2 -->
+      <div id="page2" class="page">
+        <div class="page-kicker">Chapter 2 — Page 1</div>
+        <h2>Father</h2>
+        <div class="intro">A page for your father, with one main picture and smaller memory photos around him.</div>
+
+        <div class="collage-frame">
+          <div class="main-photo">Main picture of your father</div>
+          <div class="mini-photo mini-top-left">Memory photo</div>
+          <div class="mini-photo mini-top-right">Memory photo</div>
+          <div class="mini-photo mini-bottom-left">Memory photo</div>
+          <div class="mini-photo mini-bottom-right">Memory photo</div>
+        </div>
+
+        <div class="box">
+          <strong>Story about your father:</strong><br><br>
+          Write about who he was, the memories you shared, what made him special, and anything you want remembered.
+        </div>
+
+        <div class="box">
+          <strong>More about him:</strong><br><br>
+          Add favorite sayings, important lessons, special dates, or family memories that belong here.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 3 -->
+      <div id="page3" class="page">
+        <div class="page-kicker">Chapter 3 — Page 1</div>
+        <h2>Mother</h2>
+        <div class="intro">A page for your mother, with one main picture and smaller memory photos around her.</div>
+
+        <div class="collage-frame">
+          <div class="main-photo">Main picture of your mother</div>
+          <div class="mini-photo mini-top-left">Memory photo</div>
+          <div class="mini-photo mini-top-right">Memory photo</div>
+          <div class="mini-photo mini-bottom-left">Memory photo</div>
+          <div class="mini-photo mini-bottom-right">Memory photo</div>
+        </div>
+
+        <div class="box">
+          <strong>Story about your mother:</strong><br><br>
+          Write about who she was, the memories you shared, what made her special, and anything you want remembered.
+        </div>
+
+        <div class="box">
+          <strong>More about her:</strong><br><br>
+          Add traditions, family moments, loving memories, or anything you want preserved here.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 4 -->
+      <div id="page4" class="page">
+        <div class="page-kicker">Chapter 4 — Page 1</div>
+        <h2>Brothers & Sisters</h2>
+        <div class="intro">A page for each brother or sister, with one main picture and smaller memory photos around them.</div>
+
+        <div class="collage-frame">
+          <div class="main-photo">Main picture of your brother or sister</div>
+          <div class="mini-photo mini-top-left">Memory photo</div>
+          <div class="mini-photo mini-top-right">Memory photo</div>
+          <div class="mini-photo mini-bottom-left">Memory photo</div>
+          <div class="mini-photo mini-bottom-right">Memory photo</div>
+        </div>
+
+        <div class="box">
+          <strong>Story about your brother or sister:</strong><br><br>
+          Write about your memories together and anything you want remembered about them.
+        </div>
+
+        <div class="box">
+          <strong>Extra family memories:</strong><br><br>
+          Add birthdays, trips, inside jokes, or the things that made this bond special.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 5 -->
+      <div id="page5" class="page">
+        <div class="page-kicker">Chapter 5 — Page 1</div>
+        <h2>You</h2>
+        <div class="intro">A page for you, with one main picture and smaller memory photos around you.</div>
+
+        <div class="collage-frame">
+          <div class="main-photo">Main picture of you</div>
+          <div class="mini-photo mini-top-left">Memory photo</div>
+          <div class="mini-photo mini-top-right">Memory photo</div>
+          <div class="mini-photo mini-bottom-left">Memory photo</div>
+          <div class="mini-photo mini-bottom-right">Memory photo</div>
+        </div>
+
+        <div class="box">
+          <strong>Your story:</strong><br><br>
+          Write about who you are, the life you lived, what mattered to you, and anything you want remembered about you.
+        </div>
+
+        <div class="box">
+          <strong>What mattered most:</strong><br><br>
+          Add values, beliefs, favorite memories, or the things you most want people to know.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 6 -->
+      <div id="page6" class="page">
+        <div class="page-kicker">Chapter 6 — Page 1</div>
+        <h2>Jobs Timeline</h2>
+        <div class="intro">A timeline of the jobs you worked, the years you did them, what you were paid, and the stories that came with them.</div>
+
+        <div class="job-card">
+          <strong>Job Title:</strong> ____________________<br>
+          <strong>Years Worked:</strong> ____________________<br>
+          <strong>Starting Pay:</strong> ____________________<br>
+          <strong>Ending Pay:</strong> ____________________
+
+          <div class="job-grid">
+            <div class="job-photo">Job photo</div>
+            <div class="job-story">
+              <strong>Story about this job / photo:</strong><br><br>
+              Write about what this job was like, what the picture means, who you worked with, what you learned, and what you want remembered.
+            </div>
+          </div>
+        </div>
+
+        <div class="box">
+          <strong>Work memories:</strong><br><br>
+          Add milestones, promotions, favorite crews, lessons learned, or the work you were proud of.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 7 -->
+      <div id="page7" class="page">
+        <div class="page-kicker">Chapter 7 — Page 1</div>
+        <h2>Marriage</h2>
+        <div class="intro">A page for your marriage story, wedding memories, and pictures of the person you married.</div>
+
+        <div class="photo-box">Marriage photo</div>
+
+        <div class="box">
+          <strong>Your marriage story:</strong><br><br>
+          Write about who you married, how you met, your wedding day, your life together, and what this love meant to you.
+        </div>
+
+        <div class="box">
+          <strong>Special moments:</strong><br><br>
+          Add more memories, trips, milestones, or anything that made your life together meaningful.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 8 -->
+      <div id="page8" class="page">
+        <div class="page-kicker">Chapter 8 — Page 1</div>
+        <h2>When I Started My Family</h2>
+        <div class="intro">A page for the beginning of your own family, the people in it, and the memories that came with it.</div>
+
+        <div class="photo-box">Family beginning photo</div>
+
+        <div class="box">
+          <strong>Story about starting your family:</strong><br><br>
+          Write about becoming a parent, building your family, the people in these pictures, and what those moments meant to you.
+        </div>
+
+        <div class="box">
+          <strong>Family memories:</strong><br><br>
+          Add special moments, early memories, or meaningful milestones that belong with this chapter.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 9 -->
+      <div id="page9" class="page">
+        <div class="page-kicker">Chapter 9 — Page 1</div>
+        <h2>Family Stories</h2>
+        <div class="intro">A page for family memories, photos, and the stories behind them.</div>
+
+        <div class="photo-box">Family story photo</div>
+
+        <div class="box">
+          <strong>Family story:</strong><br><br>
+          Write the story behind this family photo, who is in it, what happened, and why this memory matters.
+        </div>
+
+        <div class="box">
+          <strong>More details:</strong><br><br>
+          Add extra context, names, dates, places, or anything worth remembering.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 10 -->
+      <div id="page10" class="page">
+        <div class="page-kicker">Chapter 10 — Page 1</div>
+        <h2>Friends</h2>
+        <div class="intro">A page for the friends in your life and the stories that go with them.</div>
+
+        <div class="photo-box">Friends photo</div>
+
+        <div class="box">
+          <strong>Story about your friends:</strong><br><br>
+          Write about the moment, the people in the photo, and what made this friendship or memory special.
+        </div>
+
+        <div class="box">
+          <strong>Friend memories:</strong><br><br>
+          Add trips, laughs, hard times, loyalty, or the moments that made these friendships matter.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 11 -->
+      <div id="page11" class="page">
+        <div class="page-kicker">Chapter 11 — Page 1</div>
+        <h2>Diary</h2>
+        <div class="intro">A private page for thoughts, memories, and anything you want to write down.</div>
+
+        <div class="box">
+          <strong>Title or Date:</strong> ____________________<br><br>
+          Write whatever you want here...
+        </div>
+
+        <div class="box">
+          <strong>More thoughts:</strong><br><br>
+          Add another reflection or memory that belongs with this page.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 12 -->
+      <div id="page12" class="page">
+        <div class="page-kicker">Chapter 12 — Page 1</div>
+        <h2>Contacts and Emails</h2>
+        <div class="intro">A page for email addresses and phone contacts that should be easy to find.</div>
+
+        <div class="two-col">
+          <div class="small-box">
+            <strong>Email List:</strong><br><br>
+            Name: __________________<br>
+            Email: __________________<br><br>
+            Name: __________________<br>
+            Email: __________________<br><br>
+            Name: __________________<br>
+            Email: __________________
+          </div>
+
+          <div class="small-box">
+            <strong>Contacts & Phone Numbers:</strong><br><br>
+            Name: __________________<br>
+            Phone: __________________<br><br>
+            Name: __________________<br>
+            Phone: __________________<br><br>
+            Name: __________________<br>
+            Phone: __________________
+          </div>
+        </div>
+
+        <div class="box">
+          <strong>Extra contact notes:</strong><br><br>
+          Add who should be called first, backup numbers, or anything else important.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 13 -->
+      <div id="page13" class="page">
+        <div class="page-kicker">Chapter 13 — Page 1</div>
+        <h2>Important Information</h2>
+        <div class="intro">Everything your Angel needs to know.</div>
+
+        <div class="two-col">
+          <div class="small-box">
+            <strong>Insurance:</strong><br><br>
+            ___________________________<br>
+            ___________________________
+          </div>
+
+          <div class="small-box">
+            <strong>Doctor:</strong><br><br>
+            ___________________________<br>
+            ___________________________
+          </div>
+        </div>
+
+        <div class="box">
+          <strong>Final Wishes:</strong><br><br>
+          ___________________________<br><br>
+          ___________________________<br><br>
+          ___________________________
+        </div>
+
+        <div class="box">
+          <strong>Extra important details:</strong><br><br>
+          Add account notes, memberships, legal details, location information, or anything else your Angel needs.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
+      <!-- CHAPTER 14 -->
+      <div id="page14" class="page">
+        <div class="page-kicker">Chapter 14 — Page 1</div>
+        <h2>Angel Message</h2>
+        <div class="intro">A place for a message and a picture that goes with it.</div>
+
+        <div class="photo-box">Picture for your message</div>
+
+        <div class="box">
+          <strong>Your message:</strong><br><br>
+          Write your message here so it can go together with the picture on this page.
+        </div>
+
+        <div class="box">
+          <strong>Final words:</strong><br><br>
+          Add anything you want your family, friends, or important people to remember.
+        </div>
+
+        <button onclick="goToPage(0)">Back to Index</button>
+        <button onclick="closeBook()">Close Book</button>
+      </div>
+
     </div>
   </div>
 </div>
@@ -145,17 +710,13 @@ function openBook() {
 function closeBook() {
   document.getElementById("openedStage").style.display = "none";
   document.getElementById("closedStage").style.display = "flex";
-  document.getElementById("pageContent").innerHTML = "";
+  goToPage(0);
 }
 
 function goToPage(n) {
-  let content = "";
-
-  if (n === 1) content = "<h2>About You</h2><p>Your story here.</p>";
-  if (n === 2) content = "<h2>Father</h2><p>Father story.</p>";
-  if (n === 3) content = "<h2>Mother</h2><p>Mother story.</p>";
-
-  document.getElementById("pageContent").innerHTML = content;
+  const pages = document.querySelectorAll(".page");
+  pages.forEach(page => page.classList.remove("active"));
+  document.getElementById("page" + n).classList.add("active");
 }
 </script>
 

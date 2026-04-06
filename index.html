@@ -1,138 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You When I'm Gone</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You When I'm Gone</title>
 
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #f3f3f3;
-}
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #f3f3f3;
+      font-family: Georgia, serif;
+    }
 
-/* CLOSED BOOK */
-#closedStage {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    /* CLOSED BOOK STAGE */
+    #closedStage {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f3f3f3;
+    }
 
-/* IMAGE */
-.book {
-  width: 100vw;
-  height: 100vh;
-  object-fit: contain;
-  display: block;
-  cursor: pointer;
-}
+    .book-wrap {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
 
-/* OPEN BOOK */
-#openedStage {
-  display: none;
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-}
+    .book {
+      width: 112vw;
+      height: 112vh;
+      object-fit: contain;
+      display: block;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
 
-.open-book {
-  width: 92vw;
-  height: 84vh;
-  display: flex;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.2);
-}
+    /* OPEN BOOK STAGE */
+    #openedStage {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background: #f3f3f3;
+    }
 
-.left-page {
-  width: 50%;
-  background: #5a3a25;
-}
+    .open-book {
+      width: 92vw;
+      height: 84vh;
+      display: flex;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+      background: transparent;
+    }
 
-.right-page {
-  width: 50%;
-  background: #f8f3ea;
-  padding: 30px;
-  box-sizing: border-box;
-  overflow-y: auto;
-  font-family: Georgia, serif;
-}
+    .left-page {
+      width: 50%;
+      background: linear-gradient(to right, #6a4a31, #4f3522);
+    }
 
-h1 {
-  margin: 0 0 20px 0;
-}
+    .right-page {
+      width: 50%;
+      background: #f8f3ea;
+      color: #4a2d1a;
+      padding: 32px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
 
-.chapter {
-  font-size: 22px;
-  margin: 15px 0;
-  cursor: pointer;
-}
+    h1 {
+      margin: 0 0 24px 0;
+      font-size: 48px;
+      line-height: 1;
+    }
 
-#pageContent {
-  margin-top: 20px;
-}
+    .chapter {
+      font-size: 28px;
+      margin: 18px 0;
+      cursor: pointer;
+    }
 
-button {
-  margin-top: 20px;
-  padding: 10px;
-  cursor: pointer;
-}
-</style>
+    .chapter:hover {
+      text-decoration: underline;
+    }
+
+    #pageContent {
+      margin-top: 28px;
+      font-size: 24px;
+      line-height: 1.4;
+    }
+
+    .close-btn {
+      margin-top: 28px;
+      padding: 12px 20px;
+      font-size: 18px;
+      font-family: Georgia, serif;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- CLOSED -->
-<div id="closedStage">
-  <img src="book.jpg" class="book" onclick="openBook()">
-</div>
-
-<!-- OPEN -->
-<div id="openedStage">
-  <div class="open-book">
-    <div class="left-page"></div>
-
-    <div class="right-page">
-      <h1>Book Index</h1>
-
-      <div class="chapter" onclick="goToPage(1)">Chapter 1 — About You</div>
-      <div class="chapter" onclick="goToPage(2)">Chapter 2 — Father</div>
-      <div class="chapter" onclick="goToPage(3)">Chapter 3 — Mother</div>
-
-      <div id="pageContent"></div>
-
-      <button onclick="closeBook()">Close Book</button>
+  <!-- CLOSED -->
+  <div id="closedStage">
+    <div class="book-wrap">
+      <img src="book.jpg" alt="Closed Book" class="book" onclick="openBook()" />
     </div>
   </div>
-</div>
 
-<script>
-function openBook() {
-  document.getElementById("closedStage").style.display = "none";
-  document.getElementById("openedStage").style.display = "flex";
-}
+  <!-- OPEN -->
+  <div id="openedStage">
+    <div class="open-book">
+      <div class="left-page"></div>
 
-function closeBook() {
-  document.getElementById("openedStage").style.display = "none";
-  document.getElementById("closedStage").style.display = "flex";
-  document.getElementById("pageContent").innerHTML = "";
-}
+      <div class="right-page">
+        <h1>Book Index</h1>
 
-function goToPage(n) {
-  let content = "";
+        <div class="chapter" onclick="goToPage(1)">Chapter 1 — About You</div>
+        <div class="chapter" onclick="goToPage(2)">Chapter 2 — Father</div>
+        <div class="chapter" onclick="goToPage(3)">Chapter 3 — Mother</div>
 
-  if (n === 1) content = "<h2>About You</h2><p>Your story here.</p>";
-  if (n === 2) content = "<h2>Father</h2><p>Father story.</p>";
-  if (n === 3) content = "<h2>Mother</h2><p>Mother story.</p>";
+        <div id="pageContent"></div>
 
-  document.getElementById("pageContent").innerHTML = content;
-}
-</script>
+        <button class="close-btn" onclick="closeBook()">Close Book</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openBook() {
+      document.getElementById("closedStage").style.display = "none";
+      document.getElementById("openedStage").style.display = "flex";
+    }
+
+    function closeBook() {
+      document.getElementById("openedStage").style.display = "none";
+      document.getElementById("closedStage").style.display = "flex";
+      document.getElementById("pageContent").innerHTML = "";
+    }
+
+    function goToPage(n) {
+      let content = "";
+
+      if (n === 1) {
+        content = "<h2>About You</h2><p>This is your story page.</p>";
+      }
+      if (n === 2) {
+        content = "<h2>Father</h2><p>Story about your father.</p>";
+      }
+      if (n === 3) {
+        content = "<h2>Mother</h2><p>Story about your mother.</p>";
+      }
+
+      document.getElementById("pageContent").innerHTML = content;
+    }
+  </script>
 
 </body>
 </html>

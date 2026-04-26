@@ -19,7 +19,24 @@ body {
   overflow: hidden;
 }
 
-/* PREMIUM PHONE SIZE */
+/* CLOSED BOOK */
+.cover {
+  width: 240px;
+  height: 340px;
+  background: linear-gradient(145deg,#7a5434,#4a2f1c);
+  border: 3px solid #c7964b;
+  border-radius: 10px;
+  color: #efd39a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hidden { display: none; }
+
+/* OPEN BOOK */
 .open-book {
   width: 92vw;
   max-width: 900px;
@@ -40,7 +57,7 @@ body {
   position: relative;
 }
 
-/* CONTROLS NEAR SPINE */
+/* CONTROLS */
 .left-controls {
   position: absolute;
   right: 12px;
@@ -81,61 +98,49 @@ body {
   box-sizing: border-box;
 }
 
+/* INDEX */
 .top-bar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 6px;
-  color: #4a2d1a;
-  font-size: clamp(11px, 3vw, 14px);
+  font-size: 12px;
 }
 
 .arrow {
-  font-size: 20px;
   cursor: pointer;
+  font-size: 18px;
 }
 
 h1 {
+  font-size: 28px;
   margin: 0 0 10px 0;
-  font-size: clamp(26px, 6vw, 36px);
-  line-height: 0.95;
-  color: #3b2416;
 }
 
 .chapter {
   background: rgba(255,255,255,0.75);
   border: 1px solid rgba(199,150,75,0.35);
   border-radius: 10px;
-  padding: 8px 10px;
-  margin-bottom: 8px;
-  font-size: clamp(14px, 4vw, 20px);
-  line-height: 1.05;
-  color: #111;
+  padding: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
   cursor: pointer;
-}
-
-@media (max-width: 500px) {
-  .open-book {
-    width: 94vw;
-    height: 82vh;
-    grid-template-columns: 0.95fr 12px 1.35fr;
-  }
-
-  .right-page {
-    padding: 10px;
-  }
-
-  .left-controls {
-    right: 10px;
-    gap: 12px;
-  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="open-book">
+<!-- CLOSED BOOK -->
+<div id="cover" class="cover" onclick="openBook()">
+  <div>
+    <div>For You</div>
+    <div>When I'm Gone</div>
+    <div style="margin-top:10px;font-size:12px;">Tap to open</div>
+  </div>
+</div>
+
+<!-- OPEN BOOK -->
+<div id="book" class="open-book hidden">
 
   <div class="left-page">
     <div class="left-controls">
@@ -143,7 +148,7 @@ h1 {
       <div class="ctrl blue">NEXT CHAPTER</div>
       <div class="ctrl green">+ NEW PAGE</div>
       <div class="ctrl yellow">FLIP BACK</div>
-      <div class="ctrl black">CLOSE BOOK</div>
+      <div class="ctrl black" onclick="closeBook()">CLOSE BOOK</div>
     </div>
   </div>
 
@@ -151,13 +156,14 @@ h1 {
 
   <div class="right-page">
 
+    <!-- INDEX PAGE 1 -->
     <div id="index1">
       <div class="top-bar">
         <div>Page 1 of 2</div>
         <div class="arrow" onclick="showIndex(2)">➡️</div>
       </div>
 
-      <h1>Book<br>Index</h1>
+      <h1>Book Index</h1>
 
       <div class="chapter">Chapter 1 — About You</div>
       <div class="chapter">Chapter 2 — Father</div>
@@ -168,33 +174,212 @@ h1 {
       <div class="chapter">Chapter 7 — Marriage</div>
     </div>
 
+    <!-- INDEX PAGE 2 -->
     <div id="index2" style="display:none;">
       <div class="top-bar">
         <div class="arrow" onclick="showIndex(1)">⬅️</div>
         <div>Page 2 of 2</div>
       </div>
 
-      <h1>Book<br>Index</h1>
+      <h1>Book Index</h1>
 
       <div class="chapter">Chapter 8 — When I Started My Family</div>
       <div class="chapter">Chapter 9 — Family Stories</div>
       <div class="chapter">Chapter 10 — Friends</div>
       <div class="chapter">Chapter 11 — Diary</div>
-      <div class="chapter">Chapter 12 — Contacts and Emails</div>
-      <div class="chapter">Chapter 13 — Important Information</div>
+      <div class="chapter">Chapter 12 — Contacts</div>
+      <div class="chapter">Chapter 13 — Important Info</div>
       <div class="chapter">Chapter 14 — Angel Message</div>
     </div>
 
-  </div>
+    <!-- NEXT SECTION GOES HERE -->
+    <!-- CHAPTER PAGES START HERE -->
 
+<div id="page1" class="page" style="display:none;">
+  <h1>About You</h1>
+  <p>This is your personal story page.</p>
 </div>
 
-<script>
-function showIndex(page) {
-  document.getElementById("index1").style.display = page === 1 ? "block" : "none";
-  document.getElementById("index2").style.display = page === 2 ? "block" : "none";
-}
-</script>
+<div id="page2" class="page" style="display:none;">
+  <h1>Father</h1>
+  <p>Memories and stories about your father.</p>
+</div>
 
-</body>
-</html>
+<div id="page3" class="page" style="display:none;">
+  <h1>Mother</h1>
+  <p>Memories and stories about your mother.</p>
+</div>
+
+<div id="page4" class="page" style="display:none;">
+  <h1>Brothers & Sisters</h1>
+  <p>Family memories and siblings.</p>
+</div>
+
+<div id="page5" class="page" style="display:none;">
+  <h1>You</h1>
+  <p>Your life story and memories.</p>
+</div>
+
+<div id="page6" class="page" style="display:none;">
+  <h1>Jobs</h1>
+  <p>Your work history and experiences.</p>
+</div>
+
+<div id="page7" class="page" style="display:none;">
+  <h1>Marriage</h1>
+  <p>Your marriage story and memories.</p>
+</div>
+
+<div id="page8" class="page" style="display:none;">
+  <h1>When I Started My Family</h1>
+  <p>Your family beginnings.</p>
+</div>
+
+<div id="page9" class="page" style="display:none;">
+  <h1>Family Stories</h1>
+  <p>Stories from your family life.</p>
+</div>
+
+<div id="page10" class="page" style="display:none;">
+  <h1>Friends</h1>
+  <p>Memories with your friends.</p>
+</div>
+
+<div id="page11" class="page" style="display:none;">
+  <h1>Diary</h1>
+  <p>Your personal thoughts and writings.</p>
+</div>
+
+<div id="page12" class="page" style="display:none;">
+  <h1>Contacts</h1>
+  <p>Important contacts and emails.</p>
+</div>
+
+<div id="page13" class="page" style="display:none;">
+  <h1>Important Information</h1>
+  <p>Critical details for your Angel.</p>
+</div>
+
+<div id="page14" class="page" style="display:none;">
+  <h1>Angel Message</h1>
+  <p>Your final message.</p>
+</div>
+
+<!-- END CHAPTER PAGES --><div id="page2" class="page" style="display:none">
+  <h1>Father</h1>
+  <p>Write about your father, your memories, and what made him special.</p>
+</div>
+
+<div id="page3" class="page" style="display:none">
+  <h1>Mother</h1>
+  <p>Write about your mother, your memories, and what made her special.</p>
+</div>
+
+<div id="page4" class="page" style="display:none">
+  <h1>Brothers & Sisters</h1>
+  <p>Write about your siblings and the memories you shared together.</p>
+</div>
+
+<div id="page5" class="page" style="display:none">
+  <h1>You</h1>
+  <p>Write about yourself, your life, and what mattered most to you.</p>
+</div>
+
+<div id="page6" class="page" style="display:none">
+  <h1>Jobs</h1>
+  <p>List your jobs, the years, and the memories from each one.</p>
+</div>
+
+<div id="page7" class="page" style="display:none">
+  <h1>Marriage</h1>
+  <p>Write about your marriage, your partner, and your life together.</p>
+</div>
+
+<div id="page8" class="page" style="display:none">
+  <h1>When I Started My Family</h1>
+  <p>Write about starting your family and those early memories.</p>
+</div>
+
+<div id="page9" class="page" style="display:none">
+  <h1>Family Stories</h1>
+  <p>Write meaningful stories about your family and shared moments.</p>
+</div>
+
+<div id="page10" class="page" style="display:none">
+  <h1>Friends</h1>
+  <p>Write about your friends and the memories you shared.</p>
+</div>
+
+<div id="page11" class="page" style="display:none">
+  <h1>Diary</h1>
+  <p>Write personal thoughts, memories, or anything important.</p>
+</div>
+
+<div id="page12" class="page" style="display:none">
+  <h1>Contacts and Emails</h1>
+  <p>Add important contacts and email addresses.</p>
+</div>
+
+<div id="page13" class="page" style="display:none">
+  <h1>Important Information</h1>
+  <p>Add key details your Angel will need.</p>
+</div>
+
+<div id="page14" class="page" style="display:none">
+  <h1>Angel Message</h1>
+  <p>Write your final message for loved ones.</p>
+</div>
+    <script>
+let currentPage = 0;
+let lastPage = 0;
+
+// SHOW PAGE
+function showPage(pageNumber) {
+  for (let i = 0; i <= 14; i++) {
+    let page = document.getElementById("page" + i);
+    if (page) page.style.display = "none";
+  }
+
+  let current = document.getElementById("page" + pageNumber);
+  if (current) current.style.display = "block";
+}
+
+// GO TO INDEX
+function goToIndex() {
+  lastPage = currentPage;
+  currentPage = 0;
+  showPage(currentPage);
+}
+
+// GO TO CHAPTER (from index)
+function goToChapter(chapter) {
+  lastPage = currentPage;
+  currentPage = chapter;
+  showPage(currentPage);
+}
+
+// NEXT CHAPTER
+function goToNextChapter() {
+  lastPage = currentPage;
+  if (currentPage < 14) {
+    currentPage++;
+    showPage(currentPage);
+  }
+}
+
+// FLIP BACK
+function flipBack() {
+  let temp = currentPage;
+  currentPage = lastPage;
+  lastPage = temp;
+  showPage(currentPage);
+}
+
+// CLOSE BOOK
+function closeBook() {
+  location.reload();
+}
+
+// START ON INDEX
+showPage(0);
+</script>

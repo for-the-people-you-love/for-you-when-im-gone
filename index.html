@@ -1,168 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You When I'm Gone</title>
 
 <style>
-body {
-  margin:0;
-  font-family:Georgia, serif;
-  background:#2b1d14;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: Georgia, serif;
+  background:
+    radial-gradient(circle at top, rgba(255,220,170,0.10), transparent 30%),
+    linear-gradient(to bottom, #2b1d14, #120d09);
 }
 
-/* FULL SCREEN BOOK */
-.open-book{
-  width:100vw;
-  height:100vh;
-  display:grid;
-  grid-template-columns: 1fr 12px 1.4fr;
+/* CENTER STAGE */
+.stage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CLOSED BOOK */
+#closedBook {
+  width: 250px;
+  height: 355px;
+  background: linear-gradient(145deg, #765133, #422a1b);
+  border: 3px solid #c7964b;
+  border-radius: 12px;
+  box-shadow: 16px 20px 34px rgba(0,0,0,0.45);
+  color: #efd39a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+#closedBook h1 {
+  font-size: 28px;
+  margin: 0;
+}
+
+#closedBook p {
+  font-size: 12px;
+  margin-top: 15px;
+  text-transform: uppercase;
+}
+
+/* OPEN BOOK */
+#openBook {
+  display: none;
+  width: 94vw;
+  max-width: 900px;
+  height: 80vh;
+  max-height: 640px;
+  min-height: 500px;
+  display: grid;
+  grid-template-columns: 1fr 14px 1.4fr;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45);
 }
 
 /* LEFT PAGE */
-.left-page{
-  background:#f5efe6;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:22px;
-  font-weight:bold;
+.leftPage {
+  position: relative;
+  background: linear-gradient(to right, #ead9bd, #fff8ed);
+  border: 4px solid #d6bb90;
+  border-right: none;
 }
 
-/* CONTROL COLORS */
-.ctrl{
-  font-size:18px;
-  letter-spacing:1px;
-  cursor:pointer;
+.controls {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: right;
 }
 
-.red{color:#c0392b;}
-.blue{color:#2e86de;}
-.green{color:#2ecc71;}
-.yellow{color:#f1c40f;}
-.black{color:#000;}
+.control {
+  font-weight: 800;
+  font-size: clamp(12px,3.5vw,16px);
+  cursor: pointer;
+}
+
+.red { color:#d62828; }
+.blue { color:#1e88e5; }
+.green { color:#1fad55; }
+.yellow { color:#f2b800; }
+.black { color:#111; }
 
 /* SPINE */
-.spine{
-  background:linear-gradient(to right,#6f5130,#d8c29c,#6f5130);
+.spine {
+  background: linear-gradient(to right, #6f5130, #d8c29c, #4a341f);
 }
 
 /* RIGHT PAGE */
-.right-page{
-  background:#fffaf2;
-  padding:20px;
-  overflow-y:auto;
+.rightPage {
+  background: linear-gradient(to right,#f0dfc3,#fffaf2);
+  border: 4px solid #d6bb90;
+  border-left: none;
+  padding: 10px;
+  overflow: hidden;
 }
 
-/* INDEX BOX */
-.chapter{
-  background:#f2f2f2;
-  padding:14px;
-  border-radius:12px;
-  margin-bottom:12px;
-  cursor:pointer;
+.page {
+  display: none;
+  height: 100%;
 }
+.page.active { display:block; }
 
-/* TOP BAR */
-.top-bar{
+.topBar {
   display:flex;
   justify-content:space-between;
-  align-items:center;
-  margin-bottom:15px;
   font-size:14px;
 }
 
-.arrow{
-  font-size:20px;
+.arrow {
+  font-size:22px;
   cursor:pointer;
 }
 
+h1 {
+  margin:6px 0;
+  font-size:30px;
+}
+
+h2 {
+  margin:6px 0;
+}
+
+.chapter {
+  background:#fff;
+  padding:8px;
+  margin-bottom:6px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+}
+
+.box {
+  background:#fff;
+  padding:8px;
+  border-radius:8px;
+  margin-bottom:6px;
+  font-size:12px;
+}
+
+.photo {
+  height:80px;
+  background:#efe4d1;
+  border:2px solid #c7964b;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:6px;
+  font-size:12px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="open-book">
+<div class="stage">
 
-  <!-- LEFT PAGE -->
-  <div class="left-page">
-    <div class="ctrl red" onclick="goToIndex()">INDEX</div>
-    <div class="ctrl blue" onclick="goToNextChapter()">NEXT CHAPTER</div>
-    <div class="ctrl green">+ NEW PAGE</div>
-    <div class="ctrl yellow">FLIP BACK</div>
-    <div class="ctrl black" onclick="closeBook()">CLOSE BOOK</div>
+<div id="closedBook" onclick="openBook()">
+  <div>
+    <h1>For You<br>When I'm Gone</h1>
+    <p>Tap to open</p>
   </div>
+</div>
 
-  <div class="spine"></div>
+<div id="openBook">
 
-  <!-- RIGHT PAGE -->
-  <div class="right-page">
-
-    <!-- INDEX PAGE 1 -->
-    <div id="index1">
-      <div class="top-bar">
-        <div>Page 1 of 2</div>
-        <div class="arrow" onclick="showIndex(2)">➡️</div>
-      </div>
-
-      <h1>Book Index</h1>
-
-      <div class="chapter">Chapter 1 — About You</div>
-      <div class="chapter">Chapter 2 — Father</div>
-      <div class="chapter">Chapter 3 — Mother</div>
-      <div class="chapter">Chapter 4 — Brothers & Sisters</div>
-      <div class="chapter">Chapter 5 — You</div>
-      <div class="chapter">Chapter 6 — Jobs</div>
-      <div class="chapter">Chapter 7 — Marriage</div>
-    </div>
-
-    <!-- INDEX PAGE 2 -->
-    <div id="index2" style="display:none;">
-      <div class="top-bar">
-        <div class="arrow" onclick="showIndex(1)">⬅️</div>
-        <div>Page 2 of 2</div>
-      </div>
-
-      <h1>Book Index</h1>
-
-      <div class="chapter">Chapter 8 — When I Started My Family</div>
-      <div class="chapter">Chapter 9 — Family Stories</div>
-      <div class="chapter">Chapter 10 — Friends</div>
-      <div class="chapter">Chapter 11 — Diary</div>
-      <div class="chapter">Chapter 12 — Contacts and Emails</div>
-      <div class="chapter">Chapter 13 — Important Information</div>
-      <div class="chapter">Chapter 14 — Angel Message</div>
-    </div>
-
+<div class="leftPage">
+  <div class="controls">
+    <div class="control red" onclick="goToIndex()">INDEX</div>
+    <div class="control blue" onclick="nextChapter()">NEXT CHAPTER</div>
+    <div class="control green">+ NEW PAGE</div>
+    <div class="control yellow" onclick="flipBack()">FLIP BACK</div>
+    <div class="control black" onclick="closeBook()">CLOSE BOOK</div>
   </div>
+</div>
 
+<div class="spine"></div>
+
+<div class="rightPage">
+
+<!-- INDEX 1 -->
+<div id="index1" class="page active">
+<div class="topBar">
+<div>Page 1 of 2</div>
+<div class="arrow" onclick="showIndex(2)">➡️</div>
+</div>
+
+<h1>Book Index</h1>
+
+<div class="chapter" onclick="goToChapter(1)">Chapter 1 — About You</div>
+<div class="chapter" onclick="goToChapter(2)">Chapter 2 — Father</div>
+<div class="chapter" onclick="goToChapter(3)">Chapter 3 — Mother</div>
+<div class="chapter" onclick="goToChapter(4)">Chapter 4 — Brothers & Sisters</div>
+<div class="chapter" onclick="goToChapter(5)">Chapter 5 — You</div>
+<div class="chapter" onclick="goToChapter(6)">Chapter 6 — Jobs</div>
+<div class="chapter" onclick="goToChapter(7)">Chapter 7 — Marriage</div>
+</div>
+
+<!-- INDEX 2 -->
+<div id="index2" class="page">
+<div class="topBar">
+<div class="arrow" onclick="showIndex(1)">⬅️</div>
+<div>Page 2 of 2</div>
+</div>
+
+<h1>Book Index</h1>
+
+<div class="chapter" onclick="goToChapter(8)">Chapter 8 — Family</div>
+<div class="chapter" onclick="goToChapter(9)">Chapter 9 — Family Stories</div>
+<div class="chapter" onclick="goToChapter(10)">Chapter 10 — Friends</div>
+<div class="chapter" onclick="goToChapter(11)">Chapter 11 — Diary</div>
+<div class="chapter" onclick="goToChapter(12)">Chapter 12 — Contacts</div>
+<div class="chapter" onclick="goToChapter(13)">Chapter 13 — Important Info</div>
+<div class="chapter" onclick="goToChapter(14)">Chapter 14 — Angel Message</div>
+</div>
+
+<!-- CHAPTER 1 -->
+<div id="page1" class="page"><h2>About You</h2><div class="photo">Photo</div><div class="box">Details</div></div>
+
+<!-- CHAPTER 2 -->
+<div id="page2" class="page"><h2>Father</h2><div class="photo">Photo</div><div class="box">Story</div></div>
+
+<!-- CHAPTER 3 -->
+<div id="page3" class="page"><h2>Mother</h2><div class="photo">Photo</div><div class="box">Story</div></div>
+
+<!-- CHAPTER 4 -->
+<div id="page4" class="page"><h2>Brothers & Sisters</h2><div class="photo">Photo</div></div>
+
+<!-- CHAPTER 5 -->
+<div id="page5" class="page"><h2>You</h2><div class="photo">Photo</div></div>
+
+<!-- CHAPTER 6 -->
+<div id="page6" class="page"><h2>Jobs</h2><div class="box">Job Info</div></div>
+
+<!-- CHAPTER 7 -->
+<div id="page7" class="page"><h2>Marriage</h2></div>
+
+<!-- CHAPTER 8 -->
+<div id="page8" class="page"><h2>Family</h2></div>
+
+<!-- CHAPTER 9 -->
+<div id="page9" class="page"><h2>Family Stories</h2></div>
+
+<!-- CHAPTER 10 -->
+<div id="page10" class="page"><h2>Friends</h2></div>
+
+<!-- CHAPTER 11 -->
+<div id="page11" class="page"><h2>Diary</h2></div>
+
+<!-- CHAPTER 12 -->
+<div id="page12" class="page"><h2>Contacts</h2></div>
+
+<!-- CHAPTER 13 -->
+<div id="page13" class="page"><h2>Important Info</h2></div>
+
+<!-- CHAPTER 14 -->
+<div id="page14" class="page"><h2>Angel Message</h2></div>
+
+</div>
+</div>
 </div>
 
 <script>
+let current = "index1";
+let last = "index1";
 
-function showIndex(page){
-  document.getElementById("index1").style.display = page===1 ? "block":"none";
-  document.getElementById("index2").style.display = page===2 ? "block":"none";
-}
-
-function goToIndex(){
-  showIndex(1);
-}
-
-function goToNextChapter(){
-  alert("Next Chapter coming next step");
+function openBook(){
+document.getElementById("closedBook").style.display="none";
+document.getElementById("openBook").style.display="grid";
+showIndex(1);
 }
 
 function closeBook(){
-  alert("Close animation later");
+document.getElementById("openBook").style.display="none";
+document.getElementById("closedBook").style.display="flex";
 }
 
+function hideAll(){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+}
+
+function showIndex(n){
+last=current;
+current=n===1?"index1":"index2";
+hideAll();
+document.getElementById(current).classList.add("active");
+}
+
+function goToIndex(){showIndex(1);}
+
+function goToChapter(n){
+last=current;
+current="page"+n;
+hideAll();
+document.getElementById(current).classList.add("active");
+}
+
+function nextChapter(){
+let n=1;
+if(current.startsWith("page")){
+n=parseInt(current.replace("page",""))+1;
+}
+if(n>14)n=14;
+goToChapter(n);
+}
+
+function flipBack(){
+let temp=current;
+hideAll();
+document.getElementById(last).classList.add("active");
+current=last;
+last=temp;
+}
 </script>
 
 </body>
